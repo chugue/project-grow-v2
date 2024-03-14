@@ -3,11 +3,14 @@ package shop.mtcoding.blog.model.user;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
+
+@NoArgsConstructor
 @Table(name = "user_tb")
 @Data
 @Entity

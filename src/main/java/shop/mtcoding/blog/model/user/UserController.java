@@ -187,9 +187,6 @@ public class UserController {
     @PostMapping("/user/{id}/update")
     public String updateForm(@PathVariable Integer id, UserRequest.UpdateDTO requestDTO, HttpServletRequest request) {
         userRepository.updateById(id, requestDTO);
-        User user = userRepository.findById(id);
-        String a = user.getMyName();
-
 
         return "redirect:/user/"+ id +"/userHome";
     }

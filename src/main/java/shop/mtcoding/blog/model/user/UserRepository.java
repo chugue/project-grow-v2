@@ -15,14 +15,14 @@ import java.util.List;
 public class UserRepository {
     private final EntityManager em;
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         Query query = em.createNativeQuery("select * from user_tb order by id desc", User.class);
 
         List<User> userList = query.getResultList();
         return userList;
     }
 
-    public List<User> findByCompAll(){
+    public List<User> findByCompAll() {
         Query query = em.createNativeQuery("select * from user_tb where role = 2 order by id desc ", User.class);
 
         List<User> userList = query.getResultList();
@@ -31,15 +31,9 @@ public class UserRepository {
 
 
     public User findById(Integer id) {
-        String q = """
-                select * from user_tb where id = ?
-                """;
-        Query query = em.createNativeQuery(q, User.class);
-        query.setParameter(1, id);
-        User user = (User) query.getSingleResult();
+        User user = em.find(User.class, id);
         return user;
     }
-
 
 
     @Transactional
@@ -64,21 +58,19 @@ public class UserRepository {
     }
 
     @Transactional
-    public void deleteById () {}
+    public void deleteById() {
+    }
 
     public User findByEmailAndPassword(UserRequest.LoginDTO requestDTO) {
         String q = """
-                select * from user_tb where email = ? and password = ?
+                SELECT u FROM User u 
+                WHERE u.email = :email AND u.password = :password
                 """;
-        Query query = em.createNativeQuery(q, User.class);
-        query.setParameter(1,requestDTO.getEmail());
-        query.setParameter(2,requestDTO.getPassword());
-        User user;
-        try {
-            user = (User) query.getSingleResult();
-        } catch (NoResultException e) {
-            user = null;
-        }
+        Query query = em.createQuery(q, User.class);
+        query.setParameter("email", requestDTO.getEmail());
+        query.setParameter("password", requestDTO.getPassword());
+        User user = (User) query.getSingleResult();
+
         return user;
     }
 
@@ -99,6 +91,7 @@ public class UserRepository {
         }
 
     }
+
     @Transactional
     public void updateById(int id, UserRequest.UpdateDTO requestDTO) {
         String q = """
@@ -117,9 +110,8 @@ public class UserRepository {
     }
 
 
-
     @Transactional
-    public User updateImgFileName (String imgFileName, Integer id){
+    public User updateImgFileName(String imgFileName, Integer id) {
         String q = "update user_tb set img_file_name = ? where id = ?";
         Query query = em.createNativeQuery(q);
         query.setParameter(1, imgFileName);
