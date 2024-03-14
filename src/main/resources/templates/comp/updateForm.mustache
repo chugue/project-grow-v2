@@ -1,0 +1,73 @@
+{{> layout/compheader}}
+
+<div style="display:flex;" class="my-5">
+    <div class="mx-auto width-53 pt-40">
+        <div class="rounded-3 container all-form border border-3 p-3" style="width: 400px; margin-top: 60px">
+            <div class="form-group mb-3" style="text-align: center;">
+                <h4>기업 정보 수정</h4>
+            </div>
+            <div style="width:100%;">
+                <form action="/comp/{{sessionComp.id}}/update" method="post" style="width:100%; align-items: normal">
+                    <div class="form-group mb-2" style="width:100%;">
+                        <input type="name" name="myName" class="form-control" id="name" value="{{user.myName}}">
+                    </div>
+                    <div class="form-group mb-2" style="width:100%;">
+                        <input type="password" class="form-control" name="password" placeholder="Enter password"
+                               id="passwordCheck" value="">
+                    </div>
+                    <div class="form-group mb-2" style="width:100%;">
+                        <input type="text" name="compName" class="form-control" placeholder="Enter companyname"
+                               id="companyname" value="{{user.compName}}">
+                    </div>
+                    <div class="form-group mb-2" style="width:100%;">
+                        <input type="tel" class="form-control" placeholder="Enter passwordCheck" name="phone"
+                               id="passwordCheck" value="{{user.phone}}">
+                    </div>
+                    <div class="form-group mb-2" style="width:100%;">
+                        <input type="text" class="form-control" placeholder="Enter hompageLink" name="homepage"
+                               value="{{user.homepage}}">
+                    </div>
+                    <div class="form-group mb-2">
+                        <input type="date" name="birth" class="form-control" placeholder="" id="birth" value="{{user.birth}}">
+                    </div>
+                    <input class="btn btn-outline-mint mb-2" type="button" onClick="goPopup();" value="도로명주소 검색">
+                    <div id="list"></div>
+                    <div id="callBackDiv">
+                        <div class="form-group mb-4" >
+                            <input class="form-control" type="text" id="address" readonly name="address"
+                                   value="{{user.address}}"/>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 mb-2">
+                        <button type="submit" class=" btn btn-mint">수정완료</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function goPopup(){
+        // 현재 화면의 중앙 위치를 계산
+        var width = 500; // 팝업 창의 너비
+        var height = 480; // 팝업 창의 높이
+        var left = (window.screen.width / 2) - (width / 2);
+        var top = (window.screen.height / 2) - (height / 2);
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 주소 검색 결과 처리 로직
+                document.getElementById('address').value = data.roadAddress; // 도로명 주소
+                window.close();
+            },
+            width: width, // 팝업 창의 너비
+            height: height // 팝업 창의 높이
+        }).open({
+            left: left, // 팝업 창을 화면의 가운데로 위치
+            top: top
+        });
+    }
+
+
+</script>
+
+{{> layout/footer}}

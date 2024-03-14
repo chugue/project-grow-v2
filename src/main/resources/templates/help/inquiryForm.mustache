@@ -1,0 +1,69 @@
+{{> layout/header}}
+<style>
+    .width-53 {
+        width: 53%;
+    }
+
+</style>
+<div class="container-fluid width-53" style="margin-top: 120px">
+    <div>
+        <div style="font-size: 1.2em; font-weight : bold; display:inline; margin-left : 0em;">
+            <a href="/help" style="color: black; text-decoration: none;"> 고객 서비스</a>
+        </div>
+        <hr>
+    </div>
+
+    <div style="font-weight: bold; font-size: 0.8em; color: rgb(145, 143, 143); display:inline; margin-left : 0em;">고객센터 ＞ 문의하기
+    </div>
+
+    <div style="width: 100%">
+        <div class="container-fluid" style="padding: 0; margin-top: 40px;">
+            <div class="ft-32 mb-60" style="font-weight: bold;">문의등록</div>
+            <div class="mt-30"></div>
+            <h2 class="ft-28" style="font-weight: bold; display: inline;">제목</h2>
+            <div style="color: red; display: inline;">*</div>
+            <br>
+            <textarea name="text-align" cols="130" rows="1" style="width:100%;" placeholder="제목(예) 이벤트 신청 문의 | 보상금 신청 | 수수료 정산 등"></textarea>
+            <br>
+            <div class="mb-50"></div>
+            <h2 class="ft-28" style="font-weight: bold; display: inline;">설명</h2>
+            <div style="color: red; display: inline;">*</div>
+            <br>
+            <textarea name="text-align" cols="130" rows="7" style="width:100%;"
+                      placeholder="상세한 문의 사항을 기입해주세요.영업일 기준 1~2일 이내 가능한 빨리 답변드릴 수 있도록 노력하겠습니다."></textarea>
+
+
+            <div class="mt-50">
+            </div>
+            <h2 class="ft-28" style="font-weight: bold;">연락처</h2>
+            <input class="" placeholder=" '-'없이 번호만 입력"
+                   style="font-size: 1.0em; font-weight: bold; display: inline; width:100%; ">
+        </div>
+        <div class= "mt-50"></div>
+        <div>
+            <div class="ft-16">
+                <div style="font-weight: bold; display:inline;">개인정보 수집 및 이용에 대한 동의 내용</div>
+                <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">①개인정보 수집 항목: 이메일, 연락처</div>
+                <div>②수집목적: 고객식별, 문의 응대, 서비스 품질 향상</div>
+                <div>
+                    ③보유 및 이용기간: 수집 목적이 달성되면 지체없이 모든 개인정보를 파기합니다.<br> 단, 관계법령에서 일정 기간 정보의 보관을 규정한 경우에 한해 분리 보관 후 파기합니다.</div>
+                <div class="mt-40"></div>
+                <div>
+                    *위 동의는 거부할 수 있으며, 거부시 해당 문의를 처리할 수 없습니다.</div>
+                <br>
+            </div>
+            <div class="mt-30"></div>
+            <div class="" style="font-weight: bold;"></div>
+            <input type="checkbox"> <div class="ft-20" style="display: inline;">동의합니다. </div>
+            <div class="mt-40"></div>
+            <button type="submit" class="ttlButton"
+                    style="border-radius: 40px; padding: 1.5px 20px; color: rgb(255, 255, 255);">
+                <a href="/help">제출하기</a>
+            </button>
+        </div>
+        <div style="margin-top: 200px;">
+        </div>
+    </div>
+</div>
+
+{{> layout/footer}}

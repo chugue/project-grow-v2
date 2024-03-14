@@ -1,0 +1,190 @@
+{{> /layout/compheader}}
+<style>
+    .content {
+        display: grid;
+        justify-content: center;
+    }
+</style>
+
+<div style="margin-top: 130px; margin-bottom: 50px" class="mx-auto">
+    <div>
+        <div class="row">
+            <!--지원 및 제안-->
+            <div class="col-3 px-4" style="text-align: center; width: 250px; margin-left: 180px">
+                <div class="mb-3">
+                    <div class="fs-4">매칭 리스트</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="relative mb-3">
+                            <div>
+                                <a href="/user/profileUpdateForm">
+                                    <div class="user-img">
+                                        <img src="/images/logo.png" class="rounded" alt="Cinque Terre"
+                                             style="max-width: 80px;">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h6 class="card-subtitle text-muted">주(grow)</h6>
+                            <hr>
+                            <ul class="nav flex-column nav-pills">
+                                <li class="nav-item">
+                                    <a class="nav-link a p-1 mb-1" aria-current="page"
+                                       href="/comp/{{id}}/comphome">공고 관리</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link a p-1 mb-1" href="/comp/{{id}}/comphome">지원 / 제안</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link a p-1 mb-1" href="/comp/{{id}}/scrap">스크랩</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link a p-1 mb-1 btn btn-mint">매칭리스트</a>
+                                </li>
+                                <hr>
+                                <li class="nav-item">
+                                    <a class="nav-link a p-1 mb-1" href="/comp/updateForm" data-bs-toggle="modal"
+                                       data-bs-target="#modal">정보수정</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link a p-1" href="/">로그아웃</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8 my-4 pe-5">
+                <h6><b>전체</b><span
+                        style="margin-left: 5px; padding: 2px 8px; background-color: var(--mint-color); border-radius: 5px; color: #fff;">2</span>
+                </h6>
+
+                <div class="card mb-4 mt-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9 mt-2">
+                                <a href="#">
+                                    <h5 class="card-title" style="text-align: left;">
+                                        백엔드 개발자 지원합니다.
+                                    </h5>
+                                    <!--기술스킬-->
+                                    <div class="d-flex">
+                                        <div class="skill-wrap">
+                                            <span class="badge bg-warning">JavaScript</span>
+                                            <span class="badge bg-primary">HTML/CSS</span>
+                                            <span class="badge bg-success">Webpack</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="m-2" style="float: left;">
+                                        <h6 class="card-subtitle text-muted">
+                                            경력무관
+                                        </h6>
+                                    </div>
+                                    <div class="m-2" style="float: left;">
+                                        <h6 class="card-subtitle text-muted">
+                                            미들(4~8년)
+                                        </h6>
+                                    </div>
+                                    <div class="m-2" style="float: left;">
+                                        <h6 class="card-subtitle text-muted">
+                                            판교분당
+                                        </h6>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-3">
+                                <div class="row">
+                                    <input type="hidden" value="" name="" id="">
+                                    <div style="float: right;">
+                                        <a class="btn btn-mint btn-sm mt-1" href="/resume/resumeDetail">상세보기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4 mt-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9 mt-2">
+                                <a href="#">
+                                    <h5 class="card-title" style="text-align: left;">
+                                        백엔드 개발자 지원합니다.
+                                    </h5>
+                                    <!--기술스킬-->
+                                    <div class="d-flex">
+                                        <div class="skill-wrap">
+                                            <span class="badge bg-warning">JavaScript</span>
+                                            <span class="badge bg-primary">HTML/CSS</span>
+                                            <span class="badge bg-success">Webpack</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="m-2" style="float: left;">
+                                        <h6 class="card-subtitle text-muted">
+                                            경력무관
+                                        </h6>
+                                    </div>
+                                    <div class="m-2" style="float: left;">
+                                        <h6 class="card-subtitle text-muted">
+                                            시니어(3~4년)
+                                        </h6>
+                                    </div>
+                                    <div class="m-2" style="float: left;">
+                                        <h6 class="card-subtitle text-muted">
+                                            부산
+                                        </h6>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-3">
+                                <div class="row">
+                                    <input type="hidden" value="" name="" id="">
+                                    <div style="float: right;">
+                                        <a class="btn btn-mint btn-sm mt-1" href="/resume/resumeDetail.html">상세보기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">비밀번호 인증</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="inputPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="inputPassword"
+                                   aria-describedby="passwordHelp"
+                                   onkeypress="if(event.keyCode=='13'){event.preventDefault(); checkPS(${principal.userId});}">
+                            <div id="passwordHelp" class="form-text">현재 비밀번호를 입력해 주세요.</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="">Check</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{> /layout/footer}}

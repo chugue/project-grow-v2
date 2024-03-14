@@ -1,0 +1,119 @@
+{{> layout/header}}
+
+
+<style>
+    .nav-link {
+        color: #222;
+    }
+
+    .btn-mint {
+        color: #fff;
+    }
+</style>
+
+
+<div class="mx-auto pt-80">
+    <div class="new-flex-wrapper">
+        <div class="new-container">
+            <!--지원 및 제안-->
+            {{> layout/sidebar}}
+
+
+            <div class="my-4 layer2-right-container" style="flex: 0 0 auto; width: calc(100% - 300px);">
+                <div class="components">
+                    <div class="components-div p-tb-10 d-flex justify-content-between">
+                        <div class="font mt-20">
+                            <h5><b>전체</b></h5>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+
+                                <div class="col-7 mt-2">
+                                    <h5 class="card-title" style="text-align: left;">
+                                        [부산갈매기] 24년도 백엔드 개발자 채용 공고
+                                    </h5>
+                                    <!--기술스킬-->
+                                    <div class="d-flex">
+                                        <div class="skill-wrap">
+                                            <span class="badge bg-warning">JavaScript</span>
+                                            <span class="badge bg-primary">HTML/CSS</span>
+                                            <span class="badge bg-success">Webpack</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="m-2" style="float: left;">
+                                        <h6 class="card-subtitle text-muted">
+                                            경력무관
+                                        </h6>
+                                    </div>
+                                    <div class="m-2" style="float: left;">
+                                        <h6 class="card-subtitle text-muted">
+                                            신입
+                                        </h6>
+                                    </div>
+                                    <div class="m-2" style="float: left;">
+                                        <h6 class="card-subtitle text-muted">
+                                            부산
+                                        </h6>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-5" style="justify-content: end">
+                                    <!--        <div class="row">-->
+                                    <!--        <div style="float: right;">-->
+                                    <h5 class="card-title text-danger" style="text-align: end;">
+                                        ~ 마감 일자
+                                    </h5>
+
+                                    <div class="d-flex" style="justify-content: end">
+                                        <div class="mr-10">
+                                            <button type="submit" class="btn btn-mint"><a
+                                                    href="/resume/resumeDetail">상세보기</a></button>
+                                        </div>
+                                        <div>
+                                            <button type="submit" class="btn btn-mint"><a
+                                                    href="/resume/resumeDetail">삭제하기</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">비밀번호 인증</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="inputPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="inputPassword"
+                               aria-describedby="passwordHelp"
+                               onkeypress="if(event.keyCode=='13'){event.preventDefault(); checkPS(${principal.userId});}">
+                        <div id="passwordHelp" class="form-text">현재 비밀번호를 입력해 주세요.</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="">Check</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{> layout/footer}}

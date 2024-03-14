@@ -1,0 +1,117 @@
+{{> layout/header}}
+<div class="mx-auto pt-80">
+    <div class="new-flex-wrapper">
+        <div class="new-container">
+
+            {{> layout/sidebar}}
+            <!--이력서 관리-->
+            <div class="my-4 layer2-right-container"
+                 style="flex: 0 0 auto; width: calc(100% - 240px); padding:  0 !important;">
+                <div class="components">
+                    <div>
+                        <!--지원현황-->
+                        <h6><b>지원현황<div class="layer2-right-container"
+                                        style="flex: 0 0 auto; width: calc(100% - 240px);">
+
+                        </div></b></h6>
+                        <div class="card" style=" border-color: #2cb457; color: #2cb457; margin-bottom: 80px;">
+                            <div class="card-body mt-3">
+                                <div class="apply-present row " style="font-weight: 900; font-size: 16px;">
+                                    <div class="col-4 text-center">
+                                        <div class="apply">총지원</div>
+                                        <div class="count">{{count}}개</div>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <div class="waiting">대기중</div>
+                                        <div class="count">0개</div>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <div class="">결과발표</div>
+                                        <div class="count">0개</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--지원현황-->
+                        <div class="components-div p-tb-10 d-flex justify-content-between">
+                            <b style="font-size:1rem;">전체</b>
+                            <div>
+                                <button type="button" class="btn btn-mint offer-table-btn" style="margin: 0;"><a
+                                        href="/resume/{{sessionUserId}}/writeResumeForm">이력서 작성</a></button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="components">
+
+                        {{#resumeList}}
+                            <div class="card mb-4 mt-3">
+                                <div class="card-body" style=" padding: 0 !important;">
+                                    <div class="row">
+                                        <div class="col-7 mt-2">
+                                            <h5 class="card-title" style="text-align: left;">
+                                                {{title}}
+                                            </h5>
+                                            <!--기술스킬-->
+                                            <div class="d-flex">
+                                                <div class="new-skill-box">
+                                                    {{#skillList}}
+                                                        <div class="{{color}}">{{name}}</div>
+                                                    {{/skillList}}
+                                                </div>
+
+                                            </div>
+                                            <div class="m-2" style="float: left;">
+                                                <h6 class="card-subtitle text-muted">
+                                                    {{edu}}
+                                                </h6>
+                                            </div>
+                                            <div class="m-2" style="float: left;">
+                                                <h6 class="card-subtitle text-muted">
+                                                    {{career}}
+                                                </h6>
+                                            </div>
+                                            <div class="m-2" style="float: left;">
+                                                <h6 class="card-subtitle text-muted">
+                                                    {{area}}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="d-flex" style="justify-content: flex-end;">
+                                                <input type="hidden" value="" name="" id="">
+<!--                                                <div class="mb-2 mr-10" style="">-->
+<!--                                                    <form action="/resume/resumeDetail/{{id}}" method="get">-->
+<!--                                                        <button type="submit" class="btn btn-mint">-->
+<!--                                                            상세보기-->
+<!--                                                        </button>-->
+<!--                                                    </form>-->
+<!--                                                </div>-->
+                                                <div class="mb-2 mr-10" style="">
+                                                    <form action="/resume/{{id}}/updateResumeForm" method="get">
+                                                        <button type="submit" class="btn btn-mint">
+                                                            이력서 수정
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="mb-2" style="">
+                                                    <form action="/resume/{{id}}/delete" method="post">
+                                                        <button type="submit" class="btn btn-outline-mint mb-2">
+                                                            이력서 삭제
+                                                        </button>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/resumeList}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{> layout/footer}}

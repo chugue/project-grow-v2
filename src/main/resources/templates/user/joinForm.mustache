@@ -1,0 +1,159 @@
+{{> /layout/header}}
+
+<style>
+    /*회원가입*/
+    .nav-link.user {
+        color: var(--mint-color);
+
+    }
+</style>
+    <!--회원가입-->
+    <div style="display:flex;" class="my-5">
+        <div class="mx-auto w12 pt-40">
+            <div class=" rounded-3 container all-form border border-3 p-3 mt-5" style="width: 400px;">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="nav-item fs-4">
+                        <a class="nav-link user fw-600">회원가입</a>
+                    </li>
+                </ul>
+
+                <form action="/user/join" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return valid()">
+                    <div class="d-flex form-group mt-2 mb-2">
+                        <input type="email" name="email" class="form-control" placeholder="Enter email" id="email" value ="ssar@nate.com">
+                        <button type="button" onclick="emailSameCheck()" class="badge bg-secondary ms-2" >중복확인</button>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <input type="text" name="myName" class="form-control" placeholder="Enter name" id="name" value="ssar">
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <input type="password" name="password" class="form-control" placeholder="Enter password"
+                            id="password" required>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <input type="password" class="form-control" placeholder="Enter passwordCheck"
+                            id="passwordCheck" value="1234">
+                    </div>
+                    <div class="form-group mb-2">
+                        <input type="tel" name="phone" class="form-control" placeholder="Enter tel" id="tel" value="01022223333">
+                    </div>
+                    <div id="list">
+                        <input class="btn btn-outline-mint mb-2" type="button" onClick="goPopup();" value="도로명주소 검색">
+                    </div>
+                    <div id="callBackDiv">
+                        <div class="form-group mb-4">
+                            <input class="form-control" type="text" id="address" readonly
+                                   placeholder="" name="address" value=""/>
+                        </div>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            서비스 이용약관 관련 전체동의
+                        </label>
+                    </div>
+                    <hr />
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="flexCheckChecked1" required>
+                        <label class="form-check-label" for="flexCheckChecked1">
+                            (필수) 이용약관 동의
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="flexCheckChecked2" required>
+                        <label class="form-check-label" for="flexCheckChecked2">
+                            (필수) 개인정보 수집 및 이용 동의
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="flexCheckChecked3" required>
+                        <label class="form-check-label" for="flexCheckChecked3">
+                            (필수) 14세 이상 연령
+                        </label>
+                    </div>
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="flexCheckChecked4">
+                        <label class="form-check-label" for="flexCheckChecked4">
+                            (선택) 이메일 수신 동의
+                        </label>
+                    </div>
+                    <div class="d-grid gap-2 mb-4">
+                        <input type="hidden" name="role" value="1">
+                        <input id="button" class=" btn btn-mint" type="submit" value="회원가입">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!--회원가입 끝-->
+
+<!--중복체크 스크립트-->
+<script>
+    let isSameCheck = false;
+
+    // 아이디 필드가 변경되면 중복 체크 상태를 초기화
+    $("#email").on("change", function () {
+       isSameCheck = false;
+    });
+
+    function valid() {
+        if (isSameCheck == false) {
+            alert("아이디 중복 체크를 해야합니다");
+            return false;
+        }
+        return true;
+    }
+
+    function emailSameCheck() {
+        let email = $("#email").val();
+
+        $.ajax({
+            url: "/api/user/username-same-check?email=" + email,
+            type: "get"
+        }).done((res) => {
+            console.log(res);
+            if (res.body == true) {
+                isSameCheck = true;
+                alert("가입 가능한 아이디입니다");
+            } else {
+                isSameCheck = false;
+                alert("중복된 아이디가 존재합니다");
+            }
+        }).fail((res) => {
+            alert(res.responseJSON.msg);
+        });
+    }
+
+    document.getElementById('flexCheckDefault').addEventListener('change', function() {
+        var isChecked = this.checked;
+        ['flexCheckChecked1', 'flexCheckChecked2', 'flexCheckChecked3', 'flexCheckChecked4'].forEach(function(id) {
+            document.getElementById(id).checked = isChecked;
+        });
+    });
+    function goPopup(){
+        // 현재 화면의 중앙 위치를 계산
+        var width = 500; // 팝업 창의 너비
+        var height = 480; // 팝업 창의 높이
+        var left = (window.screen.width / 2) - (width / 2);
+        var top = (window.screen.height / 2) - (height / 2);
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 주소 검색 결과 처리 로직
+                document.getElementById('address').value = data.roadAddress; // 도로명 주소
+                window.close();
+            },
+            width: width, // 팝업 창의 너비
+            height: height // 팝업 창의 높이
+        }).open({
+            left: left, // 팝업 창을 화면의 가운데로 위치
+            top: top
+        });
+    }
+</script>
+
+
+{{> /layout/footer}}

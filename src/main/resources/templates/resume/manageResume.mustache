@@ -1,0 +1,118 @@
+{{> layout/header}}
+
+<div class="mx-auto pt-80">
+    <div class="new-flex-wrapper">
+        <div class="new-container">
+
+            {{> layout/sidebar}}
+
+            <!--이력서 관리-->
+            <div class="my-4 layer2-right-container"
+                 style="flex: 0 0 auto; width: calc(100% - 240px); padding:  0 !important;">
+                <div class="components">
+                    <div class="components-div p-tb-10 d-flex justify-content-between">
+                        <div class="font mt-20"><h4>전체</h4></div>
+
+                        <div>
+                            <button type="button" class="btn btn-mint offer-table-btn"><a
+                                    href="/resume/{{id}}/writeResumeForm">이력서 작성</a></button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="components"></div>
+                <div class="components">
+                    <!--                    <div class="font"><b>이력서 관리</b></div>-->
+                    <div>
+                        <!--                        <hr>-->
+                    </div>
+                    <!--                    <div>-->
+                    <!--                        <table class="table table-hover offer-table scroll">-->
+                    <!--                            <thead>-->
+                    <!--                            <tr>-->
+                    <!--                                <th class="center-align" scope="col" style="width: 5%;">No</th>-->
+                    <!--                                <th class="center-align" scope="col" style="width: 10%;">이름</th>-->
+                    <!--                                <th class="center-align" scope="col" style="width: 30%;">이력서제목</th>-->
+                    <!--                                <th class="center-align" scope="col" style="width: 10%;">경력</th>-->
+                    <!--                                <th class="center-align" scope="col" style="width: 35%;">주요 기술</th>-->
+                    <!--                                <th class="center-align" scope="col" style="width: 10%;"></th>-->
+                    <!--                            </tr>-->
+                    <!--                            </thead>-->
+                    <!--                        </table>-->
+                    <!--                    </div>-->
+                    <!--                </div>-->
+                    <!--            </div>-->
+
+
+                    {{#resumeList}}
+                        <div class="card mb-4 mt-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-7 mt-2">
+                                        <!--                                    <a href="/resume/resumeDetail"-->
+                                        <!--                                       onclick="window.open(this.href, '_blank', 'width=1200,height=1080,toolbars=no,scrollbars=no, resizable=no'); return false;">-->
+                                        <h5 class="card-title" style="text-align: left;">
+                                            {{title}}
+                                        </h5>
+                                        <!--기술스킬-->
+                                        <div class="d-flex">
+                                            <div class="new-skill-box">
+                                                {{#skillList}}
+                                                    <div class="{{color}}">{{name}}</div>
+                                                {{/skillList}}
+                                            </div>
+
+                                        </div>
+                                        <div class="m-2" style="float: left;">
+                                            <h6 class="card-subtitle text-muted">
+                                                {{edu}}
+                                            </h6>
+                                        </div>
+                                        <div class="m-2" style="float: left;">
+                                            <h6 class="card-subtitle text-muted">
+                                                {{career}}
+                                            </h6>
+                                        </div>
+                                        <div class="m-2" style="float: left;">
+                                            <h6 class="card-subtitle text-muted">
+                                                {{area}}
+                                            </h6>
+                                        </div>
+                                        <!--                                    </a>-->
+                                    </div>
+
+                                    <div class="col-5 d-flex" style="justify-content: end">
+                                        <div class="d-flex" style="flex-wrap: nowrap;">
+                                            <input type="hidden" value="" name="" id="">
+                                            <div class="mb-2 mr-10" style="flex-grow: 1;">
+                                                <form action="/resume/{{id}}/updateResumeForm" method="get">
+                                                    <button type="submit" class="btn btn-mint">
+                                                        이력서 수정
+                                                    </button>
+                                                </form>
+
+                                            </div>
+                                            <div class="mb-2" style="flex-grow: 1;">
+                                                <form action="/resume/{{id}}/delete" method="post">
+                                                    <button type="submit" class="btn btn-outline-mint mb-2">
+                                                        이력서 삭제
+                                                    </button>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/resumeList}}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{{> layout/footer}}

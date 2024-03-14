@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>grow</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/base.css">
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<body>
+<!--헤더 시작-->
+<header id="header" class="container-fluid">
+    <nav class="navbar navbar-expand-sm">
+        <!--(유저)로그인 됐을떄 보여질 navBar-->
+        {{#sessionUser}}
+            <div class="container-fluid">
+                <a href="/" class="navbar-brand"><img src="/images/logo.png" style="width: 70%;"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-flex justify-content-between" id="collapsibleNavbar">
+                    <ul class="navbar-nav d-flex justify-content-start">
+                        <li class="nav-item mx-3 fs-5">
+                            <a class="nav-link text-dark" href="/jobs/info">채용정보</a>
+                        </li>
+                        <li class="nav-item mx-3 fs-5">
+                            <a class="nav-link text-dark" href="/user/{{id}}/userHome">이력서</a>
+                        </li>
+                        <li class="nav-item mx-3 fs-5">
+                            <a class="nav-link text-dark" href="/jobs/{{id}}/interest">관심기업</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav d-flex justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark mr-30" href="/logout">로그아웃</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/user/{{id}}/userHome">
+                                <i class="fa-solid fa-circle-user pt-2 mr-20" style="font-size: 30px; color: #B3E2BF"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item company-service ">
+                            <form action="comp/compIndex">
+                                <input type="hidden" name="role" value="{{role}}" >
+                                <button type="submit" class="nav-link mint-color" style="border-radius: 5px; font-size: 17px; font-weight: bolder;">기업서비스</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {{/sessionUser}}
+        <!--(유저)로그인 안됐을떄 보여질 navBar-->
+
+        <!--(기업)로그인 안됐을때 보여질 navBar-->
+        {{^sessionUser}}
+            <div class="container-fluid">
+                <a href="/" class="navbar-brand"><img src="/images/logo.png"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-flex justify-content-between" id="collapsibleNavbar">
+                    <ul class="navbar-nav d-flex justify-content-start">
+                        <li class="nav-item mx-3 fs-5">
+                            <a class="nav-link text-dark" href="/user/loginForm">채용정보</a>
+                        </li>
+                        <li class="nav-item mx-3 fs-5">
+                            <a class="nav-link text-dark" href="/user/loginForm">이력서</a>
+                        </li>
+                        <li class="nav-item mx-3 fs-5">
+                            <a class="nav-link text-dark" href="/user/loginForm">관심기업</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav d-flex justify-content-end">
+                        <!-- 기업 로그인되엇을때 -->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark mr-30" href="/user/loginForm">로그인</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/user/loginForm">
+                                <i class="fa-solid fa-circle-user pt-2 mr-20 " style="font-size: 30px; color: #B3E2BF;"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item company-service ">
+                            <a class="nav-link mint-color" href="/user/loginForm">기업서비스</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {{/sessionUser}}
+    </nav>
+</header>
+
+
+<!--헤더 끝-->

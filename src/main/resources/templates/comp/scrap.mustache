@@ -1,0 +1,90 @@
+{{> layout/compheader}}
+<style>
+    .content {
+        display: grid;
+        justify-content: center;
+    }
+</style>
+
+<div style="margin-top: 130px; min-height: 600px;" class="mx-auto">
+    <div style="display: flex; justify-content: center; max-width: 1600px; margin: 0 auto;">
+            <!--지원 및 제안-->
+            {{> layout/sidebar}}
+            <div class="col-9 my-4 pe-5" style="width:calc(100% - 300px)">
+                <h6><b>전체</b><span
+                        style="margin-left: 5px; padding: 2px 8px; background-color: var(--mint-color); border-radius: 5px; color: #fff;">{{scrapList.size}}</span>
+                </h6>
+                {{#scrapList}}
+                <div class="card mb-4 mt-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9 mt-2">
+                                <a href="#">
+                                    <h5 class="card-title" style="text-align: left;">
+                                        {{title}}
+                                    </h5>
+                                    <!--기술스킬-->
+<!--                                    <div class="d-flex">-->
+<!--                                        <div class="skill-wrap">-->
+<!--                                            <span class="badge bg-warning">JavaScript</span>-->
+<!--                                            <span class="badge bg-primary">HTML/CSS</span>-->
+<!--                                            <span class="badge bg-success">Webpack</span>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+
+                                    <div class="m-2" style="float: left;">
+                                        <h6 class="card-subtitle text-muted">
+                                            {{career}}
+                                        </h6>
+                                    </div>
+                                    <div class="m-2" style="float: left;">
+                                        <h6 class="card-subtitle text-muted">
+                                            {{area}}
+                                        </h6>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-3">
+                                <div class="row">
+                                    <input type="hidden" value="" name="" id="">
+                                    <div style="float: right;">
+                                        <a class="btn btn-mint btn-sm mt-1" href="/resume/resumeDetail/{{id}}">상세보기</a>
+                                    </div>
+                                </div>
+                            </div>
+
+<!--                        여기 지워지워지워-->
+                    </div>
+                </div>
+                {{/resumeList}}
+
+            </div>
+        </div>
+</div>
+<!--<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="modalLabel">비밀번호 인증</h5>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <form>-->
+<!--                    <div class="mb-3">-->
+<!--                        <label for="inputPassword" class="form-label">Password</label>-->
+<!--                        <input type="password" class="form-control" id="inputPassword" aria-describedby="passwordHelp"-->
+<!--                               onkeypress="if(event.keyCode=='13'){event.preventDefault(); checkPS(${principal.userId});}">-->
+<!--                        <div id="passwordHelp" class="form-text">현재 비밀번호를 입력해 주세요.</div>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                <button type="button" class="btn btn-primary" onclick="">Check</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+</div>
+{{> layout/footer}}
