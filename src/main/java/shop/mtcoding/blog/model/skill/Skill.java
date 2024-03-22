@@ -16,6 +16,8 @@ public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+
     private Integer resumeId;
     private Integer jobsId;
     @Column(nullable = false)
