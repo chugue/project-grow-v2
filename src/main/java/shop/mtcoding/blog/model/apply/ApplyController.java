@@ -10,7 +10,7 @@ public class ApplyController {
 
     private final ApplyService applyService;
 
-    @PostMapping("/jobs/apply/save")
+    @PostMapping("/jobs/apply")
     public String applySave() {
 
         return "redirect:/";
@@ -47,7 +47,6 @@ public class ApplyController {
     @GetMapping("/resume/{jobId}/applyList")
     public String resumeApplyList(@PathVariable Integer jobId) {
 
-        System.out.println("Ddddddddddddddddd");
         return "/user/apply";
     }
 }
