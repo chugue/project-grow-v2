@@ -19,7 +19,7 @@ public class ResumeController {
     @GetMapping("/resume/{id}/manage-resume")
     public String manageResume(@PathVariable Integer id) {
 
-        return "/resume/manageResume";
+        return "/resume/manage-resume";
     }
 
     @GetMapping("/resume/{id}/write-resume-form")

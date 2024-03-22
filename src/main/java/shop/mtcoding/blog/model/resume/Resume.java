@@ -5,9 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.user.User;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Table(name = "resume_tb")
@@ -27,6 +30,9 @@ public class Resume {
     private String career;
     private String introduce;
     private String portLink;
+
+    @OneToMany(mappedBy = "resume", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Skill> skillList = new ArrayList<>();
 
     @CreationTimestamp //pc -> db 날짜주입
     private Timestamp createdAt;
