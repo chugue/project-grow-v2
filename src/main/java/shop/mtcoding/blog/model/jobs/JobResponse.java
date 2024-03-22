@@ -1,18 +1,19 @@
 package shop.mtcoding.blog.model.jobs;
 
+import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import shop.mtcoding.blog.model.skill.Skill;
+import shop.mtcoding.blog.model.user.User;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JobResponse {
 
-
-    @NoArgsConstructor
     @Data
     public static class DTO {
         private Integer id;
@@ -26,24 +27,61 @@ public class JobResponse {
         private String task;
         private Timestamp createdAt;
         private String compName;
-        private List<Skill> skillList;
+        private List<SkillDTO> skillList = new ArrayList<>();
 
-        @Builder
-        public DTO(Integer id, Integer userId, String area, String title, String edu, String career, String content, Date deadLine, String task, Timestamp createdAt, String compName) {
-            this.id = id;
-            this.userId = userId;
-            this.area = area;
-            this.title = title;
-            this.edu = edu;
-            this.career = career;
-            this.content = content;
-            this.deadLine = deadLine;
-            this.task = task;
-            this.createdAt = createdAt;
-            this.compName = compName;
+
+        public DTO(Jobs jobs) {
+            this.id = jobs.getId();
+            this.userId = jobs.getUser().getId();
+            this.area = jobs.getArea();
+            this.title = jobs.getTitle();
+            this.edu = jobs.getEdu();
+            this.career = jobs.getCareer();
+            this.content = jobs.getContent();
+            this.deadLine = jobs.getDeadLine();
+            this.task = jobs.getTask();
+            this.createdAt = jobs.getCreatedAt();
+            this.compName = jobs.getUser().getCompName();
+            this.skillList = jobs.getSkillList().stream().map(skill -> new SkillDTO(skill)).toList();
         }
-    }
 
+        @Data
+        public static class SkillDTO{
+            private String name;
+            private String color;
+
+            public SkillDTO(Skill skill) {
+
+                String colorClass ="";
+                if (name.equals("Jquery")){
+                    colorClass = "badge bg-primary";
+                }
+                else if(name.equals("JavaScript")){
+                    colorClass = "badge bg-secondary";
+                }
+                else if(name.equals("Spring")){
+                    colorClass = "badge bg-success";
+                }
+                else if(name.equals("HTML/CSS")){
+                    colorClass = "badge bg-danger";
+                }
+                else if(name.equals("JSP")){
+                    colorClass = "badge bg-warning";
+                }
+                else if(name.equals("Java")){
+                    colorClass = "badge bg-info";
+                }
+                else if(name.equals("React")){
+                    colorClass = "badge bg-dark";
+                }
+
+                this.name = skill.getName();
+                this.color = colorClass;
+            }
+
+        }
+
+    }
 
     @Data
     public static class JobListByUserId{
@@ -61,11 +99,5 @@ public class JobResponse {
             this.career = career;
         }
     }
-
-
-
-
-
-
 
 }

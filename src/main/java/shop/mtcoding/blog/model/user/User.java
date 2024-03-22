@@ -4,9 +4,13 @@ package shop.mtcoding.blog.model.user;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
+import shop.mtcoding.blog.model.jobs.Jobs;
+import shop.mtcoding.blog.model.skill.Skill;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "user_tb")
 @Data
@@ -34,6 +38,7 @@ public class User {
     private Integer role;
     @Column(nullable = false)
     private Timestamp createdAt;
+
 
     @Column
     @ColumnDefault("'1e308313-4d3a-4997-b42c-d409e72034ec_noimage.png'")

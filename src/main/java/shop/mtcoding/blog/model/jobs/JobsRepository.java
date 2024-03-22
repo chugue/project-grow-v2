@@ -13,6 +13,7 @@ import java.util.List;
 public class JobsRepository {
     private final EntityManager em;
 
+
     public List<JobResponse.DTO> findAllWithUserV2(){
         String q = """
                 select jt.id, jt.user_id, jt.area, jt.title, jt.edu, jt.career, jt.content, jt.dead_line, jt.task, jt.created_at,ut.img_file_name, ut.comp_name 
