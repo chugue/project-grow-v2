@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import shop.mtcoding.blog.model.comp.CompRequest;
+import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.resume.Resume;
 
 @NoArgsConstructor
@@ -23,6 +24,10 @@ public class Skill {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resume_id")
     private Resume resume;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "jobs_id")
+    private Jobs jobs;
 
     @Column(nullable = false)
     private String name;

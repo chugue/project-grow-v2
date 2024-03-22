@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import shop.mtcoding.blog.model.jobs.Jobs;
+import shop.mtcoding.blog.model.resume.Resume;
 
 import java.sql.Timestamp;
 
@@ -18,10 +19,12 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
-    private Integer resumeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "resume_id")
+    private Resume resume;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "jobs_id")
     private Jobs jobs;
 
     private Integer status;
@@ -30,9 +33,9 @@ public class Offer {
     private Timestamp createdAt;
 
     @Builder
-    public Offer(Integer id, Integer resumeId, Jobs jobs, Integer status, Timestamp createdAt) {
+    public Offer(Integer id, Resume resume, Jobs jobs, Integer status, Timestamp createdAt) {
         this.id = id;
-        this.resumeId = resumeId;
+        this.resume = resume;
         this.jobs = jobs;
         this.status = status;
         this.createdAt = createdAt;

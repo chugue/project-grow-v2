@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import shop.mtcoding.blog.model.jobs.Jobs;
+import shop.mtcoding.blog.model.resume.Resume;
 
 import java.sql.Timestamp;
 
@@ -18,11 +20,14 @@ public class Apply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-    private Integer resumeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "resume_id")
+    private Resume resume;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-    private Integer jobsId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "jobs_id")
+    private Jobs jobs;
+
 
     // 유저 상태값 (1 : 대기중) (2 : 확인)  (3 : 탈락)
     @Column(nullable = false)
@@ -32,10 +37,10 @@ public class Apply {
     private Timestamp createdAt;
 
     @Builder
-    public Apply(Integer id, Integer resumeId, Integer jobsId, String isPass, Timestamp createdAt) {
+    public Apply(Integer id, Resume resume, Jobs jobs, String isPass, Timestamp createdAt) {
         this.id = id;
-        this.resumeId = resumeId;
-        this.jobsId = jobsId;
+        this.resume = resume;
+        this.jobs = jobs;
         this.isPass = isPass;
         this.createdAt = createdAt;
     }

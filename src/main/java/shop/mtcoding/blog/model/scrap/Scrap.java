@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.model.jobs.Jobs;
+import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.user.User;
 
 import java.sql.Timestamp;
@@ -22,10 +23,12 @@ public class Scrap {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-    private Integer resumeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "resume_id")
+    private Resume resume;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "jobs_id")
     private Jobs jobs;
 
     @CreationTimestamp
@@ -33,10 +36,10 @@ public class Scrap {
     private Timestamp createdAt;
 
     @Builder
-    public Scrap(Integer id, User user, Integer resumeId, Jobs jobs, Timestamp createdAt) {
+    public Scrap(Integer id, User user, Resume resume, Jobs jobs, Timestamp createdAt) {
         this.id = id;
         this.user = user;
-        this.resumeId = resumeId;
+        this.resume = resume;
         this.jobs = jobs;
         this.createdAt = createdAt;
     }
