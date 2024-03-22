@@ -8,7 +8,6 @@ public class SkillRequest {
 
     @Data
     public static class JobSkillDTO{
-
         private String name;
         private String color;
 
@@ -64,7 +63,6 @@ public class SkillRequest {
     }
 
 
-
     @Data
     public static class ApplyskillDTO{
         private String name;
@@ -93,7 +91,6 @@ public class SkillRequest {
             else if(name.equals("React")){
                 colorClass = "badge bg-dark";
             }
-
             this.name = name;
             this.color = colorClass;
         }
@@ -104,8 +101,6 @@ public class SkillRequest {
     public static class ResumeSkillDTO{
         private String name;
         private String color;
-
-
 
         public ResumeSkillDTO(String name, String color) {
             String colorClass = "";
@@ -135,14 +130,5 @@ public class SkillRequest {
             this.color = colorClass;
 
         }
-
-
-
-
-
-
-
     }
-
-
 }
