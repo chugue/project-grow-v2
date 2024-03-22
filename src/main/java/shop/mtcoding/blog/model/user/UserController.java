@@ -43,10 +43,8 @@ import java.util.List;
 public class UserController {
     private final UserRepository userRepository;
     private final OfferRepository offerRepository;
-    private final ApplyRepository applyRepository;
     private final HttpSession session;
     private final ResumeRepository resumeRepository;
-    private final SkillRepository skillRepository;
 
     //아이디 중복체크 용. 이메일로 회원가입해서 email을 해줌
     @GetMapping("/api/user/username-same-check")

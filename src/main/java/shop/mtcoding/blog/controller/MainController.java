@@ -31,7 +31,7 @@ public class MainController {
         boolean lastPage = paging.lastPage(currentPage, totalPosts);
         boolean firstPage = paging.firstPage(currentPage);
         int totalPages = paging.totalPages(totalPosts);
-
+        System.out.println(111111);
         List<Page> pageActive = new ArrayList<>();
 
         // 페이지 네이션에 현재페이지 active기능 넣기
