@@ -19,11 +19,10 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resume_id")
     private Resume resume;
-//    private Integer resumeId;
-//    private Integer jobsId;
 
     @Column(nullable = false)
     private String name;

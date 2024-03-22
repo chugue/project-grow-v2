@@ -52,7 +52,6 @@ public class User {
         this.address = address;
         this.birth = birth;
         this.businessNumber = businessNumber;
-        this.photo = photo;
         this.compName = compName;
         this.homepage = homepage;
         this.role = role;
