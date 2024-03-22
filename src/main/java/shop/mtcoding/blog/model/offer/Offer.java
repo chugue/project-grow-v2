@@ -22,7 +22,6 @@ public class Offer {
     private Integer resumeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(nullable = false)
     private Jobs jobs;
 
     private Integer status;
