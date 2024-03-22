@@ -4,12 +4,26 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import shop.mtcoding.blog.model.jobs.JobResponse;
+import shop.mtcoding.blog.model.jobs.JobsRepository;
+import shop.mtcoding.blog.model.skill.Skill;
+import shop.mtcoding.blog.model.skill.SkillRepository;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
 @Controller
 public class UserController {
     private final UserJPARepository userJPARepo;
+    private final JobsRepository jobsRepo;
+    private final SkillRepository skillRepo;
+
+    @GetMapping("/")
+    public String index(HttpServletRequest request) {
+
+        return "index";
+    }
 
     @GetMapping("/api/user/username-same-check")
     public String usernameSameCheck() {
