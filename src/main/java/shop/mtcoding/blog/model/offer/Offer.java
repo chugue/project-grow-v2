@@ -20,11 +20,9 @@ public class Offer {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "resume_id")
     private Resume resume;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "jobs_id")
     private Jobs jobs;
 
     private Integer status;
