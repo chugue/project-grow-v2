@@ -1,46 +1,41 @@
-package shop.mtcoding.blog.model.skill;
+package shop.mtcoding.blog.model.offer;
 
 
 import jakarta.persistence.*;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import shop.mtcoding.blog.model.comp.CompRequest;
 import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.resume.Resume;
 
+import java.sql.Timestamp;
+
 @NoArgsConstructor
-@Table(name = "skill_tb")
-@Getter
-@Setter
+@Table(name = "offer_tb")
+@Data
 @Entity
-public class Skill {
+public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
-
     private Resume resume;
 
     @ManyToOne(fetch = FetchType.LAZY)
-
     private Jobs jobs;
 
+    private Integer status;
+
     @Column(nullable = false)
-    private String name;
-    @Column(nullable = false) // 1: 유저, 2: 기업
-    private Integer role;
-    private String color;
+    private Timestamp createdAt;
 
     @Builder
-    public Skill(Integer id, Resume resume, String name, Integer role, String color) {
+    public Offer(Integer id, Resume resume, Jobs jobs, Integer status, Timestamp createdAt) {
         this.id = id;
         this.resume = resume;
-        this.name = name;
-        this.role = role;
-        this.color = color;
+        this.jobs = jobs;
+        this.status = status;
+        this.createdAt = createdAt;
     }
 }

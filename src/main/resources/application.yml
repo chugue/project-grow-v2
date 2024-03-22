@@ -23,7 +23,7 @@ spring:
   sql:
     init:
       data-locations:
-        - classpath:db/data.sql
+#        - classpath:db/data.sql
   jpa:
     hibernate:
       ddl-auto: create
@@ -31,4 +31,5 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_batch_fetch_size: 10
     defer-datasource-initialization: true

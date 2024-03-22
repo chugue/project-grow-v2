@@ -1,10 +1,21 @@
 package shop.mtcoding.blog.model.jobs;
 
 import jakarta.persistence.*;
+
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.user.User;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import shop.mtcoding.blog.model.apply.Apply;
+import shop.mtcoding.blog.model.offer.Offer;
+import shop.mtcoding.blog.model.scrap.Scrap;
+import shop.mtcoding.blog.model.skill.Skill;
+
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -34,9 +45,19 @@ public class Jobs {
     @Column(nullable = false)
     private String career;
 
-    @OrderBy("id desc")
-    @OneToMany(mappedBy = "jobs", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+
+    @OneToMany(mappedBy = "jobs", fetch = FetchType.LAZY)
     private List<Skill> skillList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "jobs", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Apply> applyList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "jobs", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Scrap> scrapList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "jobs", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Offer> offerList = new ArrayList<>();
+
 
     @Column(nullable = false)
     private String content;

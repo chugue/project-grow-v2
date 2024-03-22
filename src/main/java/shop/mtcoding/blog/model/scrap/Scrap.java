@@ -1,46 +1,44 @@
-package shop.mtcoding.blog.model.skill;
-
+package shop.mtcoding.blog.model.scrap;
 
 import jakarta.persistence.*;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import shop.mtcoding.blog.model.comp.CompRequest;
+import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.resume.Resume;
+import shop.mtcoding.blog.model.user.User;
+
+import java.sql.Timestamp;
 
 @NoArgsConstructor
-@Table(name = "skill_tb")
-@Getter
-@Setter
+@Table(name="scrap_tb")
+@Data
 @Entity
-public class Skill {
+public class Scrap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-
     private Resume resume;
 
     @ManyToOne(fetch = FetchType.LAZY)
-
     private Jobs jobs;
 
+    @CreationTimestamp
     @Column(nullable = false)
-    private String name;
-    @Column(nullable = false) // 1: 유저, 2: 기업
-    private Integer role;
-    private String color;
+    private Timestamp createdAt;
 
     @Builder
-    public Skill(Integer id, Resume resume, String name, Integer role, String color) {
+    public Scrap(Integer id, User user, Resume resume, Jobs jobs, Timestamp createdAt) {
         this.id = id;
+        this.user = user;
         this.resume = resume;
-        this.name = name;
-        this.role = role;
-        this.color = color;
+        this.jobs = jobs;
+        this.createdAt = createdAt;
     }
 }
