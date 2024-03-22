@@ -3,10 +3,7 @@ package shop.mtcoding.blog.model.jobs;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,8 +12,17 @@ import java.util.List;
 public class JobController {
     private final JobService service;
 
+    @GetMapping("/jobs/{id}/interest")
+    public String interest(@PathVariable Integer id){
+        return "/jobs/interest";
+    }
 
-    @GetMapping("jobs/info")
+    @GetMapping("/jobs/jobs-detail/{id}")
+    public String jobsDetail(@PathVariable Integer id){
+        return "/jobs/jobs-detail";
+    }
+
+    @GetMapping("/jobs/info")
     public String findAll(HttpServletRequest request){
 //        List<JobResponse.DTO> jobs = service.findAll2();
 //        System.out.println(jobs);
@@ -24,20 +30,33 @@ public class JobController {
         return "/jobs/info";
     }
 
-    @PutMapping("")
-    public String update(){
-        return null;
+    @GetMapping("/jobs/{id}/update-form")
+    public String updateForm(@PathVariable Integer id){
+
+
+        return"/jobs/update-form";
+    }
+
+    @PutMapping("/jobs/{id}/update")
+    public String update(@PathVariable Integer id){
+        return "redirect:/";
+    }
+
+    @GetMapping("/jobs/write-jobs-form")
+    public String writeForm(){
+
+        return "/jobs/write-jobs-from";
     }
 
 
-    @PutMapping("")
+    @PostMapping("/jobs/save")
     public String save(){
-        return null;
+        return "redirect:/";
     }
 
-    @DeleteMapping("")
-    public String delete(){
+    @DeleteMapping("/jobs/{id}/delete")
+    public String delete(@PathVariable Integer id){
 
-        return null;
+        return "redirect:/";
     }
 }
