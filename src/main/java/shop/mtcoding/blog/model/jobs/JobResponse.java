@@ -1,18 +1,12 @@
 package shop.mtcoding.blog.model.jobs;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import shop.mtcoding.blog.model.skill.Skill;
-import shop.mtcoding.blog.model.skill.SkillRequest;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 public class JobResponse {
@@ -34,6 +28,7 @@ public class JobResponse {
         private String compName;
         private List<Skill> skillList;
 
+        @Builder
         public DTO(Integer id, Integer userId, String area, String title, String edu, String career, String content, Date deadLine, String task, Timestamp createdAt, String compName) {
             this.id = id;
             this.userId = userId;
@@ -57,7 +52,6 @@ public class JobResponse {
         private String compName;
         private String task;
         private String career;
-        private List<SkillRequest.JobSkillDTO> skillList;
 
         public JobListByUserId(Integer id, String title, String compName, String task, String career) {
             this.id = id;

@@ -3,14 +3,11 @@ package shop.mtcoding.blog.model.user;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
-
-@NoArgsConstructor
 @Table(name = "user_tb")
 @Data
 @Entity
@@ -39,7 +36,7 @@ public class User {
     private Timestamp createdAt;
 
     @Column
-    @ColumnDefault("'logo.png'")
+    @ColumnDefault("'1e308313-4d3a-4997-b42c-d409e72034ec_noimage.png'")
     private String imgFileName;
 }
 

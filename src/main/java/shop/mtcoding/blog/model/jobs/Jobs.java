@@ -1,16 +1,15 @@
 package shop.mtcoding.blog.model.jobs;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import shop.mtcoding.blog.model.skill.Skill;
-import shop.mtcoding.blog.model.user.User;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
+@NoArgsConstructor
 @Table(name = "jobs_tb")
 @Getter
 @Setter
@@ -47,5 +46,19 @@ public class Jobs {
 
     @Column(nullable = false)
     private Timestamp createdAt;
+
+    @Builder
+    public Jobs(Integer id, Integer userId, String area, String title, String edu, String career, String content, Date deadLine, String task, Timestamp createdAt) {
+        this.id = id;
+        this.userId = userId;
+        this.area = area;
+        this.title = title;
+        this.edu = edu;
+        this.career = career;
+        this.content = content;
+        this.deadLine = deadLine;
+        this.task = task;
+        this.createdAt = createdAt;
+    }
 }
 
