@@ -18,7 +18,6 @@ public class Skill {
     private Integer id;
 
     private Integer resumeId;
-
     private Integer jobsId;
 
     @Column(nullable = false)
