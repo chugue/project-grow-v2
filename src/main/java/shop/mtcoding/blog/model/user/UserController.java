@@ -1,6 +1,7 @@
 package shop.mtcoding.blog.model.user;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +16,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class UserController {
-    private final UserJPARepository userJPARepo;
-    private final JobsRepository jobsRepo;
-    private final SkillRepository skillRepo;
+    private final UserService userService;
+    private final HttpSession session;
 
     @GetMapping("/")
     public String index(HttpServletRequest request) {
-
         return "index";
     }
 
@@ -42,7 +41,9 @@ public class UserController {
 
 
     @PostMapping("/user/login")
-    public String login() {
+    public String login(UserRequest.LoginDTO reqDTO) {
+        User user = userService.login(reqDTO);
+        session.setAttribute("sessionUser", user);
         return "redirect:/";
     }
 
