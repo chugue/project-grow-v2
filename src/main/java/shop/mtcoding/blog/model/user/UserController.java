@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.util.ApiUtil;
 import shop.mtcoding.blog.model.jobs.JobResponse;
 import shop.mtcoding.blog.model.jobs.JobsRepository;
@@ -60,7 +61,7 @@ public class UserController {
 
         int role;
         if (user == null) {
-            return "errors/401";
+            throw new Exception401("일치하는 회원정보가 없습니다.");
         } else {
             role = user.getRole();
             if (role == 1) {

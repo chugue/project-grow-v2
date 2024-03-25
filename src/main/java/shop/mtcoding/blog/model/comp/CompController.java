@@ -47,7 +47,7 @@ public class CompController {
     @PostMapping("/comp/join")
     public String compJoin(CompRequest.CompJoinDTO reqDTO) {
         compService.join(reqDTO);
-        return "redirect:/comp/comp-index";
+        return "redirect:/comp/read-resume";
     }
 
     @GetMapping("/comp/profile-update-form")
