@@ -2,10 +2,13 @@ package shop.mtcoding.blog.model.jobs;
 
 import lombok.Builder;
 import lombok.Data;
+import org.apache.catalina.util.ToStringUtil;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.user.User;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,21 +20,21 @@ public class JobsResponse {
         private String title;
         private String career;
         private String area;
-        private Date deadline;
+        private LocalDate deadline;
         private UserDTO user;
-        private List<SkillDTO> skillList;
+        private List<SkillDTO> skills = new ArrayList<>();
 
         @Builder
-        public ListDTO(Integer id, String title, String career, String area, Date deadline, User user, List<Skill> skills) {
-            this.id = id;
-            this.title = title;
-            this.career = career;
-            this.area = area;
-            this.deadline = deadline;
-            this.user = new UserDTO(user.getId(), user.getMyName());
+        public ListDTO(Jobs jobs, User user, List<Skill> skills) {
+            this.id = jobs.getId();
+            this.title = jobs.getTitle();
+            this.career = jobs.getCareer();
+            this.area = jobs.getArea();
+            this.deadline = jobs.getDeadline();
+            this.user = new UserDTO(user);
 
-            this.skillList = skills.stream()
-                    .map(skill -> new SkillDTO(skill.getId(), skill.getName(), skill.getColor()))
+            this.skills = skills.stream()
+                    .map(skill -> new SkillDTO(skill))
                     .collect(Collectors.toList());
         }
     }
@@ -41,9 +44,9 @@ public class JobsResponse {
         private Integer id;
         private String myName;
 
-        public UserDTO(Integer id, String myName) {
-            this.id = id;
-            this.myName = myName;
+        public UserDTO(User user) {
+            this.id = user.getId();
+            this.myName = user.getMyName();
         }
     }
 
@@ -53,11 +56,30 @@ public class JobsResponse {
         private String name;
         private String color;
 
-        public SkillDTO(Integer id, String name, String color) {
-            this.id = id;
-            this.name = name;
-            this.color = color;
+        public SkillDTO(Skill skill) {
+            this.id = skill.getId();
+            this.name = skill.getName();
+
+            if (this.name.equals("Jquery")) {
+                this.color = "badge bg-primary";
+            } else if (this.name.equals("JavaScript")) {
+                this.color = "badge bg-secondary";
+            } else if (this.name.equals("Spring")) {
+                this.color = "badge bg-success";
+            } else if (this.name.equals("HTML/CSS")) {
+                this.color = "badge bg-danger";
+            } else if (this.name.equals("JSP")) {
+                this.color = "badge bg-warning";
+            } else if (this.name.equals("Java")) {
+                this.color = "badge bg-info";
+            } else if (this.name.equals("React")) {
+                this.color = "badge bg-dark";
+            }
+            System.out.println(111111111);
+            System.out.println(222222222);
+            System.out.println(this.color);
         }
     }
-
 }
+
+

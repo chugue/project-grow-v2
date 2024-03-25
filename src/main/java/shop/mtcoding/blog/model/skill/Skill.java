@@ -2,10 +2,7 @@ package shop.mtcoding.blog.model.skill;
 
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import shop.mtcoding.blog.model.comp.CompRequest;
 import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.resume.Resume;
@@ -20,14 +17,14 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
-    @JoinColumn(name = "resume_id")
+ // 스킬테이블은 이력서와 공고 중 하나랑만? 어쩌구 하기 때문에 이력서와 공고 테이블ㅇ 조인컬럼에 널어블 트루를 해줘야해요. 왜냐면 폴스가 디폴트거든요
+    @JoinColumn(name = "resume_id", nullable=true)
     @ManyToOne(fetch = FetchType.LAZY)
     private Resume resume;
 
-    @JoinColumn(name = "jobs_id")
+    @JoinColumn(name = "jobs_id" , nullable=true) // nullable 스펠링 틀린가요
     @ManyToOne(fetch = FetchType.LAZY)
-    private Jobs jobs;
+    private Jobs jobs; // 얘가 공고죠
 
     @Column(nullable = false)
     private String name;

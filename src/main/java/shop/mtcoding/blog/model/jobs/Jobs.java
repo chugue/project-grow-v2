@@ -13,6 +13,7 @@ import shop.mtcoding.blog.model.user.User;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,9 +55,7 @@ public class Jobs {
 
     @Column(nullable = false)
     private String content;
-
-    @Column(nullable = false)
-    private Date deadLine;
+    private LocalDate deadline;
 
     @Column(nullable = false)
     private String task;
@@ -65,7 +64,7 @@ public class Jobs {
     private Timestamp createdAt;
 
     @Builder
-    public Jobs(Integer id, User user, String area, String title, String edu, String career, String content, Date deadLine, String task, Timestamp createdAt) {
+    public Jobs(Integer id, User user, String area, String title, String edu, String career, String content, LocalDate deadline, String task, Timestamp createdAt) {
         this.id = id;
         this.user = user;
         this.area = area;
@@ -73,7 +72,7 @@ public class Jobs {
         this.edu = edu;
         this.career = career;
         this.content = content;
-        this.deadLine = deadLine;
+        this.deadline = deadline;
         this.task = task;
         this.createdAt = createdAt;
     }

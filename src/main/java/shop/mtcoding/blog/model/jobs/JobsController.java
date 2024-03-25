@@ -5,8 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import shop.mtcoding.blog.model.skill.SkillService;
-
 import java.util.List;
 
 
@@ -14,12 +12,11 @@ import java.util.List;
 @Controller
 public class JobsController {
     private final JobsService jobsService;
-    private final SkillService skillService;
 
-//    @GetMapping("/jobs/info")
-//    public String jobsInfo (HttpServletRequest request) {
-//        List<Jobs> jobsList = jobsService.jobsList();
-//        request.setAttribute("jobsList", jobsList);
-//        return "/jobs/info";
-//    }
+    @GetMapping("/jobs/info")
+    public String jobsInfo (HttpServletRequest request) {
+        List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
+        request.setAttribute("listDTOS", listDTOS);
+        return "/jobs/info";
+    }
 }
