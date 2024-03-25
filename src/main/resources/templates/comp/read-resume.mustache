@@ -57,18 +57,16 @@
         {{#readResumeList}}
         <!--공고-->
         <div class="card">
-            <a href="/resume/resumeDetail/{{id}}">
+            <a href="/resume/resume-detail/{{id}}">
 
                 <img class="card-img-top" src="/images/logo.png" alt="" srcset=""
                      style="height: 5em; width: 180px; padding:5px; text-align: center;">
                 <div class="card-body">
 
-                    <div class="mb-2 ft-16">{{myName}}</div>
+                    <div class="mb-2 ft-16">{{user.myName}}</div>
                     <div class="point-ft ft-22 fw-600 mb-10">{{title}}</div>
                     <div class="skill-wrap">
-                        {{#skillList}}
-                        <span class="{{color}}">{{name}}</span>
-                        {{/skillList}}
+                        <span class="color">skillName</span>
                     </div>
                     <!--career, address info-->
                     <div class="d-flex">

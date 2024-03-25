@@ -6,6 +6,8 @@ values ('blueocean@naver.com','이서연','1234','010-1555-5842','부산광역�
 insert into user_tb(email, my_name, password, phone, address, birth, role, img_file_name,created_at)
 values ('hamimi1997@naver.com','김하형','1234','010-2684-5842','부산광역시 해운대구 우동 789번지 센텀시티 202호','1997-05-23','1','706ffd65-ca99-4b91-a4e1-c73741f9b23f_user03.png',now());
 
+insert into user_tb(email, my_name, password, phone, address, birth, business_number, comp_name, homepage, role, photo,img_file_name, created_at)
+values ('g@n','이혁근','1234','010-5678-5822','부산광역시 부산진구 범향빌딩403호','1999-06-02','301-15-12412','네이버','www.naver.com','2', '/images/naver.png','7d7ce466-b2b0-424d-bc2b-c233d98030f6_kakao.png', now());
 
 -- 이력서 테이블
 insert into resume_tb(user_id, title, area, edu, career, introduce, port_link,  created_at)
