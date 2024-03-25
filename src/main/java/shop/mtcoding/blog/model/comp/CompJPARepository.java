@@ -2,6 +2,7 @@ package shop.mtcoding.blog.model.comp;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
+import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.user.User;
 
 import java.util.Optional;

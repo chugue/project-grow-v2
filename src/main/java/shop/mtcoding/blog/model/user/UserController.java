@@ -57,6 +57,22 @@ public class UserController {
     public String login(UserRequest.LoginDTO reqDTO) {
         User user = userService.login(reqDTO);
         session.setAttribute("sessionUser", user);
+
+        int role;
+        if (user == null) {
+            return "errors/401";
+        } else {
+            role = user.getRole();
+            if (role == 1) {
+                session.setAttribute("sessionUser", user);
+                return "redirect:/";
+            } else if (role == 2) {
+                session.setAttribute("sessionComp", user);
+                return  "redirect:/comp/read-resume";
+
+            }
+        }
+
         return "redirect:/";
     }
 
