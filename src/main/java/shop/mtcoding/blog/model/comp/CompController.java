@@ -11,7 +11,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class CompController {
-
     private final CompService compService;
 
     @GetMapping("/comp/{id}/comp-resume-detail")

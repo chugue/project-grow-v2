@@ -10,6 +10,7 @@ import shop.mtcoding.blog._core.errors.exception.Exception400;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeJPARepository;
 import shop.mtcoding.blog.model.resume.ResumeService;
+import shop.mtcoding.blog.model.skill.SkillRepository;
 import shop.mtcoding.blog.model.user.User;
 
 import java.util.Comparator;
@@ -37,13 +38,7 @@ public class CompService {
 
     // 기업 로그인하면 보여줄 이력서 목록들
     public List<Resume> findAll() {
-        List<Resume> resume = resumeJPARepo.findAllByUserId();
-
-        // 내림차순 정렬
-        // 이력서 id를 받아서 .reversed로 내림차순 정렬함
-        List<Resume> resumeList = resume.stream().
-                sorted(Comparator.comparing(Resume::getId).
-                        reversed()).collect(Collectors.toList());
+        List<Resume> resumeList = resumeJPARepo.findAllJoinUser();
         return resumeList;
     }
 }
