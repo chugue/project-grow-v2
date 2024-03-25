@@ -3,20 +3,13 @@ package shop.mtcoding.blog.model.comp;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shop.mtcoding.blog._core.errors.exception.Exception400;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeJPARepository;
-import shop.mtcoding.blog.model.resume.ResumeService;
-import shop.mtcoding.blog.model.skill.SkillRepository;
 import shop.mtcoding.blog.model.user.User;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
