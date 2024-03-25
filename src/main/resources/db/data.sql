@@ -14,3 +14,15 @@ insert into resume_tb(user_id, title, area, edu, career, introduce, port_link, c
 values (2, 'Back-End / Software Engineer', '부산', '고졸', '신입', '[성장]을 목표로 달려나가며, 도전적인 것을 좋아하는 이 서 연 입니다!', 'nate.com/blueocean',now());
 insert into resume_tb(user_id, title, area, edu, career, introduce, port_link, created_at)
 values (3, 'Java-Spring 개발자', '부산', '대졸', '미들(4~8년)', 'Java를 메인으로 Back-end 개발에 관심을 가지고 있습니다. 다양한 환경과 회사를 접하며 웹서비스를 개발하고, 서비스 해본 경험이 있습니다.', 'naver.com/githa',now());
+
+-- 스킬 테이블 (개인)
+insert into skill_tb (resume_id, name, role) values(1, 'Java', 1);
+insert into skill_tb (resume_id, name, role) values(2, 'JavaScript', 1);
+insert into skill_tb (resume_id, name, role) values(3, 'HTML/CSS', 1);
+insert into skill_tb (resume_id, name, role) values(4, 'MySQL', 1);
+
+-- 스킬 테이블 (기업)
+INSERT INTO skill_tb(jobs_id, name, role) VALUES(1, 'Java', 2);
+INSERT INTO skill_tb(jobs_id, name, role) VALUES(2, 'Spring', 2);
+INSERT INTO skill_tb(jobs_id, name, role) VALUES(3, 'MySQL', 2);
+INSERT INTO skill_tb(jobs_id, name, role) VALUES(4, 'Oracle', 2);

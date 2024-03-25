@@ -22,25 +22,24 @@ public class Skill {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-
     private Resume resume;
 
     @ManyToOne(fetch = FetchType.LAZY)
-
     private Jobs jobs;
 
     @Column(nullable = false)
     private String name;
+    private String color;
     @Column(nullable = false) // 1: 유저, 2: 기업
     private Integer role;
-    private String color;
 
     @Builder
-    public Skill(Integer id, Resume resume, String name, Integer role, String color) {
+    public Skill(Integer id, Resume resume, Jobs jobs, String name, String color, Integer role) {
         this.id = id;
         this.resume = resume;
+        this.jobs = jobs;
         this.name = name;
-        this.role = role;
         this.color = color;
+        this.role = role;
     }
 }

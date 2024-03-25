@@ -8,4 +8,8 @@ import org.springframework.stereotype.Service;
 public class SkillService {
     private final SkillJPARepository skillJPARepository;
 
+    public void skillListForJobs (){
+
+    }
+
 }
