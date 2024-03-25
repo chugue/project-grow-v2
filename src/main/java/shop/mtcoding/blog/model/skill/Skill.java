@@ -21,9 +21,11 @@ public class Skill {
     private Integer id;
 
 
+    @JoinColumn(name = "resume_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Resume resume;
 
+    @JoinColumn(name = "jobs_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Jobs jobs;
 

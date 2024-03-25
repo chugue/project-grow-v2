@@ -38,7 +38,7 @@ public class Jobs {
     @Column(nullable = false)
     private String career;
 
-    @OneToMany(mappedBy = "jobs", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "jobs", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Skill> skillList = new ArrayList<>();
 
     @OneToMany(mappedBy = "jobs", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
