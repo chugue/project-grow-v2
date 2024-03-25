@@ -50,7 +50,7 @@
                 <div id="list"></div>
                 <div id="callBackDiv">
                     <div class="form-group mb-4">
-                        <input class="form-control" type="text" id="address" readonly name="roadFullAddr"
+                        <input class="form-control" type="text" id="address" readonly name="address"
                                placeholder="주소 검색으로 입력"/>
                         <input type="hidden" id="siNm" name="siNm"/>
                     </div>
@@ -70,7 +70,6 @@
                 </div>
 
                 <div class="d-grid gap-2 mb-4">
-                    <input type="hidden" name="role" value="2">
                     <input id="button" class=" btn btn-mint" type="submit" value="회원가입">
                 </div>
             </form>
@@ -80,40 +79,40 @@
 
 <!--중복체크 스크립트-->
 <script>
-    let isSameCheck = false;
-
-    // 아이디 필드가 변경되면 중복 체크 상태를 초기화
-    $("#email").on("change", function () {
-        isSameCheck = false;
-    });
-
-    function valid() {
-        if (isSameCheck == false) {
-            alert("아이디 중복 체크를 해야합니다");
-            return false;
-        }
-        return true;
-    }
-
-    function emailSameCheck() {
-        let email = $("#email").val();
-
-        $.ajax({
-            url: "/api/user/username-same-check?email=" + email,
-            type: "get"
-        }).done((res) => {
-            console.log(res);
-            if (res.body == true) {
-                isSameCheck = true;
-                alert("가입 가능한 아이디입니다");
-            } else {
-                isSameCheck = false;
-                alert("중복된 아이디가 존재합니다");
-            }
-        }).fail((res) => {
-            alert(res.responseJSON.msg);
-        });
-    }
+    // let isSameCheck = false;
+    //
+    // // 아이디 필드가 변경되면 중복 체크 상태를 초기화
+    // $("#email").on("change", function () {
+    //     isSameCheck = false;
+    // });
+    //
+    // function valid() {
+    //     if (isSameCheck == false) {
+    //         alert("아이디 중복 체크를 해야합니다");
+    //         return false;
+    //     }
+    //     return true;
+    // }
+    //
+    // function emailSameCheck() {
+    //     let email = $("#email").val();
+    //
+    //     $.ajax({
+    //         url: "/api/user/username-same-check?email=" + email,
+    //         type: "get"
+    //     }).done((res) => {
+    //         console.log(res);
+    //         if (res.body == true) {
+    //             isSameCheck = true;
+    //             alert("가입 가능한 아이디입니다");
+    //         } else {
+    //             isSameCheck = false;
+    //             alert("중복된 아이디가 존재합니다");
+    //         }
+    //     }).fail((res) => {
+    //         alert(res.responseJSON.msg);
+    //     });
+    // }
 
     function goPopup() {
         // 현재 화면의 중앙 위치를 계산
@@ -124,7 +123,7 @@
         new daum.Postcode({
             oncomplete: function (data) {
                 // 주소 검색 결과 처리 로직
-                document.getElementById('address').value = data.roadAddress; // 도로명 주소
+                document.getElementById('address').value = data.address; // 도로명 주소
                 window.close();
             },
             width: width, // 팝업 창의 너비

@@ -1,18 +1,14 @@
 package shop.mtcoding.blog.model.comp;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import shop.mtcoding.blog.model.skill.SkillRequest;
-import shop.mtcoding.blog.model.user.User;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 public class CompController {
+
+    private final CompService compService;
 
     @GetMapping("/comp/{id}/comp-resume-detail")
     public String compResumeDetail(@PathVariable Integer id) {
@@ -46,7 +42,8 @@ public class CompController {
     }
 
     @PostMapping("/comp/join")
-    public String compJoin(@RequestParam("role") Integer role) {
+    public String compJoin(CompRequest.CompJoinDTO reqDTO) {
+        compService.join(reqDTO);
         return "redirect:/comp/comp-index";
     }
 
