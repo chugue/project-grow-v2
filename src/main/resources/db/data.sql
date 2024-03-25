@@ -15,6 +15,8 @@ values ('g@n','이혁근','1234','010-5678-5822','부산광역시 부산진구 �
 insert into user_tb(email, my_name, password, phone, address, birth, business_number, comp_name, homepage, role, photo,img_file_name,created_at)
 values ('6@c','이준수','1234','010-9824-5421','서울특별시 송파구 위례성대로 2 (방이동) 장은빌딩','2011-03-10','606-17-12120','(주)우아한형제들','www.bamin.com',2, '/images/bemin.png','8a6fc873-37df-48d4-8756-c4bf86193552_kia.png', now());
 
+insert into user_tb(email, my_name, password, phone, address, birth, business_number, comp_name, homepage, role, photo,img_file_name, created_at)
+values ('g@n','이혁근','1234','010-5678-5822','부산광역시 부산진구 범향빌딩403호','1999-06-02','301-15-12412','네이버','www.naver.com','2', '/images/naver.png','7d7ce466-b2b0-424d-bc2b-c233d98030f6_kakao.png', now());
 
 -- 이력서 테이블
 insert into resume_tb(user_id, title, area, edu, career, introduce, port_link,  created_at)

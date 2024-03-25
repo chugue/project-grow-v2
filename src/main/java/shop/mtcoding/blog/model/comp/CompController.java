@@ -1,8 +1,12 @@
 package shop.mtcoding.blog.model.comp;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import shop.mtcoding.blog.model.resume.Resume;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -52,7 +56,12 @@ public class CompController {
     }
 
     @GetMapping("/comp/read-resume")
-    public String readResume() {
+    public String readResume(HttpServletRequest request) {
+
+        // 기업이 볼 이력서 전체보기
+        List<Resume> readResumeList = compService.findAll();
+        request.setAttribute("readResumeList", readResumeList);
+
         return "/comp/read-resume";
     }
 
