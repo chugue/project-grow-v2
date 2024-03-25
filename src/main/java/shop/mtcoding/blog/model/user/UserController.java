@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import shop.mtcoding.blog._core.util.ApiUtil;
 import shop.mtcoding.blog.model.jobs.JobResponse;
 import shop.mtcoding.blog.model.jobs.JobsRepository;
 import shop.mtcoding.blog.model.skill.Skill;
@@ -19,18 +20,30 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
 
+    @GetMapping("/user/join-form")
+    public String joinForm() {
+        return "/user/join-form";
+    }
+
     @GetMapping("/")
     public String index(HttpServletRequest request) {
         return "index";
     }
 
     @GetMapping("/api/user/username-same-check")
-    public String usernameSameCheck() {
-        return null;
+    public @ResponseBody ApiUtil<?> usernameSameCheck(String email) {
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ApiUtil<>(true);
+        } else {
+            return new ApiUtil<>(false);
+        }
     }
 
     @PostMapping("/user/join")
-    public String join() {
+    public String join(@RequestParam(name = "role") Integer role, UserRequest.JoinDTO reqDTO) {
+        User user = userService.join(reqDTO, role);
+        session.setAttribute("sessionUser", user);
         return "redirect:/";
     }
 
@@ -51,10 +64,7 @@ public class UserController {
     public String logout() {
         return "redirect:/";
     }
-    @GetMapping("/user/join-form")
-    public String joinForm() {
-        return "/user/join-form";
-    }
+
 
     @GetMapping("/user/login-form")
     public String loginForm() {
