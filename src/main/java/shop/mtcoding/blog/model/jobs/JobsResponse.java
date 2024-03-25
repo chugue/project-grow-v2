@@ -77,6 +77,10 @@ public class JobsResponse {
             } else if (this.name.equals("React")) {
                 this.color = "badge bg-dark";
             }
+            // 추가 양식
+            // else if (this.name.equals("언어")){
+            //      this.color = "badge 컬러 " ;
+
         }
     }
 }

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.offer.Offer;
 import shop.mtcoding.blog.model.scrap.Scrap;
@@ -55,12 +56,14 @@ public class Jobs {
 
     @Column(nullable = false)
     private String content;
+
+    // 이거 머스태치 LocalDate만 인식함..
     private LocalDate deadline;
 
     @Column(nullable = false)
     private String task;
 
-    @Column(nullable = false)
+    @CreationTimestamp
     private Timestamp createdAt;
 
     @Builder
