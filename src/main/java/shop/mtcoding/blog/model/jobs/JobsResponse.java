@@ -14,15 +14,16 @@ import java.util.stream.Collectors;
 
 public class JobsResponse {
 
+    // 공고 리스트를 뿌려야 되는 곳에 '회사이름''공고필요기술''공고정보'를 뿌릴 수 있는 DTO
     @Data
-    public static class ListDTO {
+    public static class ListDTO { //이 DTO는 (/jobs/info) 에 사용된다.
         private Integer id;
         private String title;
         private String career;
         private String area;
         private LocalDate deadline;
         private UserDTO user;
-        private List<SkillDTO> skills = new ArrayList<>();
+        private List<SkillDTO> skills;
 
         @Builder
         public ListDTO(Jobs jobs, User user, List<Skill> skills) {
@@ -60,6 +61,7 @@ public class JobsResponse {
             this.id = skill.getId();
             this.name = skill.getName();
 
+            // 혹시 언어 추가할게 있으면 else if랑 컬러, 같은 양식 맞춰서 추가가능
             if (this.name.equals("Jquery")) {
                 this.color = "badge bg-primary";
             } else if (this.name.equals("JavaScript")) {
@@ -75,9 +77,6 @@ public class JobsResponse {
             } else if (this.name.equals("React")) {
                 this.color = "badge bg-dark";
             }
-            System.out.println(111111111);
-            System.out.println(222222222);
-            System.out.println(this.color);
         }
     }
 }

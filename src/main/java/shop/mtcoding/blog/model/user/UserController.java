@@ -7,10 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.util.ApiUtil;
-import shop.mtcoding.blog.model.jobs.JobResponse;
-import shop.mtcoding.blog.model.jobs.JobsRepository;
-import shop.mtcoding.blog.model.skill.Skill;
-import shop.mtcoding.blog.model.skill.SkillRepository;
+import shop.mtcoding.blog.model.jobs.JobsResponse;
+import shop.mtcoding.blog.model.jobs.JobsService;
 
 import java.util.List;
 
@@ -18,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class UserController {
+    private final JobsService jobsService;
     private final UserService userService;
     private final HttpSession session;
 
@@ -28,6 +27,8 @@ public class UserController {
 
     @GetMapping("/")
     public String index(HttpServletRequest request) {
+        List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
+        request.setAttribute("listDTOS", listDTOS);
         return "index";
     }
 

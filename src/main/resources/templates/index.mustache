@@ -175,33 +175,33 @@
 
         <!-- 공고들 -->
         <div class="info" style=" display: grid; grid-gap: 10px; grid-template-columns: 1fr 1fr 1fr; grid-gap: 20px; margin: 50px 0;">
-
+            {{#listDTOS}}
                 <!--공고-->
                 <div class="card">
-                    <a href="/jobs/jobsDetail/1">
+                    <a href="/jobs/jobsDetail/{{id}}">
                         <div class="card-body">
                             <div>
                                 <img class="card-img-top" src="/upload/logo.png" alt="" srcset="" style="height: 5em; width: 180px; padding:5px; text-align: center;">
-                                <div class="mb-2 ft-16">compName</div>
-                                <div class="point-ft ft-22 fw-600 mb-10 jobs-title">title</div>
+                                <div class="mb-2 ft-16">{{user.myName}}</div>
+                                <div class="point-ft ft-22 fw-600 mb-10 jobs-title">{{title}}</div>
                                 <!--기술스킬-->
-                                <div class="d-flex">
-                                        <div class="skill-wrap mr-5">
-                                            <span class="mint-color">name</span>
-                                        </div>
-
+                                <div class="skill-wrap">
+                                    {{#skills}}
+                                        <span class="{{color}}">{{name}}</span>
+                                    {{/skills}}
                                 </div>
+
                                 <!--career, address info-->
                                 <div class="d-flex">
-                                    <div class="career">career</div>
+                                    <div class="career">{{career}}</div>
                                     <div class="mr-5 ml-5">|</div>
-                                    <div class="address">area</div>
+                                    <div class="address">{{area}}</div>
                                 </div>
                                 <!--career, address info-->
 
                                 <div class="d-flex justify-content-end">
                                     <!--공고 마감일-->
-                                    <div class="d-day mr-10">~deadline</div>
+                                    <div class="d-day mr-10">{{deadline}}까지</div>
                                     <!--공고 마감일-->
 
                                     <!--공고 스크랩-->
@@ -241,7 +241,9 @@
 
                 </script>
 
-            <!--공고-->
+                <!--공고-->
+            {{/listDTOS}}
+
         </div>
         <div class="pages">
             <ul  class="pagination justify-content-center pb-50">

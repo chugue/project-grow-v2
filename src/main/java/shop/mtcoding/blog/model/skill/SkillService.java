@@ -10,9 +10,4 @@ import java.util.List;
 public class SkillService {
     private final SkillJPARepository skillJPARepository;
 
-    public List<Skill> skillListForJobs (Integer jobsId, Integer role){
-        List<Skill> skillList = skillJPARepository.findByJobsIdAndRole(jobsId,role);
-        return skillList;
-    }
-
 }
