@@ -2,11 +2,14 @@ package shop.mtcoding.blog.model.comp;
 
 import lombok.Data;
 import shop.mtcoding.blog.model.skill.SkillRequest;
+import shop.mtcoding.blog.model.user.User;
+
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-public class CompRequest {
 
+public class CompRequest {
 
     @Data
     public static class JobsViewDTO {
@@ -53,6 +56,41 @@ public class CompRequest {
         private Date birth;
         private String businessNumber;
         private String homepage;
-
     }
+
+    @Data
+    public static class CompJoinDTO {
+        private Integer id;
+        private String email;
+        private String myName;
+        private String password;
+        private String phone;
+        private String address;
+        private Date birth;
+        private String businessNumber;
+        private String photo;
+        private String compName;
+        private String homepage;
+        private Timestamp createdAt;
+
+        public User toEntity(Integer role) {
+            return User.builder()
+                    .id(id)
+                    .email(email)
+                    .myName(myName)
+                    .password(password)
+                    .phone(phone)
+                    .address(address)
+                    .birth(birth)
+                    .businessNumber(businessNumber)
+                    .photo(photo)
+                    .compName(compName)
+                    .homepage(homepage)
+                    .role(role)
+                    .createdAt(createdAt)
+                    .build();
+        }
+    }
+
+
 }
