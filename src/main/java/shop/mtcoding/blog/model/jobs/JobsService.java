@@ -14,13 +14,14 @@ public class JobsService {
     private final JobsJPARepository jobsRepo;
 
 
-    public List<Jobs> jobsList () {
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        List<Jobs> jobsList = jobsRepo.findAll(sort);
-
-
-
-
-        return jobsList;
-    }
+//    public List<JobsResponse.ListDTO> jobsList () {
+//        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+//        List<Jobs> jobsList = jobsRepo.findAll(sort);
+//
+//        return jobsList.stream()
+//                .map(jobs -> { new JobsResponse.ListDTO(
+//                        jobs.getId()
+//                )
+//                )});
+//    }
 }
