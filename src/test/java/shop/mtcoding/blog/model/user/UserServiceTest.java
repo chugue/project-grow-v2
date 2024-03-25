@@ -16,6 +16,23 @@ import java.util.Optional;
 public class UserServiceTest {
     @Autowired
     private UserJPARepository userJPARepository;
+    @Autowired
+    private UserService userService;
+
+    @Test
+    public void join_test(){
+        // given
+        Integer role = 1;
+        UserRequest.JoinDTO reqDTO = new UserRequest.JoinDTO();
+        reqDTO.setEmail("chugue@naver.com");
+        reqDTO.setMyName("chugue");
+        reqDTO.setPassword("1234");
+        reqDTO.setPhone("01034220935");
+        // when
+        userService.join(reqDTO, role);
+        // then
+
+    }
 
     @Test
     public void login_test(){

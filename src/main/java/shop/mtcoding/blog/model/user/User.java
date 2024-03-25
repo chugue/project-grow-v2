@@ -37,6 +37,7 @@ public class User {
     @Column(nullable = false)
     private Integer role;
 
+
     @Column(nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
