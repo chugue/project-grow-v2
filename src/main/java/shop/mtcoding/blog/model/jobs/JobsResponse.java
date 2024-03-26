@@ -22,21 +22,42 @@ public class JobsResponse {
         private String edu;
         private String career;
         private String content;
-        private List<SkillDTO> skills;
-        private List<SimpleResumeDTO> resumeList;
+        private UserDetailDTO user;
+        private List<SkillDTO> skillList;
 
+        @Builder
+        public DetailDTO(Jobs jobs, User user, List<Skill> skillList) {
+            this.id = jobs.getId();
+            this.title = jobs.getTitle();
+            this.area = jobs.getArea();
+            this.edu = jobs.getEdu();
+            this.career = jobs.getCareer();
+            this.content = jobs.getContent();
+            this.user = new UserDetailDTO(user);
+            this.skillList = skillList.stream()
+                    .map(skill -> new SkillDTO(skill))
+                    .collect(Collectors.toList());
+        }
     }
 
     @Data
-    public static class SimpleResumeDTO{
+    public static class UserDetailDTO{
         private Integer id;
-        private String title;
+        private String compName;
+        private String phone;
+        private String address;
+        private String homepage;
 
-        public SimpleResumeDTO(Resume resume) {
-            this.id = resume.getId();
-            this.title = resume.getTitle();
+        @Builder
+        public UserDetailDTO(User user) {
+            this.id = user.getId();
+            this.compName = user.getCompName();
+            this.phone = user.getPhone();
+            this.address = user.getAddress();
+            this.homepage = user.getHomepage();
         }
     }
+
 
     // 공고 리스트를 뿌려야 되는 곳에 '회사이름''공고필요기술''공고정보'를 뿌릴 수 있는 DTO
     @Data

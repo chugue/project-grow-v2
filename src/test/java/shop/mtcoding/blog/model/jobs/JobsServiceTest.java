@@ -29,6 +29,21 @@ public class JobsServiceTest {
     private SkillJPARepository skillRepo;
 
 
+    @Test
+    public void detailDTO_test(){
+        // given
+        int jobsId = 1;
+        // when
+        Jobs jobs = jobsRepo.findById(jobsId)
+                .orElseThrow(() -> new Exception404("해당 공고를 찾을 수 없습니다."));
+        User user = userRepo.findById(jobs.getUser().getId())
+                .orElseThrow(() -> new Exception404("해당 사용자를 찾을 수 없습니다."));
+        List<Skill> skillList = skillRepo.findAllById(jobs.getId());
+
+        JobsResponse.DetailDTO detailDTO = new JobsResponse.DetailDTO(jobs, user, skillList);
+        // then
+        System.out.println(detailDTO.toString());
+    }
 
     @Test
     public void listDTOS_test(){
