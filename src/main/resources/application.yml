@@ -4,6 +4,7 @@ server:
       charset: utf-8
       force: true
     session:
+      tracking-modes: COOKIE
       timeout: 30m
   port: 8080
 
