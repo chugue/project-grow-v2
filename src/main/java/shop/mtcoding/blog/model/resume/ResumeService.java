@@ -9,6 +9,7 @@ import shop.mtcoding.blog.model.user.UserJPARepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class ResumeService {
 
         for (int i = 0; i < resumeList.size(); i++) {
             Apply apply = applyJPARepo.findByResumeIdAndJobsId(resumeList.get(i).getId(), jobsId)
-                    .orElseThrow(() -> new Exception404("지원 내역을 찾을 수 없습니다."));
+                    .orElse(Apply.builder().isPass("1").build());
 
             resumeApplyDTOList.add(ResumeResponse.ResumeApplyDTO.builder()
                     .apply(apply)

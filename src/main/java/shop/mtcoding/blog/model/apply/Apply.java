@@ -1,5 +1,6 @@
 package shop.mtcoding.blog.model.apply;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +28,7 @@ public class Apply {
     private Jobs jobs;
 
 
-    // 유저 상태값 (1 : 대기중) (2 : 확인)  (3 : 탈락)
+    // 1. 지원안함 2. 지원중  3.합격 4.불합격
     @Column(nullable = false)
     private String isPass;
 

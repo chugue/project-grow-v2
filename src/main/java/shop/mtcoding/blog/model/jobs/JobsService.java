@@ -25,20 +25,6 @@ public class JobsService {
     private final SkillJPARepository skillRepo;
 
 
-    public void checkIsPass(ResumeResponse.ResumeApplyDTO reqDTO){
-        boolean isApply = false;
-        boolean isPass = false;
-
-        if (reqDTO.getIsPass().equals("지원중")){
-            isApply = true ;
-        }
-        if (reqDTO.getIsPass().equals("합격")){
-            isPass = true;
-        }
-
-    }
-
-
 
     public JobsResponse.DetailDTO DetailDTO (Integer jobsId){
         Jobs jobs = jobsRepo.findById(jobsId)
