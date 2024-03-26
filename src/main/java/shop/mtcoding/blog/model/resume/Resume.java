@@ -13,6 +13,7 @@ import shop.mtcoding.blog.model.user.User;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Table(name = "resume_tb")
@@ -60,4 +61,22 @@ public class Resume {
         this.portLink = portLink;
         this.createdAt = createdAt;
     }
+
+    public ResumeResponse.ResumeDTO toDTO(){
+        return ResumeResponse.ResumeDTO.builder()
+                .id(this.id)
+                .user(user.toDTO())
+                .title(this.title)
+                .area(this.area)
+                .edu(this.edu)
+                .career(this.career)
+                .introduce(this.introduce)
+                .portLink(this.portLink)
+                .createdAt(this.createdAt)
+                .skillList(skillList.stream().map(skill -> skill.toDTO())
+                        .collect(Collectors.toList())
+                )
+                .build();
+    }
+
 }

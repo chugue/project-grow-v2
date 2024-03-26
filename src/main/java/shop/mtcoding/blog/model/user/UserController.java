@@ -9,6 +9,8 @@ import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.util.ApiUtil;
 import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.jobs.JobsService;
+import shop.mtcoding.blog.model.resume.ResumeResponse;
+import shop.mtcoding.blog.model.resume.ResumeService;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class UserController {
     private final JobsService jobsService;
     private final UserService userService;
     private final HttpSession session;
+    private final ResumeService resumeService;
 
     @GetMapping("/user/join-form")
     public String joinForm() {
@@ -27,8 +30,14 @@ public class UserController {
 
     @GetMapping("/")
     public String index(HttpServletRequest request) {
-        List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
-        request.setAttribute("listDTOS", listDTOS);
+//        List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
+//        request.setAttribute("listDTOS", listDTOS);
+        List<ResumeResponse.ResumeDTO> resumeDTOS = resumeService.findAll();
+
+        System.out.println(resumeDTOS);
+
+        request.setAttribute("resumeList",resumeDTOS);
+
         return "index";
     }
 
