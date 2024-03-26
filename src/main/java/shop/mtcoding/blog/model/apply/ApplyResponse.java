@@ -1,11 +1,27 @@
 package shop.mtcoding.blog.model.apply;
 
 import lombok.Data;
+import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.skill.SkillRequest;
 
 import java.util.List;
 
 public class ApplyResponse {
+
+    @Data
+    public static class ApplyResumeDTO{
+        private Integer id;
+        private String isPass;
+        private Integer jobsId;
+        private ResumeDTO resume;
+    }
+
+    @Data
+    public static class ResumeDTO {
+        private Integer id;
+        private String title;
+
+    }
 
     @Data
     public static class ApplyByJobsDTO{

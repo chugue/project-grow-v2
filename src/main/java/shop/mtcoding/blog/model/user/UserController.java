@@ -30,13 +30,8 @@ public class UserController {
 
     @GetMapping("/")
     public String index(HttpServletRequest request) {
-//        List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
-//        request.setAttribute("listDTOS", listDTOS);
-        List<ResumeResponse.ResumeDTO> resumeDTOS = resumeService.findAll();
-
-        System.out.println(resumeDTOS);
-
-        request.setAttribute("resumeList",resumeDTOS);
+        List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
+        request.setAttribute("listDTOS", listDTOS);
 
         return "index";
     }
