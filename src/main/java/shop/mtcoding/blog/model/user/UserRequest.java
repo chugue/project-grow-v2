@@ -1,8 +1,11 @@
 package shop.mtcoding.blog.model.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import shop.mtcoding.blog.model.skill.SkillRequest;
 
 import java.sql.Date;
+import java.util.List;
 
 public class UserRequest {
 
