@@ -109,13 +109,20 @@ public class UserController {
         return "/user/scrap";
     }
 
-    @PutMapping("/user/{id}")
-    public String updateForm(@PathVariable Integer id) {
+    @PostMapping("/user/{id}/update")
+    public String updateForm(@PathVariable Integer id, UserRequest.UpdateDTO requestDTO) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        userService.updateById(sessionUser, requestDTO);
+        User user = userService.findById(sessionUser.getId());
+        System.out.println(user.getPhone());
 
-        return "redirect:/user/"+ id +"/user-home";
+        return "redirect:/";
     }
     @GetMapping("/user/{id}/update-form")
-    public String updateForm(@PathVariable int id) {
+    public String updateForm(@PathVariable int id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = userService.findById(sessionUser.getId());
+        request.setAttribute("user", newSessionUser);
 
         return "/user/update-form";
     }
