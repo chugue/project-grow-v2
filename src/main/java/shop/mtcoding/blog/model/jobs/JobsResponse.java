@@ -2,13 +2,10 @@ package shop.mtcoding.blog.model.jobs;
 
 import lombok.Builder;
 import lombok.Data;
-import org.apache.catalina.util.ToStringUtil;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.user.User;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,19 +60,19 @@ public class JobsResponse {
 
             // 혹시 언어 추가할게 있으면 else if랑 컬러, 같은 양식 맞춰서 추가가능
             if (this.name.equals("Jquery")) {
-                this.color = "badge bg-primary";
+                this.color = "badge badge-pill bg-primary";
             } else if (this.name.equals("JavaScript")) {
-                this.color = "badge bg-secondary";
+                this.color = "badge badge-pill bg-secondary";
             } else if (this.name.equals("Spring")) {
-                this.color = "badge bg-success";
+                this.color = "badge badge-pill bg-success";
             } else if (this.name.equals("HTML/CSS")) {
-                this.color = "badge bg-danger";
+                this.color = "badge badge-pill bg-danger";
             } else if (this.name.equals("JSP")) {
-                this.color = "badge bg-warning";
+                this.color = "badge badge-pill bg-warning";
             } else if (this.name.equals("Java")) {
-                this.color = "badge bg-info";
+                this.color = "badge badge-pill bg-info";
             } else if (this.name.equals("React")) {
-                this.color = "badge bg-dark";
+                this.color = "badge badge-pill bg-dark";
             }
             // 추가 양식
             // else if (this.name.equals("언어")){
