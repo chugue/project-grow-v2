@@ -33,6 +33,8 @@ public class UserService {
     }
 
     public List<ResumeRequest.UserViewDTO> userHome(Integer id) {
+
+        // TODO : 여기 오류남
         List<ResumeRequest.UserViewDTO> resumeList = resumeJPARepo.findAllUserId(id);
 
         for (int i = 0; i < resumeList.size(); i++) {
