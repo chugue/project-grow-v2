@@ -5,9 +5,11 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeJPARepository;
 import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.user.UserRequest;
 
 import java.util.List;
 
@@ -34,4 +36,29 @@ public class CompService {
         List<Resume> resumeList = resumeJPARepo.findAllJoinUser();
         return resumeList;
     }
+
+    @jakarta.transaction.Transactional
+    public User updateById(User sessionUser, UserRequest.UpdateDTO requestDTO) {
+        System.out.println(requestDTO);
+        User user = compJPARepo.findById(sessionUser.getId())
+                .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
+
+        user.update(requestDTO);
+//        user.setPassword(requestDTO.getPassword());
+//        user.setMyName(requestDTO.getMyName());
+//        user.setBirth(requestDTO.getBirth());
+//        user.setPhone(requestDTO.getPhone());
+//        user.setAddress(requestDTO.getAddress());
+
+        return user;
+    }
+
+    //유저 회원 정보 업데이트용 조회
+    public User findById(Integer sessionUserId) {
+        User user = compJPARepo.findById(sessionUserId)
+                .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
+        return user;
+
+    }
+
 }

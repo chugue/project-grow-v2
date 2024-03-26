@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ResumeResponse {
@@ -32,7 +33,7 @@ public class ResumeResponse {
         private String myName;
         private String phone;
         private String address;
-        private Date birth;
+        private LocalDate birth;
         private Integer role;
         private Timestamp createdAt;
         private String imgFileName;
