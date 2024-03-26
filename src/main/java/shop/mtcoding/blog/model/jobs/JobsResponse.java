@@ -2,14 +2,41 @@ package shop.mtcoding.blog.model.jobs;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.user.User;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class JobsResponse {
+
+    @Data
+    public static class DetailDTO{
+        private Integer id;
+        private String title;
+        private String area;
+        private String edu;
+        private String career;
+        private String content;
+        private List<SkillDTO> skills;
+        private List<SimpleResumeDTO> resumeList;
+
+    }
+
+    @Data
+    public static class SimpleResumeDTO{
+        private Integer id;
+        private String title;
+
+        public SimpleResumeDTO(Resume resume) {
+            this.id = resume.getId();
+            this.title = resume.getTitle();
+        }
+    }
 
     // 공고 리스트를 뿌려야 되는 곳에 '회사이름''공고필요기술''공고정보'를 뿌릴 수 있는 DTO
     @Data
@@ -20,7 +47,7 @@ public class JobsResponse {
         private String area;
         private LocalDate deadline;
         private UserDTO user;
-        private List<SkillDTO> skills;
+        private List<SkillDTO> skills = new ArrayList<>();
 
         @Builder
         public ListDTO(Jobs jobs, User user, List<Skill> skills) {
@@ -80,6 +107,7 @@ public class JobsResponse {
 
         }
     }
+
 }
 
 

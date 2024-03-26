@@ -47,24 +47,5 @@ public class JobsServiceTest {
                     .user(user)
                     .skills(skillList).build());
         }
-
-//        jobsList.forEach(jobs -> {
-//            User user = userRepo.findById(jobs.getUser().getId())
-//                    .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
-//
-//            int jobsId = jobs.getId();
-//            List<Skill> skillList = skillRepo.findAllById(jobsId);
-//
-//            skillList.forEach(skill -> System.out.println(skill.getName()));
-//            System.out.println(skillList.size());
-//            listDTOS.add(JobsResponse.ListDTO.builder()
-//                    .jobs(jobs)
-//                    .user(user)
-//                    .skills(skillList)
-//                    .build());
-//            skillList.forEach(skill -> System.out.println(skill.getColor()));
-//
-//        });
-
     }
 }

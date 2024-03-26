@@ -13,6 +13,11 @@ import java.util.List;
 public class JobsController {
     private final JobsService jobsService;
 
+    @GetMapping("/jobs/jobs-detail")
+    public String jobsDetail(){
+        return "jobs/jobs-detail";
+    }
+
     @GetMapping("/jobs/info")
     public String jobsInfo (HttpServletRequest request) {
         List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
