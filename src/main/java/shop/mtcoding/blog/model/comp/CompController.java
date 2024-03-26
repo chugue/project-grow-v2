@@ -1,10 +1,12 @@
 package shop.mtcoding.blog.model.comp;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import shop.mtcoding.blog.model.resume.Resume;
+import shop.mtcoding.blog.model.user.User;
 
 import java.util.List;
 
@@ -12,15 +14,25 @@ import java.util.List;
 @Controller
 public class CompController {
     private final CompService compService;
+    private final HttpSession session;
 
     @GetMapping("/comp/{id}/comp-resume-detail")
     public String compResumeDetail(@PathVariable Integer id) {
         return "/comp/comp-resume-detail";
     }
 
-    @PutMapping("/comp/{id}")
+    @PostMapping("/comp/{id}/update")
     public String updateForm(@PathVariable Integer id) {
         return "redirect:/comp/" + id + "/comphome";
+    }
+
+    @GetMapping("/comp/{id}/update-form")
+    public String updateForm(@PathVariable int id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = compService.findById(sessionUser.getId());
+        request.setAttribute("user", newSessionUser);
+
+        return "/user/update-form";
     }
 
     @GetMapping("/comp/comp-index")
