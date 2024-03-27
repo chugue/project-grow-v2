@@ -175,10 +175,10 @@
 
         <!-- 공고들 -->
         <div class="info" style=" display: grid; grid-gap: 10px; grid-template-columns: 1fr 1fr 1fr; grid-gap: 20px; margin: 50px 0;">
-            {{#resumeList}}
+            {{#listDTOS}}
                 <!--공고-->
                 <div class="card">
-                    <a href="/jobs/jobsDetail/{{id}}">
+                    <a href="/jobs/jobs-detail/{{id}}">
                         <div class="card-body">
                             <div>
                                 <img class="card-img-top" src="/upload/logo.png" alt="" srcset="" style="height: 5em; width: 180px; padding:5px; text-align: center;">
@@ -186,9 +186,9 @@
                                 <div class="point-ft ft-22 fw-600 mb-10 jobs-title">{{title}}</div>
                                 <!--기술스킬-->
                                 <div class="skill-wrap">
-                                    {{#skillList}}
+                                    {{#skills}}
                                         <span class="{{color}}">{{name}}</span>
-                                    {{/skillList}}
+                                    {{/skills}}
                                 </div>
 
                                 <!--career, address info-->
@@ -201,7 +201,7 @@
 
                                 <div class="d-flex justify-content-end">
                                     <!--공고 마감일-->
-                                    <div class="d-day mr-10">까지</div>
+                                    <div class="d-day mr-10">{{deadline}}까지</div>
                                     <!--공고 마감일-->
 
                                     <!--공고 스크랩-->
@@ -221,7 +221,7 @@
                         </div>
                     </a>
                 </div>
-                {{/resumeList}}
+                {{/listDTOS}}
                 <script>
                     // 옵션 선택 시 URL 변경
                     document.getElementById("area").addEventListener("change", function () {

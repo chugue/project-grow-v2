@@ -1,10 +1,14 @@
 package shop.mtcoding.blog.model.comp;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import shop.mtcoding.blog.model.resume.Resume;
+import shop.mtcoding.blog.model.resume.ResumeResponse;
+import shop.mtcoding.blog.model.resume.ResumeService;
+import shop.mtcoding.blog.model.user.User;
 
 import java.util.List;
 
@@ -12,15 +16,25 @@ import java.util.List;
 @Controller
 public class CompController {
     private final CompService compService;
-
+    private final HttpSession session;
+    private final ResumeService resumeService;
     @GetMapping("/comp/{id}/comp-resume-detail")
     public String compResumeDetail(@PathVariable Integer id) {
         return "/comp/comp-resume-detail";
     }
 
-    @PutMapping("/comp/{id}")
+    @PostMapping("/comp/{id}/update")
     public String updateForm(@PathVariable Integer id) {
         return "redirect:/comp/" + id + "/comphome";
+    }
+
+    @GetMapping("/comp/{id}/update-form")
+    public String updateForm(@PathVariable int id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = compService.findById(sessionUser.getId());
+        request.setAttribute("sessionUser", newSessionUser);
+
+        return "/user/update-form";
     }
 
     @GetMapping("/comp/comp-index")
@@ -58,9 +72,8 @@ public class CompController {
     @GetMapping("/comp/read-resume")
     public String readResume(HttpServletRequest request) {
 
-        // 기업이 볼 이력서 전체보기
-        List<Resume> readResumeList = compService.findAll();
-        request.setAttribute("readResumeList", readResumeList);
+        List<ResumeResponse.ResumeDTO> resumes = resumeService.findAll();
+        request.setAttribute("readResumeList", resumes);
 
         return "/comp/read-resume";
     }

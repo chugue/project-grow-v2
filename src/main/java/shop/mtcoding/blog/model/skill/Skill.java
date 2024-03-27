@@ -64,6 +64,9 @@ public class Skill {
         else if(name.equals("React")){
             colorClass = "badge bg-dark";
         }
+        else if(name.equals("Oracle")){
+            colorClass = "badge bg-info";
+        }
 
         return ResumeResponse.SkillDTO.builder()
             .id(this.id)
