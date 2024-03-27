@@ -66,7 +66,9 @@
                     <div class="mb-2 ft-16">{{user.myName}}</div>
                     <div class="point-ft ft-22 fw-600 mb-10">{{title}}</div>
                     <div class="skill-wrap">
-                        <span class="color">skillName</span>
+                        {{#skillList}}
+                            <span class="{{color}}">{{name}}</span>
+                        {{/skillList}}
                     </div>
                     <!--career, address info-->
                     <div class="d-flex">
