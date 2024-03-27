@@ -10,6 +10,8 @@ import shop.mtcoding.blog.model.offer.Offer;
 import shop.mtcoding.blog.model.scrap.Scrap;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.user.User;
+
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +64,7 @@ public class Resume {
         this.createdAt = createdAt;
     }
 
-    public ResumeResponse.ResumeDTO toDTO(){
+    public ResumeResponse.ResumeDTO toDTO() {
         return ResumeResponse.ResumeDTO.builder()
                 .id(this.id)
                 .user(user.toDTO())
@@ -72,11 +74,19 @@ public class Resume {
                 .career(this.career)
                 .introduce(this.introduce)
                 .portLink(this.portLink)
-                .createdAt(this.createdAt)
+                .createdAt(this.createdAt.toLocalDateTime().toLocalDate())
                 .skillList(skillList.stream().map(skill -> skill.toDTO())
                         .collect(Collectors.toList())
                 )
                 .build();
     }
 
+    public void setResumeUpdate(ResumeRequest.UpdateDTO reqDTO) {
+        this.title = reqDTO.getTitle();
+        this.career = reqDTO.getCareer();
+        this.edu = reqDTO.getEdu();
+        this.area = reqDTO.getArea();
+        this.introduce = reqDTO.getIntroduce();
+        this.portLink = reqDTO.getPortLink();
+    }
 }

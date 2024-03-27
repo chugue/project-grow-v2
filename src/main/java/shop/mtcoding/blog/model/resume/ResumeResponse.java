@@ -25,7 +25,7 @@ public class ResumeResponse {
         private String introduce;
         private String portLink;
         private List<SkillDTO> skillList;
-        private Timestamp createdAt;
+        private LocalDate createdAt;
     }
 
     @Data
@@ -38,7 +38,7 @@ public class ResumeResponse {
         private String address;
         private LocalDate birth;
         private Integer role;
-        private Timestamp createdAt;
+        private LocalDate createdAt;
         private String imgFileName;
     }
 
