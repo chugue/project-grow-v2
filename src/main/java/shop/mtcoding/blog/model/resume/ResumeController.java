@@ -1,14 +1,18 @@
 package shop.mtcoding.blog.model.resume;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import shop.mtcoding.blog.model.user.User;
 
 
 @RequiredArgsConstructor
 @Controller
 public class ResumeController {
     private final ResumeService resumeService;
+    private final HttpSession session;
 
     @GetMapping("/resume/resume-detail/{id}")
     public String resumeDetail(@PathVariable Integer id) {
@@ -54,6 +58,16 @@ public class ResumeController {
         // return 부분 manage-resume id 안 받나..? 아무튼 수정해야함. 본인이 작업해보고 수정하길
         return "redirect:/";
 
+    }
+
+
+    @GetMapping("/resume/{id}/resume-home")
+    public String resumeHome(@PathVariable Integer id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
+        request.setAttribute("user", sessionUser);
+//        return "redirect:/";
+        return "/resume/resume-home";
     }
 
 }
