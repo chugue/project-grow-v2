@@ -39,11 +39,8 @@ public class CompController {
 
     @GetMapping("/comp/comp-index")
     public String compIndex(HttpServletRequest request) {
-
-
-        List<ResumeResponse.ResumeDTO> resumes = resumeService.findAll();
-        request.setAttribute("readResumeList", resumes);
-
+        List<CompResponse.ResumeUserSkillDTO> rusList = compService.findAllRusList();
+        request.setAttribute("rusList", rusList);
         return "comp/comp-index";
     }
 
@@ -66,7 +63,8 @@ public class CompController {
 
     @PostMapping("/comp/join")
     public String compJoin(CompRequest.CompJoinDTO reqDTO) {
-        compService.join(reqDTO);
+        User user = compService.join(reqDTO);
+        session.setAttribute("sessionComp", user);
         return "redirect:/comp/read-resume";
     }
 

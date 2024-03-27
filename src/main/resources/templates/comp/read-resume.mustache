@@ -53,59 +53,58 @@
 
 
     <!-- 공고들 -->
-    <div class="info" style=" display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-gap: 30px; margin: 50px 0;">
+    <div class="info" style=" display: grid; grid-gap: 10px; grid-template-columns: 1fr 1fr 1fr; grid-gap: 20px; margin: 50px 0;">
         {{#readResumeList}}
-            <!--공고-->
-            <div class="card">
-                <a href="/resume/resumeDetail/{{id}}">
-                    <div class="img-wrapepr" style="display: flex; justify-content: center;">
-                        <img class="card-img-top" src="/upload/{{imgFileName}}" alt="" srcset=""
-                             style=" width: 200px; height: 200px; border-radius: 10px; padding: 5px; text-align: center; padding: 0;">
+        <!--공고-->
+        <div class="card">
+            <a href="/resume/resume-detail/{{id}}">
+
+                <img class="card-img-top" src="/images/logo.png" alt="" srcset=""
+                     style="height: 5em; width: 180px; padding:5px; text-align: center;">
+                <div class="card-body">
+
+                    <div class="mb-2 ft-16">{{user.myName}}</div>
+                    <div class="point-ft ft-22 fw-600 mb-10">{{title}}</div>
+                    <div class="skill-wrap">
+                        {{#skillList}}
+                            <span class="{{color}}">{{name}}</span>
+                        {{/skillList}}
                     </div>
-                    <div class="card-body">
-
-                        <div class="mb-2 ft-16">{{myName}}</div>
-                        <div class="point-ft ft-22 fw-600 mb-10">{{title}}</div>
-                        <div class="skill-wrap">
-                            {{#skillList}}
-                                <span class="{{color}}">{{name}}</span>
-                            {{/skillList}}
-                        </div>
-                        <!--career, address info-->
-                        <div class="d-flex">
-                            <div class="career">{{career}}</div>
-                            <div class="mr-5 ml-5">|</div>
-                            <div class="address">{{area}}</div>
-                        </div>
-                        <!--career, address info-->
-
-                        <div class="d-flex justify-content-end">
-                            <!--공고 마감일-->
-                            <div class="edu mr-10">{{edu}}</div>
-                            <!--공고 마감일-->
-
-
-                            <!--공고 스크랩-->
-                            <button onclick="event.preventDefault(); event.stopPropagation();" type="button" aria-label="북마크"
-                                    class="btn-scrap">
-                                <div class="scrap">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                              d="M4.75 2.5a.25.25 0 0 0-.25.25v9.91l3.023-2.489a.75.75 0 0 1 .954 0l3.023 2.49V2.75a.25.25 0 0 0-.25-.25h-6.5zM3 2.75C3 1.784 3.784 1 4.75 1h6.5c.966 0 1.75.784 1.75 1.75v11.5a.75.75 0 0 1-1.227.579L8 11.722l-3.773 3.107A.75.75 0 0 1 3 14.25V2.75z"
-                                              fill="#eaecee"></path>
-                                    </svg>
-                                </div>
-                            </button>
-                            <!--공고 스크랩-->
-                        </div>
+                    <!--career, address info-->
+                    <div class="d-flex">
+                        <div class="career">{{career}}</div>
+                        <div class="mr-5 ml-5">|</div>
+                        <div class="address">{{area}}</div>
                     </div>
-                </a>
-            </div>
-            <!--공고-->
+                    <!--career, address info-->
+
+                    <div class="d-flex justify-content-end">
+                        <!--공고 마감일-->
+                        <div class="edu mr-10">{{edu}}</div>
+                        <!--공고 마감일-->
+
+
+                        <!--공고 스크랩-->
+                        <button onclick="event.preventDefault(); event.stopPropagation();" type="button" aria-label="북마크"
+                                class="btn-scrap">
+                            <div class="scrap">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M4.75 2.5a.25.25 0 0 0-.25.25v9.91l3.023-2.489a.75.75 0 0 1 .954 0l3.023 2.49V2.75a.25.25 0 0 0-.25-.25h-6.5zM3 2.75C3 1.784 3.784 1 4.75 1h6.5c.966 0 1.75.784 1.75 1.75v11.5a.75.75 0 0 1-1.227.579L8 11.722l-3.773 3.107A.75.75 0 0 1 3 14.25V2.75z"
+                                          fill="#eaecee"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        <!--공고 스크랩-->
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!--공고-->
         {{/readResumeList}}
-        <!-- 공고들 -->
-    </div>
+    <!-- 공고들 -->
+</div>
 
     <!--페이징-->
     <div class="pages">
@@ -123,7 +122,6 @@
 
 
 </div>
-
 
 
 {{> layout/footer}}

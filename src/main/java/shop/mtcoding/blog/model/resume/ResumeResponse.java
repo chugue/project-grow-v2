@@ -2,6 +2,7 @@ package shop.mtcoding.blog.model.resume;
 
 import lombok.Builder;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.user.User;
 
@@ -17,13 +18,13 @@ public class ResumeResponse {
     @Data
     public static class ResumeDTO{
         private Integer id;
-        private UserDTO user;
         private String title;
         private String area;
         private String edu;
         private String career;
         private String introduce;
         private String portLink;
+        private UserDTO user;
         private List<SkillDTO> skillList;
         private LocalDate createdAt;
     }
@@ -79,4 +80,6 @@ public class ResumeResponse {
             }
         }
     }
+
+
 }
