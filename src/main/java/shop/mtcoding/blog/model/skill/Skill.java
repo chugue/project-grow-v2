@@ -66,7 +66,6 @@ public class Skill {
         }
 
         return ResumeResponse.SkillDTO.builder()
-
             .id(this.id)
             .name(this.name)
             .color(colorClass)

@@ -7,16 +7,23 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog._core.util.ApiUtil;
+import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeJPARepository;
 import shop.mtcoding.blog.model.resume.ResumeRequest;
+import shop.mtcoding.blog.model.resume.ResumeResponse;
+import shop.mtcoding.blog.model.skill.Skill;
+import shop.mtcoding.blog.model.skill.SkillJPARepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserJPARepository userRepo;
     private final ResumeJPARepository resumeJPARepo;
+    private final SkillJPARepository skillJPARepo;
 
     @Transactional
     public User join (UserRequest.JoinDTO reqDTO, Integer role){
@@ -33,15 +40,21 @@ public class UserService {
     }
 
     public List<ResumeRequest.UserViewDTO> userHome(Integer id) {
-
-        // TODO : 여기 오류남
-        List<ResumeRequest.UserViewDTO> resumeList = resumeJPARepo.findAllUserId(id);
+        List<Resume> resumeList = resumeJPARepo.findAllUserId(id);
+        List<ResumeRequest.UserViewDTO> listDTO = new ArrayList<>();
 
         for (int i = 0; i < resumeList.size(); i++) {
-            ResumeRequest.UserViewDTO dto = resumeList.get(i);
-            dto.setSkillList(resumeJPARepo.findAllByResumeId(dto.getId()));
-        }
+            User user = userRepo.findById(resumeList.get(i).getUser().getId())
+                    .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
 
-        return resumeList;
+            List<Skill> skillList = skillJPARepo.findAllById(resumeList.get(i).getId());
+
+            listDTO.add(ResumeRequest.UserViewDTO.builder()
+                    .resume(resumeList.get(i))
+                    .skills(skillList)
+                    .build());
+        }
+        System.out.println(listDTO.toString());
+        return listDTO;
     }
 }
