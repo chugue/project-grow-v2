@@ -28,8 +28,8 @@ public class ResumeController {
         return "/resume/write-resume-form";
     }
 
-    @GetMapping("/resume/{id}/update-resume-form")
-    public String updateResumeForm(@PathVariable int id) {
+    @GetMapping("/resume/update-resume-form")
+    public String updateResumeForm() {
 
         return "/resume/update-resume-form";
     }
@@ -48,7 +48,7 @@ public class ResumeController {
         return "redirect:/";
     }
 
-    @DeleteMapping("/resume/{id}/delete")
+    @PostMapping("/resume/{id}/delete")
     public String delete(@PathVariable int id) {
 
         // return 부분 manage-resume id 안 받나..? 아무튼 수정해야함. 본인이 작업해보고 수정하길
