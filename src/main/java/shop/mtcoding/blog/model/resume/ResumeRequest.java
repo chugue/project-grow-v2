@@ -11,7 +11,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResumeRequest {
-  
+    @Data
+    public static class UpdateDTO{
+        private String title;
+        private String area;
+        private String edu;
+        private String career;
+        private String introduce;
+        private String portLink;
+        private List<String> skill;
+    }
+
     @Data
     public static class SaveDTO{
         private String title;
@@ -34,7 +44,7 @@ public class ResumeRequest {
                     .build();
         }
     }
-  
+
     @Data
     public static class UserViewDTO{
         private Integer id;

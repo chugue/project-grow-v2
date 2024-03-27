@@ -88,7 +88,7 @@ public class CompRequest {
                     .compName(compName)
                     .homepage(homepage)
                     .role(role)
-                    .createdAt(createdAt)
+                    .createdAt(this.createdAt.toLocalDateTime().toLocalDate())
                     .build();
         }
     }
