@@ -31,7 +31,7 @@ public class ResumeController {
         return "/resume/manage-resume";
     }
 
-    @GetMapping("/resume/write-resume-form")
+    @GetMapping("/resume/{id}/write-resume-form")
     public String writeResumeForm() {
 
         return "/resume/write-resume-form";
@@ -57,7 +57,6 @@ public class ResumeController {
 
     @PostMapping("/resume/save")
     public String save(ResumeRequest.SaveDTO reqDTO) {
-
         resumeService.save(reqDTO);
         return "redirect:/";
     }
