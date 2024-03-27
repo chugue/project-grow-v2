@@ -1,8 +1,11 @@
 package shop.mtcoding.blog.model.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import shop.mtcoding.blog.model.skill.SkillRequest;
 
 import java.sql.Date;
+import java.util.List;
 import java.time.LocalDate;
 
 public class UserRequest {
@@ -14,10 +17,8 @@ public class UserRequest {
         private LocalDate birth;
         private String phone;
         private String address;
-
     }
-
-
+  
     @Data
     public static class JoinDTO{
         private String email;
