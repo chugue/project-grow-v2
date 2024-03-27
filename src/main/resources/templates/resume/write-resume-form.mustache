@@ -38,7 +38,7 @@
                                 <div class="card-body d-flex">
                                     <div class="resume-info-img col-3 mt-3" style="text-align: center;">
                                         <img class="" src="" alt="" srcset=""
-                                             style="width: 80%; height: auto;" id="photo">
+                                             style="width: 80%; height: auto;" id="imgFileName" value="{{sessionUser.imgFileName}}">
                                     </div>
 
                                     <div class="resume-info-txt">
@@ -50,7 +50,7 @@
                                             </tr>
                                             <tr>
                                                 <th>생년월일</th>
-                                                <td></td>
+                                                <td>{{sessionUser.birth}}</td>
                                             </tr>
                                             <tr>
                                                 <th>연락처</th>
@@ -64,7 +64,6 @@
                                                 <th>주소</th>
                                                 <td>{{sessionUser.address}}</td>
                                             </tr>
-
 
                                             <tr>
                                                 <th>희망 근무 지역</th>
