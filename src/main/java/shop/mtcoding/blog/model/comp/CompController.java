@@ -32,7 +32,7 @@ public class CompController {
     public String updateForm(@PathVariable int id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User newSessionUser = compService.findById(sessionUser.getId());
-        request.setAttribute("sessionUser", newSessionUser);
+        request.setAttribute("user", newSessionUser);
 
         return "/user/update-form";
     }
