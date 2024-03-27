@@ -28,6 +28,8 @@ public class ResumeService {
     private final UserJPARepository userJPARepository;
     private final HttpSession session;
 
+
+
     public List<ResumeResponse.ResumeApplyDTO> findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {
         List<Resume> resumeList = resumeJPARepo.findAllByUserId(userId);
 

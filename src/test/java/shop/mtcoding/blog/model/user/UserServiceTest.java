@@ -8,7 +8,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
+import shop.mtcoding.blog.model.resume.Resume;
+import shop.mtcoding.blog.model.resume.ResumeJPARepository;
+import shop.mtcoding.blog.model.skill.Skill;
+import shop.mtcoding.blog.model.skill.SkillJPARepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Import(UserService.class)
@@ -18,7 +24,32 @@ public class UserServiceTest {
     private UserJPARepository userJPARepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ResumeJPARepository resumeRepo;
+    @Autowired
+    private SkillJPARepository skillRepo;
 
+
+    @Test
+    public void UserResumeSkillDTO_test() {
+        //given
+        int userId =1;
+        //when
+        List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();
+        List<Resume> resumeList = resumeRepo.findAllByUserId(userId);
+        User user = userJPARepository.findById(userId).orElseThrow(() -> new Exception401("sdfs"));
+
+        for (int i = 0; i < resumeList.size(); i++) {
+            List<Skill> skills = skillRepo.findAllByResumeId(resumeList.get(i).getId());
+            ursList.add(UserResponse.UserResumeSkillDTO.builder()
+                    .user(user)
+                    .resume(resumeList.get(i))
+                    .skillList(skills).build());
+        }
+        //then
+
+
+    }
     @Test
     public void join_test(){
         // given
