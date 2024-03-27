@@ -62,11 +62,11 @@ public class ResumeController {
     }
 
     @PostMapping("/resume/{id}/delete")
-    public String delete(@PathVariable int id) {
+    public String delete(@PathVariable Integer id) {
 
         resumeService.delete(id);
 
-        return "redirect:/user/user-home";
+        return "redirect:/user/"+id+"/user-home";
 
     }
 

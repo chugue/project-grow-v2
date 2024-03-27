@@ -21,10 +21,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class FileService {
-    private final FileJPARepository fileJPARepo;
     private final HttpSession session;
     private final UserJPARepository userJPARepo;
-    private final EntityManager em;
 
     @Transactional
     public void upload(FileInfoRequest.UploadDTO reqDTO){
@@ -39,12 +37,6 @@ public class FileService {
             // 이미지 파일 저장
             Files.write(imgPath, imgFile.getBytes());
 
-            // 3. DB에 저장 (title, realFileName)
-
-            //  fileInfoRepository.insert(title, imgFilename);
-
-            // User imgFileName update
-
             User sessionUser = (User) session.getAttribute("sessionUser");
             User newSessionUser = userJPARepo.findById(sessionUser.getId())
                     .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
@@ -52,10 +44,7 @@ public class FileService {
             newSessionUser.setImgFileName(imgFilename);
 
             session.setAttribute("sessionUser",newSessionUser);
-            // user db 에 저장
-//            User newComp  = userRepository.updateImgFileName(imgFilename, comp.getId());
-            // session 저장
-//            session.setAttribute("sessionUser",newComp);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

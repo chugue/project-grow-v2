@@ -47,6 +47,7 @@ public class JobsResponse {
         private String phone;
         private String address;
         private String homepage;
+        private String imgFileName;
 
         @Builder
         public UserDetailDTO(User user) {
@@ -55,6 +56,7 @@ public class JobsResponse {
             this.phone = user.getPhone();
             this.address = user.getAddress();
             this.homepage = user.getHomepage();
+            this.imgFileName = user.getImgFileName();
         }
     }
 

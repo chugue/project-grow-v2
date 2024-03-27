@@ -61,7 +61,7 @@ public class ResumeService {
         return resume;
     }
 
-    //이력서 신청
+
     @Transactional
     public void update(int id, int sessionUserId, ResumeRequest.UpdateDTO reqDTO){
         // 1. 조회 및 예외처리
@@ -76,6 +76,7 @@ public class ResumeService {
         System.out.println("수정된 데이터 : " +reqDTO);
     } // 더티체킹
 
+    //이력서 신청
     @Transactional
     public void save(ResumeRequest.SaveDTO saveDTO) {
         //1. 인증처리 : 유저가 세션을가지고있는지 로그인상태 확인
@@ -119,7 +120,7 @@ public class ResumeService {
         }
 
         //3. 삭제하기
-        resumeJPARepo.delete(resume);
+        resumeJPARepo.deleteById(resume.getId());
     }
 
 }

@@ -9,7 +9,6 @@ import shop.mtcoding.blog.model.user.UserService;
 @Controller
 public class FileController {
     private final FileService fileService;
-    private final UserService userService;
 
     @PostMapping("/upload")
     public String upload(FileInfoRequest.UploadDTO reqDTO){
