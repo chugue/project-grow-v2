@@ -115,7 +115,7 @@
     <div class="search-wrap search-bg">
         <div class="search-bg-opcity">
             <form action="/" method="get" class="search-from d-flex" id="search">
-                <input class="form-control me-2" type="text" placeholder="Search" value="{{keyword}}" name="keyword"
+                <input class="form-control me-2" type="text" placeholder="Search" value="keyword" name="keyword"
                        required>
                 <button class="btn-m btn-mint form-control" style="width:100px">Search</button>
             </form>
@@ -191,7 +191,7 @@
                                 <div class="d-flex">
                                     {{#skillList}}
                                         <div class="skill-wrap mr-5">
-                                            <span class="badge bg-primary">{{name}}</span>
+                                            <span class="{{color}}">{{name}}</span>
                                             <!-- <span class="badge bg-primary">HTML/CSS</span>-->
                                             <!-- <span class="badge bg-success">Webpack</span>-->
                                         </div>
@@ -252,16 +252,12 @@
         </div>
         <!--페이징-->
         <div class="pages">
-            <ul class="pagination justify-content-center pb-50">
-                <li class="page-item {{#firstPage}}disabled{{/firstPage}}">
-                    <a class="page-link" href="?page={{prevPage}}&keyword={{keyword}}"><i class="fa-solid fa-angle-left"></i></a></li>
-                {{#pages}}
-                    <li class="page-item {{#isActive}}active{{/isActive}}">
-                        <a class="page-link" href="?page={{number}}&keyword={{keyword}}">{{number}}</a></li>
-                {{/pages}}
-                <li class="page-item {{#lastPage}}disabled{{/lastPage}}">
-                    <a class="page-link" href="?page={{nextPage}}&keyword={{keyword}}"><i class="fa-solid fa-angle-right"></i></a>
-                </li>
+            <ul  class="pagination justify-content-center pb-50">
+                <li class="page-item prev">
+                    <a class="page-link" href="#"><i class="fa-solid fa-angle-left"></i></a></li>
+                <li class="page-item"><a class="page-link" href="#">number</a></li>
+                <li class="page-item next">
+                    <a class="page-link" href="#"><i class="fa-solid fa-angle-right"></i></a></li>
             </ul>
         </div>
     </div>
