@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class JobsResponse {
 
     @Data
-    public static class DetailDTO{
+    public static class DetailDTO {
         private Integer id;
         private String title;
         private String area;
@@ -41,7 +41,7 @@ public class JobsResponse {
     }
 
     @Data
-    public static class UserDetailDTO{
+    public static class UserDetailDTO {
         private Integer id;
         private String compName;
         private String phone;
@@ -88,11 +88,13 @@ public class JobsResponse {
     @Data
     public static class UserDTO {
         private Integer id;
-        private String myName;
+        private String compName;
+        private String imgFileName;
 
         public UserDTO(User user) {
             this.id = user.getId();
-            this.myName = user.getMyName();
+            this.compName = user.getCompName();
+            this.imgFileName = user.getImgFileName();
         }
     }
 
