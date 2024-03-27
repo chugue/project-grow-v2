@@ -67,8 +67,8 @@ public class ResumeService {
             throw new Exception403("이력서를 수정할 권한이 없습니다");
         }
         // 3. 이력서 수정하기
-        resume.setTitle(reqDTO.getTitle());
-        resume.setEdu(reqDTO.getEdu());
+        resume.setResumeUpdate(reqDTO);
+        System.out.println("수정된 데이터 : " +reqDTO);
     } // 더티체킹
 
     @Transactional
