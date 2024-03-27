@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog._core.util.ApiUtil;
+import shop.mtcoding.blog.model.file.FileInfoRequest;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeJPARepository;
 import shop.mtcoding.blog.model.resume.ResumeRequest;
@@ -102,4 +103,6 @@ public class UserService {
         return user;
 
     }
+
+
 }

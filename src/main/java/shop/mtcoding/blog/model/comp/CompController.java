@@ -69,7 +69,10 @@ public class CompController {
     }
 
     @GetMapping("/comp/profile-update-form")
-    public String profileUpdateForm() {
+    public String profileUpdateForm(HttpServletRequest request) {
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        request.setAttribute("imgFileName",sessionUser.getImgFileName());
         return "/comp/profile-update-form";
     }
 
