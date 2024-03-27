@@ -44,8 +44,6 @@ public class ResumeService {
         return resumeApplyDTOList;
     }
 
-
-
     public List<ResumeResponse.ResumeDTO> findAll() {
        List<Resume> resumes = resumeJPARepo.findAll();
 
