@@ -32,7 +32,7 @@
                             <a class="nav-link text-dark" href="/jobs/info">채용정보</a>
                         </li>
                         <li class="nav-item mx-3 fs-5">
-                            <a class="nav-link text-dark" href="/user/{{id}}/userHome">이력서</a>
+                            <a class="nav-link text-dark" href="/user/{{id}}/user-home">이력서</a>
                         </li>
                         <li class="nav-item mx-3 fs-5">
                             <a class="nav-link text-dark" href="/jobs/{{id}}/interest">관심기업</a>
@@ -44,15 +44,10 @@
                             <a class="nav-link text-dark mr-30" href="/logout">로그아웃</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/user/{{id}}/userHome">
-                                <i class="fa-solid fa-circle-user pt-2 mr-20" style="font-size: 30px; color: #B3E2BF"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item company-service ">
-                            <form action="comp/compIndex">
+                            <a href="/user/{{id}}/user-home">
                                 <input type="hidden" name="role" value="{{role}}" >
-                                <button type="submit" class="nav-link mint-color" style="border-radius: 5px; font-size: 17px; font-weight: bolder;">기업서비스</button>
-                            </form>
+                                <button type="submit" class="nav-link mint-color" style="border-radius: 5px; font-size: 17px; font-weight: bolder;">개인서비스</button>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -82,17 +77,8 @@
                     </ul>
 
                     <ul class="navbar-nav d-flex justify-content-end">
-                        <!-- 기업 로그인되엇을때 -->
                         <li class="nav-item">
                             <a class="nav-link text-dark mr-30" href="/user/login-form">로그인</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/user/login-form">
-                                <i class="fa-solid fa-circle-user pt-2 mr-20 " style="font-size: 30px; color: #B3E2BF;"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item company-service ">
-                            <a class="nav-link mint-color" href="/user/login-form">기업서비스</a>
                         </li>
                     </ul>
                 </div>
