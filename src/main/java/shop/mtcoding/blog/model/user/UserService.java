@@ -32,7 +32,7 @@ public class UserService {
         List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();
         List<Resume> resumeList = resumeRepo.findAllByUserId(userId);
         User user = userRepo.findById(userId)
-                        .orElseThrow(() -> new Exception401("sdfs"));
+                        .orElseThrow(() -> new Exception401("사용자를 찾을 수 없습니다."));
 
         for (int i = 0; i < resumeList.size(); i++) {
             List<Skill> skills = skillRepo.findAllByResumeId(resumeList.get(i).getId());
@@ -52,7 +52,6 @@ public class UserService {
 
 
     public User login (UserRequest.LoginDTO reqDTO){
-
         return userRepo.findByIdAndPassword(reqDTO.getEmail(), reqDTO.getPassword())
                 .orElseThrow(() -> new Exception401("회원 정보가 없습니다."));
     }

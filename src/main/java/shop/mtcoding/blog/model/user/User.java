@@ -42,14 +42,14 @@ public class User {
 
     @Column(nullable = false)
     @CreationTimestamp
-    private Timestamp createdAt;
+    private LocalDate createdAt;
 
     @Column
     @ColumnDefault("'2cfe3a66-74cb-4688-9f41-f417b1db694e_naver.jpg'")
     private String imgFileName;
 
     @Builder
-    public User(Integer id, String email, String myName, String password, String phone, String address, LocalDate birth, String businessNumber, String photo, String compName, String homepage, Integer role, Timestamp createdAt, String imgFileName) {
+    public User(Integer id, String email, String myName, String password, String phone, String address, LocalDate birth, String businessNumber, String photo, String compName, String homepage, Integer role, LocalDate createdAt, String imgFileName) {
         this.id = id;
         this.email = email;
         this.myName = myName;

@@ -31,28 +31,32 @@ public class ResumeController {
         return "/resume/manage-resume";
     }
 
-    @GetMapping("/resume/write-resume-form")
+    @GetMapping("/resume/{id}/write-resume-form")
     public String writeResumeForm() {
 
         return "/resume/write-resume-form";
     }
 
-    @GetMapping("/resume/{id}/update-resume-form")
-    public String updateResumeForm(@PathVariable int id) {
 
-        return "/resume/update-resume-form";
+    @GetMapping("/resume/{id}/update-resume-form")
+    public String updateResumeForm(@PathVariable Integer id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        Resume resume = resumeService.updateForm(sessionUser.getId());
+        request.setAttribute("resume", resume);
+
+        return "resume/update-resume-form";
     }
 
     @PostMapping("/resume/{id}/update")
-    public String update(@PathVariable Integer id) {
-
+    public String update(@PathVariable Integer id, ResumeRequest.UpdateDTO reqDTO, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
         //해당 부분 redirect 해보고 틀렸으면 본인이 수정
-        return "redirect:/board/" + id;
+        resumeService.update(id, sessionUser.getId(), reqDTO);
+        return "redirect:/resume/"+id+"/manage-resume";
     }
 
     @PostMapping("/resume/save")
     public String save(ResumeRequest.SaveDTO reqDTO) {
-
         resumeService.save(reqDTO);
         return "redirect:/";
     }

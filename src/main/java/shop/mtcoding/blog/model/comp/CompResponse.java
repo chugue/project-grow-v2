@@ -1,8 +1,8 @@
-package shop.mtcoding.blog.model.resume;
-
+package shop.mtcoding.blog.model.comp;
 
 import lombok.Builder;
 import lombok.Data;
+import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.user.User;
 
@@ -10,63 +10,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResumeRequest {
-    @Data
-    public static class UpdateDTO{
-        private String title;
-        private String area;
-        private String edu;
-        private String career;
-        private String introduce;
-        private String portLink;
-        private List<String> skill;
-    }
+public class CompResponse {
 
     @Data
-    public static class SaveDTO{
-        private String title;
-        private String area;
-        private String edu;
-        private String career;
-        private String introduce;
-        private String portLink;
-        private List<String> skill;
-
-        public Resume toEntity(User user){
-            return Resume.builder()
-                    .title(title)
-                    .area(area)
-                    .edu(edu)
-                    .career(career)
-                    .introduce(introduce)
-                    .portLink(portLink)
-                    .user(user)
-                    .build();
-        }
-    }
-
-    @Data
-    public static class UserViewDTO{
-        private Integer id;
-        private String title;
-        private String edu;
-        private String area;
-        private String career;
-
-        private List<SkillDTO> skills = new ArrayList<>();
+    public static class ResumeUserSkillDTO {
+        private Integer id;//resume
+        private String title;//resume
+        private String edu;//resume
+        private String career; //resume
+        private String area; //resume
+        private String myName;//user
+        private Integer userId;//user
+        private String imgFileName; //user
+        private List<SkillDTO> skillList = new ArrayList<>();
 
         @Builder
-        public UserViewDTO(Resume resume, List<Skill> skills) {
+        public ResumeUserSkillDTO(Resume resume, User user, List<Skill> skillList) {
             this.id = resume.getId();
             this.title = resume.getTitle();
             this.edu = resume.getEdu();
-            this.area = resume.getArea();
             this.career = resume.getCareer();
-
-            this.skills = skills.stream().map(skill -> new SkillDTO(skill))
-                    .collect(Collectors.toList());
+            this.area = resume.getArea();
+            this.myName = user.getMyName();
+            this.userId = user.getId();
+            this.imgFileName = user.getImgFileName();
+            this.skillList = skillList.stream()
+                    .map(skill -> new SkillDTO(skill))
+                    .collect(Collectors.toList());;
         }
     }
+
 
     @Data
     public static class SkillDTO {
@@ -94,6 +67,11 @@ public class ResumeRequest {
             } else if (this.name.equals("React")) {
                 this.color = "badge badge-pill bg-dark";
             }
+            // 추가 양식
+            // else if (this.name.equals("언어")){
+            //      this.color = "badge 컬러 " ;
+
         }
     }
+
 }

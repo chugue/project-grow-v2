@@ -75,7 +75,7 @@ public class UserController {
                 return "redirect:/";
             } else if (role == 2) {
                 session.setAttribute("sessionComp", user);
-                return  "redirect:/comp/read-resume";
+                return  "redirect:/comp/comp-index";
 
             }
         }

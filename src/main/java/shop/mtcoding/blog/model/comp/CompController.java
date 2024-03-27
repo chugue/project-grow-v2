@@ -17,6 +17,7 @@ public class CompController {
     private final CompService compService;
     private final HttpSession session;
     private final ResumeService resumeService;
+
     @GetMapping("/comp/{id}/comp-resume-detail")
     public String compResumeDetail(@PathVariable Integer id) {
         return "/comp/comp-resume-detail";
@@ -37,7 +38,9 @@ public class CompController {
     }
 
     @GetMapping("/comp/comp-index")
-    public String compIndex() {
+    public String compIndex(HttpServletRequest request) {
+        List<CompResponse.ResumeUserSkillDTO> rusList = compService.findAllRusList();
+        request.setAttribute("rusList", rusList);
         return "comp/comp-index";
     }
 
@@ -60,7 +63,8 @@ public class CompController {
 
     @PostMapping("/comp/join")
     public String compJoin(CompRequest.CompJoinDTO reqDTO) {
-        compService.join(reqDTO);
+        User user = compService.join(reqDTO);
+        session.setAttribute("sessionComp", user);
         return "redirect:/comp/read-resume";
     }
 
