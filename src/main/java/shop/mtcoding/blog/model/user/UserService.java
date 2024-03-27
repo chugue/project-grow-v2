@@ -18,19 +18,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserJPARepository userRepo;
-    private final ResumeJPARepository resumeJPARepo;
-    private final SkillJPARepository skillJPARepo;
+    private final ResumeJPARepository resumeRepo;
+    private final SkillJPARepository skillRepo;
+
+
+    public List<UserResponse.UserResumeSkillDTO> UserResumeSkillDTO (Integer userId){
+        List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();
+        List<Resume> resumeList = resumeRepo.findAllByUserId(userId);
+        User user = userRepo.findById(userId)
+                        .orElseThrow(() -> new Exception401("sdfs"));
+
+        for (int i = 0; i < resumeList.size(); i++) {
+            List<Skill> skills = skillRepo.findAllByResumeId(resumeList.get(i).getId());
+            ursList.add(UserResponse.UserResumeSkillDTO.builder()
+                    .user(user)
+                    .resume(resumeList.get(i))
+                    .skillList(skills).build());
+        }
+        return ursList;
+    }
+
 
     @Transactional
     public User join (UserRequest.JoinDTO reqDTO, Integer role){
-        return userRepo.save(reqDTO.toEntity(role));
+               return userRepo.save(reqDTO.toEntity(role));
     }
 
+
     public User login (UserRequest.LoginDTO reqDTO){
+
         return userRepo.findByIdAndPassword(reqDTO.getEmail(), reqDTO.getPassword())
                 .orElseThrow(() -> new Exception401("회원 정보가 없습니다."));
     }
@@ -40,14 +61,14 @@ public class UserService {
     }
 
     public List<ResumeRequest.UserViewDTO> userHome(Integer id) {
-        List<Resume> resumeList = resumeJPARepo.findAllUserId(id);
+        List<Resume> resumeList = resumeRepo.findAllUserId(id);
         List<ResumeRequest.UserViewDTO> listDTO = new ArrayList<>();
 
         for (int i = 0; i < resumeList.size(); i++) {
             User user = userRepo.findById(resumeList.get(i).getUser().getId())
                     .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
 
-            List<Skill> skillList = skillJPARepo.findAllById(resumeList.get(i).getId());
+            List<Skill> skillList = skillRepo.findAllById(resumeList.get(i).getId());
 
             listDTO.add(ResumeRequest.UserViewDTO.builder()
                     .resume(resumeList.get(i))
