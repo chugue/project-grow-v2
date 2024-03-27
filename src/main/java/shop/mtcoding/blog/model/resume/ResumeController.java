@@ -51,7 +51,7 @@ public class ResumeController {
         User sessionUser = (User) session.getAttribute("sessionUser");
         //해당 부분 redirect 해보고 틀렸으면 본인이 수정
         resumeService.update(id, sessionUser.getId(), reqDTO);
-        return "resume/manage-resume";
+        return "redirect:/resume/"+id+"/manage-resume";
     }
 
     @PostMapping("/resume/save")
