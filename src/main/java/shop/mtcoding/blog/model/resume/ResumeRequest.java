@@ -4,6 +4,7 @@ package shop.mtcoding.blog.model.resume;
 import lombok.Builder;
 import lombok.Data;
 import shop.mtcoding.blog.model.skill.Skill;
+import shop.mtcoding.blog.model.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
