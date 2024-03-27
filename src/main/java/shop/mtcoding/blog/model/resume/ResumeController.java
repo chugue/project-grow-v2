@@ -38,13 +38,13 @@ public class ResumeController {
     }
 
 
-    @GetMapping("/resume/update-resume-form")
+    @GetMapping("/resume/{id}/update-resume-form")
     public String updateResumeForm(@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         Resume resume = resumeService.updateForm(sessionUser.getId());
         request.setAttribute("resume", resume);
 
-        return "/resume/update-resume-form";
+        return "resume/update-resume-form";
     }
 
     @PostMapping("/resume/{id}/update")
@@ -52,7 +52,7 @@ public class ResumeController {
         User sessionUser = (User) session.getAttribute("sessionUser");
         //해당 부분 redirect 해보고 틀렸으면 본인이 수정
         resumeService.update(id, sessionUser.getId(), reqDTO);
-        return "resume/manage-resume";
+        return "redirect:/user/"+id+"/user-home";
     }
 
     @PostMapping("/resume/save")
