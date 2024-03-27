@@ -6,6 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.user.UserResponse;
+import shop.mtcoding.blog.model.user.UserService;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -13,6 +17,7 @@ import shop.mtcoding.blog.model.user.User;
 public class ResumeController {
     private final ResumeService resumeService;
     private final HttpSession session;
+    private final UserService userService;
 
     @GetMapping("/resume/resume-detail/{id}")
     public String resumeDetail(@PathVariable Integer id) {
@@ -44,7 +49,6 @@ public class ResumeController {
     @PostMapping("/resume/{id}/update")
     public String update(@PathVariable Integer id, ResumeRequest.UpdateDTO reqDTO, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-
         //해당 부분 redirect 해보고 틀렸으면 본인이 수정
         resumeService.update(id, sessionUser.getId(), reqDTO);
         return "resume/manage-resume";
@@ -57,11 +61,12 @@ public class ResumeController {
         return "redirect:/";
     }
 
-    @DeleteMapping("/resume/{id}/delete")
+    @PostMapping("/resume/{id}/delete")
     public String delete(@PathVariable int id) {
 
-        // return 부분 manage-resume id 안 받나..? 아무튼 수정해야함. 본인이 작업해보고 수정하길
-        return "redirect:/";
+        resumeService.delete(id);
+
+        return "redirect:/user/user-home";
 
     }
 
@@ -69,8 +74,13 @@ public class ResumeController {
     @GetMapping("/resume/{id}/resume-home")
     public String resumeHome(@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
+        //조회하고 들어가는게 맞지않아요?
+
+        List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO = userService.UserResumeSkillDTO(sessionUser.getId());
 
         request.setAttribute("user", sessionUser);
+        request.setAttribute("userResumeSkill", userResumeSkillDTO);
+
 //        return "redirect:/";
         return "/resume/resume-home";
     }

@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
 import shop.mtcoding.blog.model.user.User;
@@ -42,14 +41,15 @@ public class CompController {
         return "comp/comp-index";
     }
 
-    @GetMapping("/comp/{id}/comphome")
+    @GetMapping("/comp/{id}/comp-home")
     public String compHome(@PathVariable Integer id) {
-        return "/comp/comphome";
+        return "/comp/comp-home";
     }
 
-    @PostMapping("/comp/{id}/apply")
+    @GetMapping("/comp/{id}/apply")
     public String offer(@PathVariable Integer id) {
-        return "redirect:/";
+
+        return "/comp/apply";
     }
 
     @GetMapping("/comp/join-form")
@@ -91,7 +91,7 @@ public class CompController {
     @GetMapping("/comp/jobs-info")
     public String jobsInfo() {
 
-        return null;
+        return "/comp/jobs-info";
     }
 
 

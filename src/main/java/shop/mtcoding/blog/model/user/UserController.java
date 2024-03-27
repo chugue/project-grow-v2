@@ -9,6 +9,7 @@ import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.util.ApiUtil;
 import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.jobs.JobsService;
+import shop.mtcoding.blog.model.resume.ResumeRequest;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
 
@@ -123,7 +124,13 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}/user-home")
-    public String userHome(@PathVariable Integer id) {
+    public String userHome(@PathVariable Integer id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
+        List<ResumeRequest.UserViewDTO> resumeList = userService.userHome(id);
+
+        request.setAttribute("resumeList", resumeList);
+        request.setAttribute("sessionUserId", sessionUser.getId());
 
         return "/user/user-home";
     }

@@ -25,7 +25,10 @@ public class ResumeService {
     private final ResumeJPARepository resumeJPARepo;
     private final ApplyJPARepository applyJPARepo;
     private final SkillJPARepository skillJPARepo;
+    private final UserJPARepository userJPARepository;
     private final HttpSession session;
+
+
 
     public List<ResumeResponse.ResumeApplyDTO> findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {
         List<Resume> resumeList = resumeJPARepo.findAllByUserId(userId);
@@ -45,6 +48,7 @@ public class ResumeService {
         return resumeApplyDTOList;
     }
 
+    //이력서 뿌리기
     public List<ResumeResponse.ResumeDTO> findAll() {
         List<Resume> resumes = resumeJPARepo.findAll();
 
@@ -57,6 +61,7 @@ public class ResumeService {
         return resume;
     }
 
+    //이력서 신청
     @Transactional
     public void update(int id, int sessionUserId, ResumeRequest.UpdateDTO reqDTO){
         // 1. 조회 및 예외처리
@@ -95,9 +100,26 @@ public class ResumeService {
                 .forEach((skill) -> {
                     skillJPARepo.save(skill);
                 });
-
-
     }
 
+    //이력서 삭제
+    @Transactional
+    public void delete(Integer boardId){
+        //1. 인증처리
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
+        if (sessionUser.getId() == null){
+            throw new Exception401("서비스가 필요한 서비스입니다.");
+        }
+        Resume resume = resumeJPARepo.findById(boardId)
+                .orElseThrow(() -> new Exception404("해당 게시글을 찾을 수 없습니다"));
+        //2.권한처리
+        if (sessionUser.getId() != resume.getUser().getId()){
+            throw new Exception403("해당 게시글을 삭제할 권한이 없습니다");
+        }
+
+        //3. 삭제하기
+        resumeJPARepo.delete(resume);
+    }
 
 }
