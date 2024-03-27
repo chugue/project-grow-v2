@@ -6,6 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.user.UserResponse;
+import shop.mtcoding.blog.model.user.UserService;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -13,6 +17,7 @@ import shop.mtcoding.blog.model.user.User;
 public class ResumeController {
     private final ResumeService resumeService;
     private final HttpSession session;
+    private final UserService userService;
 
     @GetMapping("/resume/resume-detail/{id}")
     public String resumeDetail(@PathVariable Integer id) {
@@ -64,8 +69,13 @@ public class ResumeController {
     @GetMapping("/resume/{id}/resume-home")
     public String resumeHome(@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
+        //조회하고 들어가는게 맞지않아요?
+
+        List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO = userService.UserResumeSkillDTO(sessionUser.getId());
 
         request.setAttribute("user", sessionUser);
+        request.setAttribute("userResumeSkill", userResumeSkillDTO);
+
 //        return "redirect:/";
         return "/resume/resume-home";
     }

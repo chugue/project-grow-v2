@@ -6,15 +6,44 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.util.ApiUtil;
+import shop.mtcoding.blog.model.resume.Resume;
+import shop.mtcoding.blog.model.resume.ResumeJPARepository;
+import shop.mtcoding.blog.model.skill.Skill;
+import shop.mtcoding.blog.model.skill.SkillJPARepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserJPARepository userRepo;
+    private final ResumeJPARepository resumeRepo;
+    private final SkillJPARepository skillRepo;
+
+
+    public List<UserResponse.UserResumeSkillDTO> UserResumeSkillDTO (Integer userId){
+        List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();
+        List<Resume> resumeList = resumeRepo.findAllByUserId(userId);
+        User user = userRepo.findById(userId)
+                        .orElseThrow(() -> new Exception401("sdfs"));
+
+        for (int i = 0; i < resumeList.size(); i++) {
+            List<Skill> skills = skillRepo.findAllByResumeId(resumeList.get(i).getId());
+            ursList.add(UserResponse.UserResumeSkillDTO.builder()
+                    .user(user)
+                    .resume(resumeList.get(i))
+                    .skillList(skills).build());
+        }
+        return ursList;
+    }
+
 
     public User join (UserRequest.JoinDTO reqDTO, Integer role){
-        return userRepo.save(reqDTO.toEntity(role));
+               return userRepo.save(reqDTO.toEntity(role));
     }
+
+
 
     public  User login (UserRequest.LoginDTO reqDTO){
         return userRepo.findByIdAndPassword(reqDTO.getEmail(), reqDTO.getPassword())
