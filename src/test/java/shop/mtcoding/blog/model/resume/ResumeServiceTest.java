@@ -12,6 +12,8 @@ public class ResumeServiceTest {
     @Autowired
     private ResumeService resumeService;
 
+
+
     @Test
     public void ResumeApplyDTO_test() {
         // given

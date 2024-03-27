@@ -7,6 +7,17 @@ import java.util.List;
 
 public class ResumeRequest {
 
+    @Data
+    public static class UpdateDTO{
+        private String title;
+        private String area;
+        private String edu;
+        private String career;
+        private String introduce;
+        private String portLink;
+        private List<String> skill;
+    }
+
 
     @Data
     public static class SaveDTO{
@@ -30,4 +41,6 @@ public class ResumeRequest {
                     .build();
         }
     }
+
+    
 }

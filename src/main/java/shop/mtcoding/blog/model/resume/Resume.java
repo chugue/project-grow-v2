@@ -72,7 +72,7 @@ public class Resume {
                 .career(this.career)
                 .introduce(this.introduce)
                 .portLink(this.portLink)
-                .createdAt(this.createdAt)
+                .createdAt(this.createdAt.toLocalDateTime().toLocalDate())
                 .skillList(skillList.stream().map(skill -> skill.toDTO())
                         .collect(Collectors.toList())
                 )
