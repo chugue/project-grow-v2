@@ -43,7 +43,7 @@ public class ResumeController {
         return "/resume/update-resume-form";
     }
 
-    @PutMapping("/resume/{id}/update")
+    @PostMapping("/resume/{id}/update")
     public String update(@PathVariable Integer id) {
 
         //해당 부분 redirect 해보고 틀렸으면 본인이 수정
@@ -57,11 +57,12 @@ public class ResumeController {
         return "redirect:/";
     }
 
-    @DeleteMapping("/resume/{id}/delete")
+    @PostMapping("/resume/{id}/delete")
     public String delete(@PathVariable int id) {
 
-        // return 부분 manage-resume id 안 받나..? 아무튼 수정해야함. 본인이 작업해보고 수정하길
-        return "redirect:/";
+        resumeService.delete(id);
+
+        return "redirect:/user/user-home";
 
     }
 

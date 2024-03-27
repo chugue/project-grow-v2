@@ -10,7 +10,7 @@
             <div style="width: 100%;">
                 <div class="relative mb-3">
                     <div>
-                        <a href="/user/profileUpdateForm"
+                        <a href="/user/profile-update-form"
                            onclick="window.open(this.href, '_blank', 'width=1200,height=900,toolbars=no,scrollbars=no, resizable=no'); return false;">
                             <div class="user-img">
                                 <img src="/upload/{{imgFileName}}" class="rounded" alt="Cinque Terre"
@@ -42,7 +42,7 @@
 <!--                            <a id="scrap" href="/user/{{sessionUser.id}}/scrap" class="nav-link sub-menu a p-1 mb-1">스크랩</a>-->
                         <hr>
                         <li class="nav-item">
-                            <a href="/user/{{sessionUser.id}}/updateForm" class="nav-link sub-menu a p-1 mb-1">정보수정</a>
+                            <a href="/user/{{sessionUser.id}}/update-form" class="nav-link sub-menu a p-1 mb-1">정보수정</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link sub-menu a p-1 mb-1" href="/">로그아웃</a>
@@ -66,7 +66,7 @@
                 <div class="relative mb-3">
                     <div>
                         <div>
-                        <a href="/comp/profileUpdateForm"
+                        <a href="/comp/profile-update-form"
                            onclick="window.open(this.href, '_blank', 'width=1200,height=900,toolbars=no,scrollbars=no, resizable=no'); return false;">
                             <div class="user-img">
                                 <img src="/upload/{{sessionComp.imgFileName}}" class="rounded" alt="Cinque Terre"
@@ -80,7 +80,7 @@
                     <hr>
                     <ul class="nav flex-column nav-pills">
                         <li class="nav-item">
-                            <a id="compHome" class="nav-link sub-menu a p-1 mb-1" href="/comp/{{sessionComp.id}}/comphome">공고 관리</a>
+                            <a id="compHome" class="nav-link sub-menu a p-1 mb-1" href="/comp/{{sessionComp.id}}/comp-home">공고 관리</a>
                         </li>
 
                         <li class="nav-item">
@@ -98,7 +98,7 @@
 
                         <hr>
                         <li class="nav-item">
-                            <a href="/comp/{{sessionComp.id}}/updateForm" class="nav-link sub-menu a p-1 mb-1">정보수정</a>
+                            <a href="/comp/{{sessionComp.id}}/update-form" class="nav-link sub-menu a p-1 mb-1">정보수정</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link  sub-menu a p-1" href="/">로그아웃</a>
