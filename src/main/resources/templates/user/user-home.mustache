@@ -19,7 +19,7 @@
                                 <div class="apply-present row " style="font-weight: 900; font-size: 16px;">
                                     <div class="col-4 text-center">
                                         <div class="apply">총지원</div>
-                                        <div class="count">{{count}}개</div>
+                                        <div class="count">0개</div>
                                     </div>
                                     <div class="col-4 text-center">
                                         <div class="waiting">대기중</div>
@@ -37,13 +37,11 @@
                             <b style="font-size:1rem;">전체</b>
                             <div>
                                 <button type="button" class="btn btn-mint offer-table-btn" style="margin: 0;"><a
-                                        href="/resume/{{sessionUserId}}/writeResumeForm">이력서 작성</a></button>
+                                        href="/resume/{{sessionUserId}}/write-resume-form">이력서 작성</a></button>
                             </div>
-
                         </div>
                     </div>
                     <div class="components">
-
                         {{#resumeList}}
                             <div class="card mb-4 mt-3">
                                 <div class="card-body" style=" padding: 0 !important;">
@@ -55,9 +53,9 @@
                                             <!--기술스킬-->
                                             <div class="d-flex">
                                                 <div class="new-skill-box">
-                                                    {{#skillList}}
+                                                    {{#skills}}
                                                         <div class="{{color}}">{{name}}</div>
-                                                    {{/skillList}}
+                                                    {{/skills}}
                                                 </div>
 
                                             </div>
@@ -80,15 +78,15 @@
                                         <div class="col-5">
                                             <div class="d-flex" style="justify-content: flex-end;">
                                                 <input type="hidden" value="" name="" id="">
-<!--                                                <div class="mb-2 mr-10" style="">-->
-<!--                                                    <form action="/resume/resumeDetail/{{id}}" method="get">-->
-<!--                                                        <button type="submit" class="btn btn-mint">-->
-<!--                                                            상세보기-->
-<!--                                                        </button>-->
-<!--                                                    </form>-->
-<!--                                                </div>-->
                                                 <div class="mb-2 mr-10" style="">
-                                                    <form action="/resume/{{id}}/updateResumeForm" method="get">
+                                                    <form action="/resume/resume-detail/{{id}}" method="get">
+                                                        <button type="submit" class="btn btn-mint">
+                                                            상세보기
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="mb-2 mr-10" style="">
+                                                    <form action="/resume/{{id}}/update-resume-form" method="get">
                                                         <button type="submit" class="btn btn-mint">
                                                             이력서 수정
                                                         </button>
