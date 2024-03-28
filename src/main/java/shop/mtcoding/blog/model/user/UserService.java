@@ -16,6 +16,7 @@ import shop.mtcoding.blog.model.skill.SkillJPARepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -25,6 +26,21 @@ public class UserService {
     private final UserJPARepository userRepo;
     private final ResumeJPARepository resumeRepo;
     private final SkillJPARepository skillRepo;
+
+
+    public UserResponse.UserResumeSkillV2DTO UserResumeSkillV2DTO (Integer userId, Integer resumeId){
+       User user =  userRepo.findById(userId)
+                .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
+       Resume resume = resumeRepo.findById(resumeId)
+               .orElseThrow(() ->  new Exception404("이력서를 찾을 수 없습니다."));
+       List<Skill> skillList = skillRepo.findAllByResumeId(resumeId);
+
+       UserResponse.UserResumeSkillV2DTO dto = UserResponse.UserResumeSkillV2DTO.builder()
+                .user(user)
+                .resume(resume)
+                .skillList(skillList).build();
+       return dto;
+    }
 
 
     public List<UserResponse.UserResumeSkillDTO> UserResumeSkillDTO (Integer userId){

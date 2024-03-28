@@ -73,6 +73,10 @@ public class ResumeService {
         }
         // 3. 이력서 수정하기
         resume.setResumeUpdate(reqDTO);
+
+        // 3. 스킬 작성
+
+
         System.out.println("수정된 데이터 : " +reqDTO);
     } // 더티체킹
 

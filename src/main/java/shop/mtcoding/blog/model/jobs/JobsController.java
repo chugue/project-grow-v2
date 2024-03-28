@@ -32,10 +32,11 @@ public class JobsController {
 
         //공고정보와 사용자정보를 가져오는 detailDTO
         JobsResponse.DetailDTO detailDTO = jobsService.DetailDTO(jobsId);
+        System.out.println("detailDTO :"+detailDTO);
 
         //사용자 이력서 보유내역과 지원상태를 가져오는 ResumeApplyDTO
         List<ResumeResponse.ResumeApplyDTO> resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionUser.getId(), jobsId);
-
+        System.out.println("resumeApplyDTOList: " + resumeApplyDTOList);
         request.setAttribute("resumeApplyDTOList", resumeApplyDTOList);
         request.setAttribute("detailDTO", detailDTO);
         return "jobs/jobs-detail";
