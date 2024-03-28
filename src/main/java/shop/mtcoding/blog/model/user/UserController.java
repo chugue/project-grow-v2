@@ -127,7 +127,7 @@ public class UserController {
     public String userHome(@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
 
-        List<ResumeRequest.UserViewDTO> resumeList = userService.userHome(id);
+        List<ResumeRequest.UserViewDTO> resumeList = userService.userHome();
 
         request.setAttribute("resumeList", resumeList);
         request.setAttribute("sessionUserId", sessionUser.getId());
