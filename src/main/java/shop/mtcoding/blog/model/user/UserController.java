@@ -24,6 +24,26 @@ public class UserController {
     private final HttpSession session;
     private final ResumeService resumeService;
 
+    //user의 지원 내역
+    @GetMapping("/user/{id}/resume-home")
+    public String resumeHome(@PathVariable Integer id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = userService.findById(sessionUser.getId());
+
+        List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO = userService.UserResumeSkillDTO(newSessionUser.getId());
+        //No 카운트 뽑으려고 for문 돌림
+        for (int i = 0; i < userResumeSkillDTO.size(); i++) {
+            userResumeSkillDTO.get(i).setId(i + 1);
+        }
+
+        request.setAttribute("user", sessionUser);
+        request.setAttribute("userResumeSkill", userResumeSkillDTO);
+
+//        return "redirect:/";
+        return "/user/resume-home";
+    }
+
+
     @GetMapping("/user/join-form")
     public String joinForm() {
         return "/user/join-form";

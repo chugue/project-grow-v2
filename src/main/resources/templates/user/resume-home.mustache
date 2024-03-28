@@ -8,10 +8,10 @@
             <div id="content" class="my-4 layer2-right-container" style="flex: 0 0 auto; width: calc(100% - 270px);">
                 <div class="components">
                     <div class="components-div p-tb-10 d-flex justify-content-between">
-                        <div class="font mb-3">지원 내역</div>
+                        <div class="font mb-3">이력서 내역</div>
                         <div>
                             <button type="button" class="btn btn-mint offer-table-btn mb-3"><a
-                                    href="/jobs/writeJobsForm">공고작성</a></button>
+                                    href="/jobs/writeJobsForm">이력서 작성</a></button>
                         </div>
                     </div>
                     <div class="components-div">
@@ -29,74 +29,76 @@
                             </tr>
                             </thead>
                             <tbody>
-
-                            <tr class="offer-table">
-                                <th scope="row">id</th>
-                                <td>myName</td>
-                                <td>title</td>
-                                <td>career</td>
-                                <td>
-                                    <div class="new-skill-box">
-
-                                        <div class="color">name</div>
-
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="new-create-button">
-                                        <form action="/resume/resumeDetail/{{id}}">
-                                            <input type="hidden" name="jobsId" value="jobsId">
-                                            <button type="submit" class="btn btn-mint offer-table-btn">상세보기</button>
-                                        </form>
-                                    </div>
-                                    <div class="new-create-button">
-                                        <form action="/apply/pass/update/{{id}}" method="post">
-                                            <input type="hidden" name="jobsId" value="jobsId">
-                                            <button type="submit" class="btn btn-mint offer-table-btn">지원내역</button>
-                                        </form>
-                                    </div>
-<!--                                    <div class="new-create-button">-->
-<!--                                        <form action="/apply/fail/update/{{id}}" method="post">-->
-<!--                                            <input type="hidden" name="jobsId" value="jobsId">-->
-<!--                                            <button type="submit" class="btn btn-mint offer-table-btn">불합격</button>-->
-<!--                                        </form>-->
-<!--                                    </div>-->
-                                </td>
-                            </tr>
-
+                            {{#userResumeSkill}}
+                                <tr class="offer-table">
+                                    <th scope="row">{{id}}</th>
+                                    <td>{{myName}}</td>
+                                    <td>{{resumeTitle}}</td>
+                                    <td>{{career}}</td>
+                                    <td>
+                                        <div class="new-skill-box">
+                                            {{#skillList}}
+                                                <div class="{{color}}">{{name}}</div>
+                                            {{/skillList}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="new-create-button">
+                                            <form action="/resume/resume-detail/{{id}}">
+                                                <input type="hidden" name="jobsId" value="jobsId">
+                                                <button type="submit" class="btn btn-mint offer-table-btn">상세보기</button>
+                                            </form>
+                                        </div>
+                                        <div class="new-create-button">
+                                            <form action="/apply/pass/update/{{id}}" method="post">
+                                                <input type="hidden" name="jobsId" value="jobsId">
+                                                <button type="submit" class="btn btn-mint offer-table-btn">지원내역</button>
+                                            </form>
+                                        </div>
+                                        <!--                                    <div class="new-create-button">-->
+                                        <!--                                        <form action="/apply/fail/update/{{id}}" method="post">-->
+                                        <!--                                            <input type="hidden" name="jobsId" value="jobsId">-->
+                                        <!--                                            <button type="submit" class="btn btn-mint offer-table-btn">불합격</button>-->
+                                        <!--                                        </form>-->
+                                        <!--                                    </div>-->
+                                    </td>
+                                </tr>
+                            {{/userResumeSkill}}
                         </table>
                     </div>
                 </div>
+
                 <div class="components" style="height: 50px;"></div>
                 <div class="components">
-                    <div class="font mb-3">지원자현황</div>
+                    <div class="font mb-3">지원 현황</div>
                     <div>
                         <table class="table table-hover offer-table scroll"
                                style="text-align: center; border-top:2px solid #ddd">
                             <thead>
                             <tr>
                                 <th>No</th>
-                                <th>현재 열린 공고</th>
-                                <th>포지션</th>
+                                <th>기업명</th>
+                                <th>공고명</th>
                                 <th>경력</th>
-                                <th>공고 관련</th>
+                                <th>주요 기술</th>
+                                <th>현재 상태</th>
                             </tr>
                             </thead>
                             <tbody>
 
 
-
                             <tr class="offer-table">
                                 <td>{{id}}</td>
                                 <td>
-                                    <div style="    text-align: left; font-size: 20px;font-weight: 700;margin-bottom: 5px;">title</div>
+                                    <div style="text-align: left; font-size: 20px;font-weight: 700;margin-bottom: 5px;">
+                                        title
+                                    </div>
 
 
-
-                                <td>{{id}}</td>
+                                <td>기업명</td>
                                 <!--타이틀, 보유스킬-->
                                 <td class="col-3" style="text-align: center">
-                                    <div style="text-align: start">title</div>
+                                    <div style="text-align: start"> </div>
                                     <div class="new-skill-box">
 
                                         <div class="color">name</div>
@@ -122,11 +124,11 @@
                                                 </button>
                                             </a>
                                         </div>
-<!--                                        <div class="new-create-button">-->
-<!--                                            <form action="/jobs/{{id}}/delete" method="post">-->
-<!--                                                <button class="btn btn-mint offer-table-btn">공고 삭제</button>-->
-<!--                                            </form>-->
-<!--                                        </div>-->
+                                        <!--                                        <div class="new-create-button">-->
+                                        <!--                                            <form action="/jobs/{{id}}/delete" method="post">-->
+                                        <!--                                                <button class="btn btn-mint offer-table-btn">공고 삭제</button>-->
+                                        <!--                                            </form>-->
+                                        <!--                                        </div>-->
                                     </div>
 
                                 </td>
