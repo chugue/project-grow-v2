@@ -54,16 +54,19 @@
 
     <!-- 공고들 -->
     <div class="info" style=" display: grid; grid-gap: 10px; grid-template-columns: 1fr 1fr 1fr; grid-gap: 20px; margin: 50px 0;">
-        {{#readResumeList}}
+
+            {{#rusList}}
+
         <!--공고-->
         <div class="card">
             <a href="/resume/resume-detail/{{id}}">
+                <div class="img-wrapepr" style="display: flex; justify-content: center;">
+                <img class="card-img-top" src="/upload/{{imgFileName}}" alt="" srcset=""
+                     style=" width: 200px; height: 200px; border-radius: 10px; padding: 5px; text-align: center; padding: 0;">
+                </div>
+                    <div class="card-body">
 
-                <img class="card-img-top" src="/images/logo.png" alt="" srcset=""
-                     style="height: 5em; width: 180px; padding:5px; text-align: center;">
-                <div class="card-body">
-
-                    <div class="mb-2 ft-16">{{user.myName}}</div>
+                    <div class="mb-2 ft-16">{{myName}}</div>
                     <div class="point-ft ft-22 fw-600 mb-10">{{title}}</div>
                     <div class="skill-wrap">
                         {{#skillList}}
@@ -102,7 +105,8 @@
             </a>
         </div>
         <!--공고-->
-        {{/readResumeList}}
+            {{/rusList}}
+
     <!-- 공고들 -->
 </div>
 
