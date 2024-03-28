@@ -126,7 +126,6 @@
                     </div>
                 </form>
             </div>
-            </div>
         {{/resume}}
         <div class="side-button-container">
             <div class="side-button">
@@ -187,18 +186,18 @@
                 <div>
                     <div id="scrap-${rDto.resumeId}-render">
                         <div id="scrap-${rDto.resumeId}-remove">
-                            <form id="passForm" method="post" enctype="application/x-www-form-urlencoded">
-                                <button type="button" class="btn btn-mint w-100 mb-10"
-                                        onclick="submitFormWithResumeAndJobsId('pass')">합격
-                                </button>
-                            </form>
+<!--                            <form id="passForm" method="post" enctype="application/x-www-form-urlencoded">-->
+<!--                                <button type="button" class="btn btn-mint w-100 mb-10"-->
+<!--                                        onclick="submitFormWithResumeAndJobsId('pass')">합격-->
+<!--                                </button>-->
+<!--                            </form>-->
 
-                            <!-- 불합격 폼 -->
-                            <form id="failForm" method="post" enctype="application/x-www-form-urlencoded">
-                                <button type="button" class="btn btn-outline-mint w-100"
-                                        onclick="submitFormWithResumeAndJobsId('fail')">불합격
-                                </button>
-                            </form>
+<!--                            &lt;!&ndash; 불합격 폼 &ndash;&gt;-->
+<!--                            <form id="failForm" method="post" enctype="application/x-www-form-urlencoded">-->
+<!--                                <button type="button" class="btn btn-outline-mint w-100"-->
+<!--                                        onclick="submitFormWithResumeAndJobsId('fail')">불합격-->
+<!--                                </button>-->
+<!--                            </form>-->
                             <script>
                                 // 폼을 제출할 때 resumeId와 jobsId 값을 추가하는 함수
                                 function submitFormWithResumeAndJobsId(formType) {
