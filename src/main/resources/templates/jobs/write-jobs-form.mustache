@@ -18,7 +18,7 @@
         <!--공고 작성 폼-->
         <div class="container" style="width: calc(100% - 270px); padding: 0">
             <form action="/jobs/save" method="post" style="width:100%;">
-                <input type="hidden" value="{{sessionComp.id}}" name="userId"/>
+                <input type="hidden" value="{{sessionC.id}}" name="userId"/>
                 <div class="">
                     <!-- <div class="title">
                             <h2>이력서 작성</h2>
@@ -39,7 +39,7 @@
                                 <table>
                                     <tr>
                                         <th style="width:100px;">기업명</th>
-                                        <td>{{sessionComp.compName}}</td>
+                                        <td>{{sessionC.compName}}</td>
                                     </tr>
                                     <tr>
                                         <th>공고제목</th>
