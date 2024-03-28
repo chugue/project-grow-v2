@@ -117,9 +117,19 @@ public class JobsService {
         jobs.setDeadline(reqDTO.getDeadLine());
         jobs.setTask(reqDTO.getTask());
 
-        List<Skill> skill = skillRepo.findAllByJobsId(id);
+        skillRepo.deleteByJobsId(id);
 
-
+        // 스킬뿌리기
+        reqDTO.getSkill().stream().map((skill) -> {
+            return Skill.builder()
+                    .name(skill)
+                    .role(sessionComp.getRole())
+                    .jobs(jobs)
+                    .build();
+        }).forEach(skill -> {
+            // 반복문으로 스킬 돌면서 뿌림
+            skillRepo.save(skill);
+        });
     }
 
     public JobsResponse.JobUpdateDTO updateForm(Integer id) {

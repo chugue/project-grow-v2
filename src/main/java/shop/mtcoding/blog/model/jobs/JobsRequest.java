@@ -56,6 +56,6 @@ public class JobsRequest {
         private String area;
         private LocalDate deadLine;
         private String task;
-        private List<Skill> skills;
+        private List<String> skill;
     }
 }

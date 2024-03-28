@@ -81,6 +81,7 @@ public class JobsController {
         User sessionComp = (User)session.getAttribute("sessionComp");
         jobsService.update(id, reqDTO);
 
+
         return "redirect:/comp/" + sessionComp.getId() + "/comp-home";
     }
 
