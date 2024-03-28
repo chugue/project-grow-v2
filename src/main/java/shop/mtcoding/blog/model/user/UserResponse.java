@@ -2,6 +2,8 @@ package shop.mtcoding.blog.model.user;
 
 import lombok.Builder;
 import lombok.Data;
+import shop.mtcoding.blog.model.apply.Apply;
+import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.skill.Skill;
@@ -12,11 +14,40 @@ import java.util.stream.Collectors;
 public class UserResponse {
 
     @Data
+    public static class UrsDTO {
+        //user
+        private Integer id;
+        private String compName;
+        //jobs
+        private String jobsTitle;
+        private String jobsCareer;
+        //Apply
+        private String isPass;
+        //skill
+        private Integer resumeId;
+        private List<SkillDTO> skillList;
+
+        @Builder
+        public UrsDTO(User user, Jobs jobs, Apply apply,Resume resume, List<Skill> skillList) {
+            this.id = user.getId();
+            this.compName = user.getCompName();
+            this.jobsTitle = jobs.getTitle();
+            this.jobsCareer = jobs.getCareer();
+            this.isPass = apply.getIsPass();
+            this.resumeId = resume.getId();
+            this.skillList = skillList.stream()
+                    .map(skill -> new SkillDTO(skill))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    @Data
     public static class UserResumeSkillDTO {
         private Integer id;
         private String myName;
         private String career;
         private String resumeTitle;
+        private Integer resumeId;
         private List<SkillDTO> skillList;
 
         @Builder
@@ -25,6 +56,7 @@ public class UserResponse {
             this.myName = user.getMyName();
             this.career = resume.getCareer();
             this.resumeTitle = resume.getTitle();
+            this.resumeId = resume.getId();
             this.skillList = skillList.stream()
                     .map(skill -> new SkillDTO(skill))
                     .collect(Collectors.toList());

@@ -34,6 +34,7 @@ VALUES (6, '서울', '프런트 엔드/백엔드 개발자 채용', '학력무�
 
 -- 스킬 테이블 (개인)
 insert into skill_tb (resume_id, name, role) values(1, 'Java', 1);
+insert into skill_tb (resume_id, name, role) values(1, 'JavaScript', 1);
 insert into skill_tb (resume_id, name, role) values(2, 'JavaScript', 1);
 insert into skill_tb (resume_id, name, role) values(3, 'HTML/CSS', 1);
 
