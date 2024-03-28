@@ -1,6 +1,7 @@
 package shop.mtcoding.blog.model.user;
 
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,6 @@ public class UserService {
 
     }
 
-
     public List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO (Integer userId, Integer resumeId){
         List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();
         List<Resume> resumeList = resumeRepo.findAllByUserId(userId);
@@ -85,24 +85,36 @@ public class UserService {
         return userRepo.findByEmail(email);
     }
 
-    public List<ResumeRequest.UserViewDTO> userHome(Integer id) {
-        List<Resume> resumeList = resumeRepo.findAllUserId(id);
-        List<ResumeRequest.UserViewDTO> listDTO = new ArrayList<>();
 
-        for (int i = 0; i < resumeList.size(); i++) {
-            User user = userRepo.findById(resumeList.get(i).getUser().getId())
-                    .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
+    //유저 홈 리스트
+    public List<ResumeRequest.UserViewDTO> userHome() {
+        List<Resume> resumeList = resumeRepo.findAll();
+        User sessionUser = (User) session.getAttribute("sessionUser");
+//        for (int i = 0; i < resumeList.size(); i++) {
+//            User user = userRepo.findById(resumeList.get(i).getUser().getId())
+//                    .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
+//
+//            List<Skill> skillList = skillRepo.findAllById(resumeList.get(i).getId());
+//
+//            listDTO.add(ResumeRequest.UserViewDTO.builder()
+//                    .resume(resumeList.get(i))
+//                    .skills(skillList)
+//                    .build());
+//        }
+//        System.out.println(listDTO.toString());
+//        return listDTO;
 
-            List<Skill> skillList = skillRepo.findAllById(resumeList.get(i).getId());
+        List<ResumeRequest.UserViewDTO> listDTO = resumeList.stream()
+                .filter(resume -> resume.getUser().getId() == sessionUser.getId()) // Filter resumes by ID = 1
+                .map(resume -> ResumeRequest.UserViewDTO.builder()
+                        .resume(resume)
+                        .skills(resume.getSkillList())
+                        .build())
+                .collect(Collectors.toList());
 
-            listDTO.add(ResumeRequest.UserViewDTO.builder()
-                    .resume(resumeList.get(i))
-                    .skills(skillList)
-                    .build());
-        }
-        System.out.println(listDTO.toString());
-        return listDTO;
+        return  listDTO;
     }
+
 
     //유저 회원정보 폼 업데이트 메소드
     @Transactional

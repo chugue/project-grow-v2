@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
@@ -46,5 +47,31 @@ public class JobsController {
         List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
         request.setAttribute("listDTOS", listDTOS);
         return "/jobs/info";
+    }
+
+    @GetMapping("/jobs/write-jobs-form")
+    public String writeJobsForm(HttpServletRequest request) {
+        User sessionComp = (User)session.getAttribute("sessionComp");
+
+        // sessionComp 라고 주면 오류나서 sessionC라고 하였음
+        request.setAttribute("sessionC", sessionComp);
+
+        return "/jobs/write-jobs-form";
+    }
+
+    @PostMapping("/jobs/save")
+    public String save (JobsRequest.JobWriterDTO reqDTO) {
+        User sessionComp = (User)session.getAttribute("sessionComp");
+        jobsService.save(reqDTO);
+
+        return "redirect:/comp/" + sessionComp.getId() + "/comp-home";
+    }
+
+    @PostMapping("/jobs/{id}/delete")
+    public String delete(@PathVariable Integer id) {
+        User sessionComp = (User)session.getAttribute("sessionComp");
+        jobsService.delete(id);
+
+        return "redirect:/comp/" + sessionComp.getId() + "/comp-home";
     }
 }

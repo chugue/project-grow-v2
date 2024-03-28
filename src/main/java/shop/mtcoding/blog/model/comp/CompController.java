@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
 import shop.mtcoding.blog.model.user.User;
@@ -34,7 +35,7 @@ public class CompController {
         User newSessionUser = compService.findById(sessionUser.getId());
         request.setAttribute("user", newSessionUser);
 
-        return "/user/update-form";
+        return "/comp/update-form";
     }
 
     @GetMapping("/comp/comp-index")
@@ -45,7 +46,12 @@ public class CompController {
     }
 
     @GetMapping("/comp/{id}/comp-home")
-    public String compHome(@PathVariable Integer id) {
+    public String compHome(@PathVariable Integer id, HttpServletRequest request) {
+        List<JobsResponse.JobsListDTO> jobsList = compService.findAllJobsId(id);
+        request.setAttribute("jobList", jobsList);
+        request.setAttribute("sessionC", id);
+        System.out.println(jobsList.toString());
+
         return "/comp/comp-home";
     }
 
