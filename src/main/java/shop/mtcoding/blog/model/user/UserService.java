@@ -31,30 +31,32 @@ public class UserService {
     private final JobsJPARepository jobsRepo;
     private final ApplyJPARepository applyRepo;
 
-    public List<UserResponse.UrsDTO> ursDTOS (Integer userId, Integer resumeId) {
+    public List<UserResponse.UrsDTO> ursDTOS(Integer resumeId) {
         List<Apply> applyList = applyRepo.findAppliesByNot1ByResumeId(resumeId);
-
-        List<UserResponse.UrsDTO> jobsSkillList = new ArrayList<>();
-
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new Exception404(" 사용자를 찾을 수 없습니다."));
+        Resume resume = resumeRepo.findById(resumeId)
+                .orElseThrow(() -> new Exception404("정보를 찾을 수 없습니다."));
+        List<UserResponse.UrsDTO> ursDTOList = new ArrayList<>();
 
         for (int i = 0; i < applyList.size(); i++) {
             Jobs jobs = jobsRepo.findById(applyList.get(i).getJobs().getId())
                     .orElseThrow(() -> new Exception404("공고를 찾을 수 없습니다."));
             List<Skill> skills = skillRepo.findAllByJobsId(applyList.get(i).getJobs().getId());
-            jobsSkillList.add(UserResponse.UrsDTO.builder()
-                    .user(user)
-                    .jobs(applyList.get(i).getJobs())
+            User compUser = userRepo.findById(jobs.getUser().getId())
+                    .orElseThrow(() -> new Exception404(" 사용자를 찾을 수 없습니다."));
+
+            ursDTOList.add(UserResponse.UrsDTO.builder()
+                    .user(compUser)
+                    .jobs(jobs)
                     .apply(applyList.get(i))
+                    .resume(resume)
                     .skillList(skills).build());
         }
 
-        return jobsSkillList;
+        return ursDTOList;
 
     }
 
-    public List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO (Integer userId, Integer resumeId){
+    public List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO(Integer userId, Integer resumeId) {
         List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();
         List<Resume> resumeList = resumeRepo.findAllByUserId(userId);
         User user = userRepo.findById(userId)
@@ -72,12 +74,12 @@ public class UserService {
 
 
     @Transactional
-    public User join (UserRequest.JoinDTO reqDTO, Integer role){
-               return userRepo.save(reqDTO.toEntity(role));
+    public User join(UserRequest.JoinDTO reqDTO, Integer role) {
+        return userRepo.save(reqDTO.toEntity(role));
     }
 
 
-    public User login (UserRequest.LoginDTO reqDTO){
+    public User login(UserRequest.LoginDTO reqDTO) {
         return userRepo.findByIdAndPassword(reqDTO.getEmail(), reqDTO.getPassword())
                 .orElseThrow(() -> new Exception401("회원 정보가 없습니다."));
     }
@@ -93,10 +95,6 @@ public class UserService {
         List<Resume> resumeList = resumeRepo.findAll();
         User sessionUser = userRepo.findById(sessionUserId)
                 .orElseThrow(() -> new Exception404("사용자 정보를 찾을 수 없습니다."));
-//        for (int i = 0; i < resumeList.size(); i++) {
-//            User user = userRepo.findById(resumeList.get(i).getUser().getId())
-//                    .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
-//
         List<ResumeRequest.UserViewDTO> listDTO = resumeList.stream()
                 .filter(resume -> resume.getUser().getId() == sessionUser.getId()) // Filter resumes by ID = 1
                 .map(resume -> ResumeRequest.UserViewDTO.builder()
@@ -105,7 +103,7 @@ public class UserService {
                         .build())
                 .collect(Collectors.toList());
 
-        return  listDTO;
+        return listDTO;
     }
 
 
