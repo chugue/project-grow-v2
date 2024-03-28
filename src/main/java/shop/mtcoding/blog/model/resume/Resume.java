@@ -1,9 +1,7 @@
 package shop.mtcoding.blog.model.resume;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.offer.Offer;
@@ -19,7 +17,8 @@ import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Table(name = "resume_tb")
-@Data
+@Getter
+@Setter
 @Entity
 public class Resume {
     @Id
@@ -90,4 +89,17 @@ public class Resume {
         this.portLink = reqDTO.getPortLink();
     }
 
+    @Override
+    public String toString() {
+        return "Resume{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", area='" + area + '\'' +
+                ", edu='" + edu + '\'' +
+                ", career='" + career + '\'' +
+                ", introduce='" + introduce + '\'' +
+                ", portLink='" + portLink + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }

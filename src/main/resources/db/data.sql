@@ -19,7 +19,7 @@ values ('6@c','배달의민족','1234','010-9824-5421','서울특별시 송파�
 insert into resume_tb(user_id, title, area, edu, career, introduce, port_link,  created_at)
 values (1, '신입 백엔드 개발자', '부산', '대졸', '신입', 'ERD를 설계하고, MySQL, MariaDB를 사용할 수 있습니다. JavaScript, TypeScript, HTML/CSS 프론트엔드 개발도 가능합니다.', 'naver.com/universe00',now());
 insert into resume_tb(user_id, title, area, edu, career, introduce, port_link, created_at)
-values (1, 'Back-End / Software Engineer', '부산', '고졸', '신입', '[성장]을 목표로 달려나가며, 도전적인 것을 좋아하는 이 서 연 입니다!', 'nate.com/blueocean',now());
+values (1, 'Back-End / Software Engineer', '부산', '고졸', '신입', '[성장]을 목표로 달려나가며, 도전적인 것을 좋아하는 이 서 현 입니다!', 'nate.com/blueocean',now());
 insert into resume_tb(user_id, title, area, edu, career, introduce, port_link, created_at)
 values (3, 'Java-Spring 개발자', '부산', '대졸', '미들(4~8년)', 'Java를 메인으로 Back-end 개발에 관심을 가지고 있습니다. 다양한 환경과 회사를 접하며 웹서비스를 개발하고, 서비스 해본 경험이 있습니다.', 'naver.com/githa',now());
 
@@ -35,8 +35,11 @@ VALUES (6, '서울', '프런트 엔드/백엔드 개발자 채용', '학력무�
 -- 스킬 테이블 (개인)
 insert into skill_tb (resume_id, name, role) values(1, 'Java', 1);
 insert into skill_tb (resume_id, name, role) values(1, 'JavaScript', 1);
+insert into skill_tb (resume_id, name, role) values(1, 'HTML/CSS', 1);
 insert into skill_tb (resume_id, name, role) values(2, 'JavaScript', 1);
+insert into skill_tb (resume_id, name, role) values(3, 'Java', 1);
 insert into skill_tb (resume_id, name, role) values(3, 'HTML/CSS', 1);
+insert into skill_tb (resume_id, name, role) values(3, 'Spring', 1);
 
 -- 스킬 테이블 (기업)
 INSERT INTO skill_tb(jobs_id, name, role) VALUES(1, 'Jquery', 2);

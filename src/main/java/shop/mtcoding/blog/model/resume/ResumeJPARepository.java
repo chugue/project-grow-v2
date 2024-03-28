@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import shop.mtcoding.blog.model.apply.ApplyResponse;
+import shop.mtcoding.blog.model.user.User;
 
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface ResumeJPARepository extends JpaRepository<Resume, Integer> {
     @Query("select r from Resume r where r.user.id = :userId")
     List<Resume> findAllByUserId(@Param("userId") Integer userId);
 
+    @Query("select r from Resume r join fetch r.user u where r.id = :resumeId")
+    Resume findByIdJoinUser(@Param("resumeId") Integer resumeId);
 }
