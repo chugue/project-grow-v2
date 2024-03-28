@@ -2,9 +2,7 @@ package shop.mtcoding.blog.model.user;
 
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
@@ -15,7 +13,8 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @Table(name = "user_tb")
-@Data
+@Getter
+@Setter
 @Entity
 public class User {
     @Id
@@ -87,6 +86,25 @@ public class User {
         this.address = requestDTO.getAddress();
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", myName='" + myName + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", birth=" + birth +
+                ", businessNumber='" + businessNumber + '\'' +
+                ", photo='" + photo + '\'' +
+                ", compName='" + compName + '\'' +
+                ", homepage='" + homepage + '\'' +
+                ", role=" + role +
+                ", createdAt=" + createdAt +
+                ", imgFileName='" + imgFileName + '\'' +
+                '}';
+    }
 }
 
 
