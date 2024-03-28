@@ -6,18 +6,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
-import shop.mtcoding.blog._core.util.ApiUtil;
-import shop.mtcoding.blog.model.file.FileInfoRequest;
+import shop.mtcoding.blog.model.apply.Apply;
+import shop.mtcoding.blog.model.apply.ApplyJPARepository;
+import shop.mtcoding.blog.model.jobs.Jobs;
+import shop.mtcoding.blog.model.jobs.JobsJPARepository;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeJPARepository;
 import shop.mtcoding.blog.model.resume.ResumeRequest;
-import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -26,13 +26,38 @@ public class UserService {
     private final UserJPARepository userRepo;
     private final ResumeJPARepository resumeRepo;
     private final SkillJPARepository skillRepo;
+    private final JobsJPARepository jobsRepo;
+    private final ApplyJPARepository applyRepo;
+
+    public List<UserResponse.UrsDTO> ursDTOS (Integer userId, Integer resumeId) {
+        List<Apply> applyList = applyRepo.findAppliesByNot1ByResumeId(resumeId);
+
+        List<UserResponse.UrsDTO> jobsSkillList = new ArrayList<>();
+
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new Exception404(" 사용자를 찾을 수 없습니다."));
+
+        for (int i = 0; i < applyList.size(); i++) {
+            Jobs jobs = jobsRepo.findById(applyList.get(i).getJobs().getId())
+                    .orElseThrow(() -> new Exception404("공고를 찾을 수 없습니다."));
+            List<Skill> skills = skillRepo.findAllByJobsId(applyList.get(i).getJobs().getId());
+            jobsSkillList.add(UserResponse.UrsDTO.builder()
+                    .user(user)
+                    .jobs(applyList.get(i).getJobs())
+                    .apply(applyList.get(i))
+                    .skillList(skills).build());
+        }
+
+        return jobsSkillList;
+
+    }
 
 
-    public List<UserResponse.UserResumeSkillDTO> UserResumeSkillDTO (Integer userId){
+    public List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO (Integer userId, Integer resumeId){
         List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();
         List<Resume> resumeList = resumeRepo.findAllByUserId(userId);
         User user = userRepo.findById(userId)
-                        .orElseThrow(() -> new Exception401("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new Exception401("사용자를 찾을 수 없습니다."));
 
         for (int i = 0; i < resumeList.size(); i++) {
             List<Skill> skills = skillRepo.findAllByResumeId(resumeList.get(i).getId());

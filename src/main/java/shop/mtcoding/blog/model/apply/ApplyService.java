@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class ApplyService {
     private final ApplyJPARepository applyJPARepo;
 
-    public void JobsUserDTO (Integer jobsId) {
-
+    public void t (Integer resumeId) {
+        applyJPARepo.findAppliesByNot1ByResumeId(resumeId);
     }
 }

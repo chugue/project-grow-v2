@@ -39,7 +39,7 @@
                                     <td>
                                         <div class="new-skill-box">
                                             {{#skillList}}
-                                                <div class="">{{name}}</div>
+                                                <div class="color">{{name}}</div>
                                             {{/skillList}}
                                         </div>
                                     </td>
@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="new-create-button">
                                             <form action="/apply/pass/update/{{id}}" method="post">
-                                                <input type="hidden" name="jobsId" value="jobsId">
+                                                <input type="hidden" name="resumeId" value="{{resumeId}}">
                                                 <button type="submit" class="btn btn-mint offer-table-btn">지원내역</button>
                                             </form>
                                         </div>
@@ -81,18 +81,21 @@
                                 <th>현재 상태</th>
                             </tr>
                             </thead>
+
+
+                            {{#UrsDTOList}}
                             <tbody>
 
-
                             <tr class="offer-table">
-                                <td>{{id}}</td>
+                                <td>id</td>
                                 <td>
                                     <div style="text-align: left; font-size: 20px;font-weight: 700;margin-bottom: 5px;">
-                                        title
+                                        {{compName}}
                                     </div>
 
 
-                                <td>기업명</td>
+                                <td>title</td>
+                                <td>career</td>
                                 <!--타이틀, 보유스킬-->
                                 <td class="col-3" style="text-align: center">
                                     <div style="text-align: start"> </div>
@@ -102,7 +105,7 @@
 
                                     </div>
                                 </td>
-                                <td>task</td>
+
                                 <td>career</td>
 
                                 <!--공고 관련 버튼-->
@@ -122,16 +125,15 @@
                                             </a>
                                         </div>
                                         <!--                                        <div class="new-create-button">-->
-                                        <!--                                            <form action="/jobs/{{id}}/delete" method="post">-->
-                                        <!--                                                <button class="btn btn-mint offer-table-btn">공고 삭제</button>-->
-                                        <!--                                            </form>-->
-                                        <!--                                        </div>-->
+
                                     </div>
 
                                 </td>
                             </tr>
 
                             </tbody>
+                            {{/UrsDTOList}}
+
                         </table>
 
                     </div>
