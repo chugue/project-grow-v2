@@ -17,6 +17,7 @@ public class CompController {
     private final CompService compService;
     private final HttpSession session;
     private final ResumeService resumeService;
+
     @GetMapping("/comp/{id}/comp-resume-detail")
     public String compResumeDetail(@PathVariable Integer id) {
         return "/comp/comp-resume-detail";
@@ -31,13 +32,15 @@ public class CompController {
     public String updateForm(@PathVariable int id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User newSessionUser = compService.findById(sessionUser.getId());
-        request.setAttribute("sessionUser", newSessionUser);
+        request.setAttribute("user", newSessionUser);
 
         return "/user/update-form";
     }
 
     @GetMapping("/comp/comp-index")
-    public String compIndex() {
+    public String compIndex(HttpServletRequest request) {
+        List<CompResponse.ResumeUserSkillDTO> rusList = compService.findAllRusList();
+        request.setAttribute("rusList", rusList);
         return "comp/comp-index";
     }
 
@@ -60,12 +63,16 @@ public class CompController {
 
     @PostMapping("/comp/join")
     public String compJoin(CompRequest.CompJoinDTO reqDTO) {
-        compService.join(reqDTO);
+        User user = compService.join(reqDTO);
+        session.setAttribute("sessionComp", user);
         return "redirect:/comp/read-resume";
     }
 
     @GetMapping("/comp/profile-update-form")
-    public String profileUpdateForm() {
+    public String profileUpdateForm(HttpServletRequest request) {
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        request.setAttribute("imgFileName",sessionUser.getImgFileName());
         return "/comp/profile-update-form";
     }
 

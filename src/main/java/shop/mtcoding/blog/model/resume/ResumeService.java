@@ -28,6 +28,8 @@ public class ResumeService {
     private final UserJPARepository userJPARepository;
     private final HttpSession session;
 
+
+
     public List<ResumeResponse.ResumeApplyDTO> findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {
         List<Resume> resumeList = resumeJPARepo.findAllByUserId(userId);
 
@@ -48,17 +50,38 @@ public class ResumeService {
 
     //이력서 뿌리기
     public List<ResumeResponse.ResumeDTO> findAll() {
-       List<Resume> resumes = resumeJPARepo.findAll();
+        List<Resume> resumes = resumeJPARepo.findAll();
 
-       return resumes.stream().map(resume -> resume.toDTO()).collect(Collectors.toList());
+        return resumes.stream().map(resume -> resume.toDTO()).collect(Collectors.toList());
     }
+
+    public Resume updateForm (int id) {
+        Resume resume = resumeJPARepo.findById(id)
+                .orElseThrow(() -> new Exception404("이력서를 찾을 수 없습니다"));
+        return resume;
+    }
+
+
+    @Transactional
+    public void update(int id, int sessionUserId, ResumeRequest.UpdateDTO reqDTO){
+        // 1. 조회 및 예외처리
+        Resume resume = resumeJPARepo.findById(id)
+                .orElseThrow(() -> new Exception404("해당 이력서를 찾을 수 없습니다"));
+        // 2. 권한 처리
+        if (sessionUserId != resume.getUser().getId()) {
+            throw new Exception403("이력서를 수정할 권한이 없습니다");
+        }
+        // 3. 이력서 수정하기
+        resume.setResumeUpdate(reqDTO);
+        System.out.println("수정된 데이터 : " +reqDTO);
+    } // 더티체킹
 
     //이력서 신청
     @Transactional
-    public void save(ResumeRequest.SaveDTO saveDTO){
+    public void save(ResumeRequest.SaveDTO saveDTO) {
         //1. 인증처리 : 유저가 세션을가지고있는지 로그인상태 확인
         User sessionUser = (User) session.getAttribute("sessionUser");
-        if (sessionUser == null){
+        if (sessionUser == null) {
             throw new Exception401("로그인이 필요한 서비스입니다");
         }
         //2. 이력서 작성
@@ -68,7 +91,7 @@ public class ResumeService {
 
         // 3. 스킬 작성
         saveDTO.getSkill().stream()
-                .map((skilName)->{
+                .map((skilName) -> {
                     return Skill.builder()
                             .name(skilName)
                             .role(sessionUser.getRole())
@@ -97,7 +120,7 @@ public class ResumeService {
         }
 
         //3. 삭제하기
-        resumeJPARepo.delete(resume);
+        resumeJPARepo.deleteById(resume.getId());
     }
 
- }
+}

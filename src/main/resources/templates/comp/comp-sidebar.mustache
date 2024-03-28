@@ -1,0 +1,82 @@
+
+
+
+    <aside class="px-5" style="text-align: center; flex: 0 0 auto; padding: 0 !important; width: 220px; margin-right:50px; ">
+        <div class="mb-3">
+            <div class="fs-4" style="font-weight: 700;">기업 홈</div>
+        </div>
+        <div class="card" style="border-radius: 10px">
+            <div style="width: 100%;">
+                <div class="relative mb-3">
+                    <div>
+                        <div>
+                        <a href="/comp/profile-update-form"
+                           onclick="window.open(this.href, '_blank', 'width=1200,height=900,toolbars=no,scrollbars=no, resizable=no'); return false;">
+                            <div class="user-img">
+                                <img src="/upload/{{sessionComp.imgFileName}}" class="rounded" alt="Cinque Terre"
+                                     style="max-width: 80px;">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h6 class="card-subtitle text-muted">{{sessionComp.myName}}</h6>
+                    <hr>
+                    <ul class="nav flex-column nav-pills">
+                        <li class="nav-item">
+                            <a id="compHome" class="nav-link sub-menu a p-1 mb-1" href="/comp/{{sessionComp.id}}/comp-home">공고 관리</a>
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a id="apply" class="nav-link sub-menu a p-1 mb-1" href="/comp/{{sessionComp.id}}/apply">지원</a>
+
+                        </li>
+
+<!--                        <li class="nav-item">-->
+<!--                            <a id="scrap" class="nav-link sub-menu a p-1" href="/comp/{{id}}/scrap">스크랩</a>-->
+<!--                        </li>-->
+                        <!--                    <li class="nav-item">-->
+                        <!--                        <a class="nav-link sub-menu a p-1" href="/comp/talent">매칭리스트</a>-->
+                        <!--                    </li>-->
+
+                        <hr>
+                        <li class="nav-item">
+                            <a href="/comp/{{sessionComp.id}}/update-form" class="nav-link sub-menu a p-1 mb-1">정보수정</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  sub-menu a p-1" href="/">로그아웃</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+<script>
+
+    // 페이지가 로드될 때 선택된 메뉴 항목에 활성화 클래스를 추가
+
+    $(document).ready(function () {
+        // 현재 페이지의 URL을 가져오는 함수
+        function getCurrentPageUrl() {
+            return window.location.pathname;
+        }
+
+        // 현재 페이지에 대한 메뉴 항목을 활성화하는 함수
+        function activateMenu() {
+            var currentPageUrl = getCurrentPageUrl();
+            $('aside .sub-menu').each(function () {
+                if ($(this).attr('href') === currentPageUrl) {
+                    $(this).addClass('btn-mint');
+                    $(this).css('color', 'white'); // 글자 색상을 흰색으로 설정
+
+                }
+            });
+        }
+
+        // 페이지가 로드될 때 메뉴 항목 활성화 실행
+        activateMenu();
+    });
+
+</script>
