@@ -89,7 +89,7 @@ public class ResumeService {
         //2. 이력서 작성
         Resume resume = saveDTO.toEntity(sessionUser);
         resumeJPARepo.save(resume);
-        System.out.println("============================" + resume.getId());
+        System.out.println("------------------" + resume.getId());
 
         // 3. 스킬 작성
 

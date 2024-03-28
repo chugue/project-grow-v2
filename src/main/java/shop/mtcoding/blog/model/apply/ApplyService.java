@@ -16,8 +16,8 @@ public class ApplyService {
     private final JobsJPARepository jobsJPARepo;
     private final ResumeJPARepository resumeJPARepo;
 
-    public void JobsUserDTO (Integer jobsId) {
-
+    public void t (Integer resumeId) {
+        applyJPARepo.findAppliesByNot1ByResumeId(resumeId);
     }
 
     //이력서로 공고에 막 지원했을때 사용되는 메소드
