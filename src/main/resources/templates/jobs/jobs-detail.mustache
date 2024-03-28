@@ -173,30 +173,30 @@
     </div>
     <div class="side-item">
         <div class="side-item-1">
-            <div id="scrap-${rDto.resumeId}-remove">
-                <form action="/resume/{{sessionUser.id}}/applyList">
+            <form action="/jobs/apply" method="post" enctype="application/x-www-form-urlencoded">
+                <div id="scrap-${rDto.resumeId}-remove">
                     {{#resumeApplyDTOList.apply.isApply}}
-                        <button type="submit" class="btn btn-outline-mint w-100"
+                        <button type="button" class="btn btn-outline-mint w-100"
                                 disabled>지원완료
                         </button>
                         {{#resumeApplyDTOList.apply.isPass}}
-                            <button type="submit" class="btn btn-outline-mint w-100"
+                            <button type="button" class="btn btn-outline-mint w-100"
                                     disabled>합격
                             </button>
                         {{/resumeApplyDTOList.apply.isPass}}
                         {{^resumeApplyDTOList.apply.isApply}}
-                            <button type="submit" class="btn btn-outline-mint w-100"
+                            <button type="button" class="btn btn-outline-mint w-100"
                                     disabled>불합격
                             </button>
                         {{/resumeApplyDTOList.apply.isApply}}
 
                     {{/resumeApplyDTOList.apply.isApply}}
                     {{^resumeApplyDTOList.apply.isApply}}
+                        <input type="hidden" name="jobsId" value="{{detailDTO.id}}">
                         <button type="submit" class="btn btn-outline-mint w-100">
                             지원하기
                         </button>
                     {{/resumeApplyDTOList.apply.isApply}}
-
                     <div>
                         <div class="card mt-3">
                             <h6 class="card-body text">내 이력서 선택</h6>
@@ -212,8 +212,8 @@
                             {{/resumeApplyDTOList}}
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
