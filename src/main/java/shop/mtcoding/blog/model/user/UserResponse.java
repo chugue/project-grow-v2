@@ -14,6 +14,31 @@ import java.util.stream.Collectors;
 public class UserResponse {
 
     @Data
+    public static class UserResumeSkillV2DTO{
+        private Integer id;
+        private String myName;
+        private String address;
+        private Integer resumeId;
+        private String title; // resume
+        private String career; // resume
+        private List<Skill2DTO> skillList;
+
+        @Builder
+        public UserResumeSkillV2DTO(User user, Resume resume, List<Skill> skillList) {
+            this.id = user.getId();
+            this.myName = user.getMyName();
+            this.address = user.getAddress();
+            this.resumeId = resume.getId();
+            this.title = resume.getTitle();
+            this.career = resume.getCareer();
+            this.skillList = skillList.stream()
+                    .map(skill -> new Skill2DTO(skill))
+             .collect(Collectors.toList());
+        }
+
+    }
+
+    @Data
     public static class UrsDTO {
         //user
         private Integer id;
@@ -38,6 +63,20 @@ public class UserResponse {
             this.skillList = skillList.stream()
                     .map(skill -> new SkillDTO(skill))
                     .collect(Collectors.toList());
+        }
+
+    }
+
+    @Data
+    public static class Skill2DTO{
+        private Integer id;
+        private String name;
+        private String color;
+
+        public Skill2DTO(Skill skill) {
+            this.id = skill.getId();
+            this.name = skill.getName();
+            this.color = skill.getColor();
         }
     }
 
