@@ -26,11 +26,16 @@ public class UserController {
     private final ResumeService resumeService;
     private final ApplyService applyService;
 
+
+
+
     //user의 지원 내역
     @GetMapping("/user/{id}/resume-home")
-    public String resumeHome(@PathVariable Integer id, @RequestParam ("resumeId") Integer resumeId, HttpServletRequest request) {
+    public String resumeHome(@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User newSessionUser = userService.findById(sessionUser.getId());
+
+        Integer resumeId = 1; // 지워야함
 
         List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO = userService.userResumeSkillDTO(newSessionUser.getId(), resumeId);
         //No 카운트 뽑으려고 for문 돌림
@@ -38,11 +43,9 @@ public class UserController {
             userResumeSkillDTO.get(i).setId(i + 1);
         }
 
-      List<UserResponse.UrsDTO> UrsDTOList = userService.ursDTOS(newSessionUser.getId(), resumeId);
 
         request.setAttribute("user", sessionUser);
         request.setAttribute("userResumeSkill", userResumeSkillDTO);
-        request.setAttribute("UrsDTOList", UrsDTOList);
 
 //        return "redirect:/";
         return "/user/resume-home";
