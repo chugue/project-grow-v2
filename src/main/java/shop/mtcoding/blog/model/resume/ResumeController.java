@@ -64,10 +64,10 @@ public class ResumeController {
 
     @PostMapping("/resume/{id}/delete")
     public String delete(@PathVariable Integer id) {
-
+        User sessionUser = (User) session.getAttribute("sessionUser");
         resumeService.delete(id);
 
-        return "redirect:/user/"+id+"/user-home";
+        return "redirect:/user/"+sessionUser.getId()+"/user-home";
 
     }
 
