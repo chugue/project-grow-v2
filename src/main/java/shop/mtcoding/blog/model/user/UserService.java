@@ -27,7 +27,6 @@ public class UserService {
     private final UserJPARepository userRepo;
     private final ResumeJPARepository resumeRepo;
     private final SkillJPARepository skillRepo;
-    private final HttpSession session;
 
     public List<UserResponse.UserResumeSkillDTO> UserResumeSkillDTO (Integer userId){
         List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();
@@ -63,9 +62,10 @@ public class UserService {
 
 
     //유저 홈 리스트
-    public List<ResumeRequest.UserViewDTO> userHome() {
+    public List<ResumeRequest.UserViewDTO> userHome(Integer sessionUserId) {
         List<Resume> resumeList = resumeRepo.findAll();
-        User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionUser = userRepo.findById(sessionUserId)
+                .orElseThrow(() -> new Exception404("사용자 정보를 찾을 수 없습니다."));
 //        for (int i = 0; i < resumeList.size(); i++) {
 //            User user = userRepo.findById(resumeList.get(i).getUser().getId())
 //                    .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
