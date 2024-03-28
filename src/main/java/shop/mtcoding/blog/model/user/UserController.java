@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String index(HttpServletRequest request) {
+    public String index(HttpServletRequest request, @RequestParam (value = "keyword", defaultValue = "") String keyword) {
         List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
         request.setAttribute("listDTOS", listDTOS);
 

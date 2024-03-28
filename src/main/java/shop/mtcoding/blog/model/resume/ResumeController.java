@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog.model.user.User;
 import shop.mtcoding.blog.model.user.UserResponse;
 import shop.mtcoding.blog.model.user.UserService;
@@ -41,6 +42,10 @@ public class ResumeController {
     @GetMapping("/resume/{id}/update-resume-form")
     public String updateResumeForm(@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null){
+            throw new Exception401("인증되지 않았습니다.");
+        }
+
         Resume resume = resumeService.updateForm(sessionUser.getId());
         request.setAttribute("resume", resume);
 
