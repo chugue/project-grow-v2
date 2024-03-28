@@ -123,13 +123,12 @@ public class ResumeService {
 
         // 3. 스킬 작성
 
-        String colors = "";
+
 
         saveDTO.getSkill().stream()
                 .map((skillName) -> {
                     return Skill.builder()
                             .name(skillName)
-                            .color(colors)
                             .role(sessionUser.getRole())
                             .resume(resume)
                             .build();

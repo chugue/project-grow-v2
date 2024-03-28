@@ -70,6 +70,10 @@ public class Skill {
         else if(name.equals("Vue.js")){
             colorClass = "badge bg-info";
         }
+        else if(name.equals("MySql")){
+            colorClass = "badge bg-info";
+        }
+
         return ResumeResponse.SkillDTO.builder()
             .id(this.id)
             .name(this.name)

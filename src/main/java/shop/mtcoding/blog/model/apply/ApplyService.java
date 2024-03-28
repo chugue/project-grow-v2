@@ -42,34 +42,35 @@ public class ApplyService {
 
     // 신청테이블 뿌리기
     public ApplyResponse.stateViewDTO findAll(Integer id){
+
         //1. 지원테이블 뿌리기 (뿌리기 완성)
         //2. sessionUser만 지원한 지원테이블 뿌리기(뿌리기 완성)
-
-        List<Apply> applies =  applyJPARepo.findAll();
+        //3. 지원한 테이블 카운트(완성)
 
         User sessionUser = userJPARepo.findById(id)
                 .orElseThrow(() -> new Exception401("로그인이 필요한 서비스 입니다"));
         ApplyResponse.stateViewDTO stateDTO = new ApplyResponse.stateViewDTO();
 
+        List<Apply> applies =  applyJPARepo.findAll();
 
+        //신청 이력석 카운트
         Integer applyCount = Math.toIntExact(applies.stream()
                 .filter(apply -> apply.getResume().getUser().getId().equals(sessionUser.getId()))
                 .count());
 
+        //대기중 카운트
         Integer waitCount = Math.toIntExact(applies.stream()
                 .filter(apply -> apply.getResume().getUser().getId().equals(sessionUser.getId()))
                 .filter(apply -> apply.getIsPass().equals("2"))
                 .count());
 
+        //결과 카운트
         Integer resultCount = Math.toIntExact(applies.stream()
                 .filter(apply -> apply.getResume().getUser().getId().equals(sessionUser.getId()))
                 .filter(apply -> "3".equals(apply.getIsPass()) || "4".equals(apply.getIsPass()))
                 .count());
 
-//        Integer resultCount = Math.toIntExact(applies.stream()
-//                .filter(apply -> "3".equals(apply.getIsPass()) && "4".equals(apply.getIsPass()))
-//                .count());
-
+        //sessionUser 의 지원한 공고 리스트
         List<ApplyResponse.ApplyUserViewDTO> listDTO = applies.stream()
                 .filter(apply -> apply.getResume().getUser().getId() == sessionUser.getId())
                 .map(apply -> ApplyResponse.ApplyUserViewDTO.builder()
@@ -87,7 +88,7 @@ public class ApplyService {
         stateDTO.setWaitCount(waitCount);
         stateDTO.setResultCount(resultCount);
         stateDTO.setApplys(listDTO);
-        //3. 지원한 테이블 카운트 세기
+
 
         return stateDTO;
     }

@@ -1,19 +1,22 @@
 package shop.mtcoding.blog.model.apply;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import shop.mtcoding.blog.model.user.User;
 
 @RequiredArgsConstructor
 @Controller
 public class ApplyController {
     private final ApplyService applyService;
-
+    private final HttpSession session;
     @PostMapping("/jobs/apply")
     public String applySave(@RequestParam(name = "jobsId") Integer jobsId, @RequestParam(name = "resumeId") Integer resumeId) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
         applyService.newApply(jobsId,resumeId);
 
-        return "redirect:/";
+        return "redirect:/user/"+sessionUser.getId()+"/user-home";
     }
 
     @PutMapping("/apply/pass/{id}")
