@@ -1,9 +1,11 @@
 package shop.mtcoding.blog.model.jobs;
 
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.skill.Skill;
@@ -23,8 +25,7 @@ public class JobsService {
     private final JobsJPARepository jobsRepo;
     private final UserJPARepository userRepo;
     private final SkillJPARepository skillRepo;
-
-
+    private final HttpSession session;
 
     public JobsResponse.DetailDTO DetailDTO (Integer jobsId){
         Jobs jobs = jobsRepo.findById(jobsId)
@@ -36,7 +37,6 @@ public class JobsService {
         JobsResponse.DetailDTO detailDTO = new JobsResponse.DetailDTO(jobs, user, skillList);
         return detailDTO;
     }
-
 
     public List<JobsResponse.ListDTO> listDTOS() {
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
@@ -56,6 +56,31 @@ public class JobsService {
                     .skills(skillList).build());
         }
         return listDTOS;
+    }
+
+    public void save(JobsRequest.JobWriterDTO reqDTO) {
+
+        // 인증체크
+        User sessionComp = (User) session.getAttribute("sessionComp");
+        if (sessionComp == null) {
+            throw new Exception401("로그인이 필요한 서비스입니다");
+        }
+
+        // 공고작성 하기
+        Jobs jobs = reqDTO.toEntity(sessionComp);
+        jobsRepo.save(jobs);
+
+        // 스킬뿌리기
+        reqDTO.getSkill().stream().map((skill) -> {
+            return Skill.builder()
+                    .name(skill)
+                    .role(sessionComp.getRole())
+                    .jobs(jobs)
+                    .build();
+        }).forEach(skill -> {
+            // 반복문으로 스킬 돌면서 뿌림
+            skillRepo.save(skill);
+        });
     }
 }
 
