@@ -35,7 +35,7 @@ public class CompController {
         User newSessionUser = compService.findById(sessionUser.getId());
         request.setAttribute("user", newSessionUser);
 
-        return "/user/update-form";
+        return "/comp/update-form";
     }
 
     @GetMapping("/comp/comp-index")
