@@ -19,6 +19,7 @@ import shop.mtcoding.blog.model.skill.SkillJPARepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -87,30 +88,22 @@ public class UserService {
 
 
     //유저 홈 리스트
-    public List<ResumeRequest.UserViewDTO> userHome() {
-//        List<Resume> resumeList = resumeRepo.findAll();
-//        User sessionUser = (User) session.getAttribute("sessionUser");
-////        for (int i = 0; i < resumeList.size(); i++) {
-////            User user = userRepo.findById(resumeList.get(i).getUser().getId())
-////                    .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
-////
-////            List<Skill> skillList = skillRepo.findAllById(resumeList.get(i).getId());
-////
-////            listDTO.add(ResumeRequest.UserViewDTO.builder()
-////                    .resume(resumeList.get(i))
-////                    .skills(skillList)
-////                    .build());
-////        }
-////        System.out.println(listDTO.toString());
-////        return listDTO;
+
+    public List<ResumeRequest.UserViewDTO> userHome(Integer sessionUserId) {
+        List<Resume> resumeList = resumeRepo.findAll();
+        User sessionUser = userRepo.findById(sessionUserId)
+                .orElseThrow(() -> new Exception404("사용자 정보를 찾을 수 없습니다."));
+//        for (int i = 0; i < resumeList.size(); i++) {
+//            User user = userRepo.findById(resumeList.get(i).getUser().getId())
+//                    .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
 //
-//        List<ResumeRequest.UserViewDTO> listDTO = resumeList.stream()
-//                .filter(resume -> resume.getUser().getId() == sessionUser.getId()) // Filter resumes by ID = 1
-//                .map(resume -> ResumeRequest.UserViewDTO.builder()
-//                        .resume(resume)
-//                        .skills(resume.getSkillList())
-//                        .build())
-//                .collect(Collectors.toList());
+        List<ResumeRequest.UserViewDTO> listDTO = resumeList.stream()
+                .filter(resume -> resume.getUser().getId() == sessionUser.getId()) // Filter resumes by ID = 1
+                .map(resume -> ResumeRequest.UserViewDTO.builder()
+                        .resume(resume)
+                        .skills(resume.getSkillList())
+                        .build())
+                .collect(Collectors.toList());
 
         return  listDTO;
     }
@@ -122,14 +115,7 @@ public class UserService {
         System.out.println(requestDTO);
         User user = userRepo.findById(sessionUser.getId())
                 .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
-
         user.update(requestDTO);
-//        user.setPassword(requestDTO.getPassword());
-//        user.setMyName(requestDTO.getMyName());
-//        user.setBirth(requestDTO.getBirth());
-//        user.setPhone(requestDTO.getPhone());
-//        user.setAddress(requestDTO.getAddress());
-
         return user;
     }
 
