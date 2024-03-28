@@ -88,29 +88,29 @@ public class UserService {
 
     //유저 홈 리스트
     public List<ResumeRequest.UserViewDTO> userHome() {
-        List<Resume> resumeList = resumeRepo.findAll();
-        User sessionUser = (User) session.getAttribute("sessionUser");
-//        for (int i = 0; i < resumeList.size(); i++) {
-//            User user = userRepo.findById(resumeList.get(i).getUser().getId())
-//                    .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
+//        List<Resume> resumeList = resumeRepo.findAll();
+//        User sessionUser = (User) session.getAttribute("sessionUser");
+////        for (int i = 0; i < resumeList.size(); i++) {
+////            User user = userRepo.findById(resumeList.get(i).getUser().getId())
+////                    .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
+////
+////            List<Skill> skillList = skillRepo.findAllById(resumeList.get(i).getId());
+////
+////            listDTO.add(ResumeRequest.UserViewDTO.builder()
+////                    .resume(resumeList.get(i))
+////                    .skills(skillList)
+////                    .build());
+////        }
+////        System.out.println(listDTO.toString());
+////        return listDTO;
 //
-//            List<Skill> skillList = skillRepo.findAllById(resumeList.get(i).getId());
-//
-//            listDTO.add(ResumeRequest.UserViewDTO.builder()
-//                    .resume(resumeList.get(i))
-//                    .skills(skillList)
-//                    .build());
-//        }
-//        System.out.println(listDTO.toString());
-//        return listDTO;
-
-        List<ResumeRequest.UserViewDTO> listDTO = resumeList.stream()
-                .filter(resume -> resume.getUser().getId() == sessionUser.getId()) // Filter resumes by ID = 1
-                .map(resume -> ResumeRequest.UserViewDTO.builder()
-                        .resume(resume)
-                        .skills(resume.getSkillList())
-                        .build())
-                .collect(Collectors.toList());
+//        List<ResumeRequest.UserViewDTO> listDTO = resumeList.stream()
+//                .filter(resume -> resume.getUser().getId() == sessionUser.getId()) // Filter resumes by ID = 1
+//                .map(resume -> ResumeRequest.UserViewDTO.builder()
+//                        .resume(resume)
+//                        .skills(resume.getSkillList())
+//                        .build())
+//                .collect(Collectors.toList());
 
         return  listDTO;
     }
