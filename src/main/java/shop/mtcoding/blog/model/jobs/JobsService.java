@@ -84,5 +84,15 @@ public class JobsService {
             skillRepo.save(skill);
         });
     }
+
+    @Transactional
+    public void delete(Integer id) {
+        User sessionComp = (User) session.getAttribute("sessionComp");
+        if (sessionComp == null) {
+            throw new Exception401("로그인이 필요한 서비스입니다");
+        }
+
+        jobsRepo.deleteById(id);
+    }
 }
 

@@ -66,4 +66,12 @@ public class JobsController {
 
         return "redirect:/comp/" + sessionComp.getId() + "/comp-home";
     }
+
+    @PostMapping("/jobs/{id}/delete")
+    public String delete(@PathVariable Integer id) {
+        User sessionComp = (User)session.getAttribute("sessionComp");
+        jobsService.delete(id);
+
+        return "redirect:/comp/" + sessionComp.getId() + "/comp-home";
+    }
 }
