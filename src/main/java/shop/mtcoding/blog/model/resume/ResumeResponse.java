@@ -10,6 +10,7 @@ import shop.mtcoding.blog.model.user.User;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class ResumeResponse {
         private String career;
         private String portLink;
         private Integer userId;
-        private List<SkillDTO2> skillList;
+        private List<SkillDTO2> skillList = new ArrayList<>();
 
         @Builder
         public DetailDTO(Resume resume, User user, List<Skill> skillList) {
@@ -36,8 +37,9 @@ public class ResumeResponse {
             this.introduce = resume.getIntroduce();
             this.career = resume.getCareer();
             this.portLink = resume.getPortLink();
-            this.userId = user.getId();
-            this.skillList = skillList.stream().map(skill -> new SkillDTO2(skill)).collect(Collectors.toList());
+            this.userId = resume.getUser().getId();
+            this.skillList = resume.getSkillList().stream().map(skill ->
+                    new SkillDTO2(skill)).toList();
         }
 
         @Data
