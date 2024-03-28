@@ -1,13 +1,20 @@
 package shop.mtcoding.blog.model.apply;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.jobs.JobsJPARepository;
 import shop.mtcoding.blog.model.jobs.JobsService;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeJPARepository;
+import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.user.UserJPARepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service // IoC 에 등록된다.
@@ -15,6 +22,8 @@ public class ApplyService {
     private final ApplyJPARepository applyJPARepo;
     private final JobsJPARepository jobsJPARepo;
     private final ResumeJPARepository resumeJPARepo;
+    private final HttpSession session;
+    private final UserJPARepository userJPARepo;
 
     public void t (Integer resumeId) {
         applyJPARepo.findAppliesByNot1ByResumeId(resumeId);
@@ -29,4 +38,59 @@ public class ApplyService {
         Apply apply = Apply.builder().jobs(jobs).resume(resume).isPass("2").build();
         applyJPARepo.save(apply);
     }
+
+
+    // 신청테이블 뿌리기
+    public ApplyResponse.stateViewDTO findAll(Integer id){
+        //1. 지원테이블 뿌리기 (뿌리기 완성)
+        //2. sessionUser만 지원한 지원테이블 뿌리기(뿌리기 완성)
+
+        List<Apply> applies =  applyJPARepo.findAll();
+
+        User sessionUser = userJPARepo.findById(id)
+                .orElseThrow(() -> new Exception401("로그인이 필요한 서비스 입니다"));
+        ApplyResponse.stateViewDTO stateDTO = new ApplyResponse.stateViewDTO();
+
+
+        Integer applyCount = Math.toIntExact(applies.stream()
+                .filter(apply -> apply.getResume().getUser().getId().equals(sessionUser.getId()))
+                .count());
+
+        Integer waitCount = Math.toIntExact(applies.stream()
+                .filter(apply -> apply.getResume().getUser().getId().equals(sessionUser.getId()))
+                .filter(apply -> apply.getIsPass().equals("2"))
+                .count());
+
+        Integer resultCount = Math.toIntExact(applies.stream()
+                .filter(apply -> apply.getResume().getUser().getId().equals(sessionUser.getId()))
+                .filter(apply -> "3".equals(apply.getIsPass()) || "4".equals(apply.getIsPass()))
+                .count());
+
+//        Integer resultCount = Math.toIntExact(applies.stream()
+//                .filter(apply -> "3".equals(apply.getIsPass()) && "4".equals(apply.getIsPass()))
+//                .count());
+
+        List<ApplyResponse.ApplyUserViewDTO> listDTO = applies.stream()
+                .filter(apply -> apply.getResume().getUser().getId() == sessionUser.getId())
+                .map(apply -> ApplyResponse.ApplyUserViewDTO.builder()
+                        .id(apply.getId())
+                        .user(apply.getResume().getUser())
+                        .isPass(apply.getIsPass())
+                        .resume(apply.getResume())
+                        .jobs(apply.getJobs())
+                        .build())
+                .collect(Collectors.toList());
+
+        System.out.println(listDTO);
+
+        stateDTO.setApplyCount(applyCount);
+        stateDTO.setWaitCount(waitCount);
+        stateDTO.setResultCount(resultCount);
+        stateDTO.setApplys(listDTO);
+        //3. 지원한 테이블 카운트 세기
+
+        return stateDTO;
+    }
+
+
 }

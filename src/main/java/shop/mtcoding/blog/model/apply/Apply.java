@@ -43,4 +43,6 @@ public class Apply {
         this.isPass = isPass;
         this.createdAt = createdAt;
     }
+
+
 }
