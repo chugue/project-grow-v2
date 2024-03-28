@@ -12,6 +12,30 @@ import java.util.stream.Collectors;
 public class UserResponse {
 
     @Data
+    public static class UserJobsSkillDTO {
+        //user
+        private Integer id;
+        private String compName;
+        //jobs
+        private String jobsTitle;
+        private String jobsCareer;
+        //Apply
+        private String isPass;
+        //skill
+        private List<SkillDTO> skillList;
+
+        @Builder
+        public UserJobsSkillDTO(Integer id, String compName, String jobsTitle, String jobsCareer, String isPass, List<SkillDTO> skillList) {
+            this.id = id;
+            this.compName = compName;
+            this.jobsTitle = jobsTitle;
+            this.jobsCareer = jobsCareer;
+            this.isPass = isPass;
+            this.skillList = skillList;
+        }
+    }
+
+    @Data
     public static class UserResumeSkillDTO {
         private Integer id;
         private String myName;

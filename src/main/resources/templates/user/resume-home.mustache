@@ -28,8 +28,9 @@
                                 <th class="center-align col"></th>
                             </tr>
                             </thead>
-                            <tbody>
                             {{#userResumeSkill}}
+                            <tbody>
+
                                 <tr class="offer-table">
                                     <th scope="row">{{id}}</th>
                                     <td>{{myName}}</td>
@@ -38,7 +39,7 @@
                                     <td>
                                         <div class="new-skill-box">
                                             {{#skillList}}
-                                                <div class="{{color}}">{{name}}</div>
+                                                <div class="">{{name}}</div>
                                             {{/skillList}}
                                         </div>
                                     </td>
@@ -55,17 +56,13 @@
                                                 <button type="submit" class="btn btn-mint offer-table-btn">지원내역</button>
                                             </form>
                                         </div>
-                                        <!--                                    <div class="new-create-button">-->
-                                        <!--                                        <form action="/apply/fail/update/{{id}}" method="post">-->
-                                        <!--                                            <input type="hidden" name="jobsId" value="jobsId">-->
-                                        <!--                                            <button type="submit" class="btn btn-mint offer-table-btn">불합격</button>-->
-                                        <!--                                        </form>-->
-                                        <!--                                    </div>-->
                                     </td>
                                 </tr>
+                                </tbody>
                             {{/userResumeSkill}}
                         </table>
                     </div>
+
                 </div>
 
                 <div class="components" style="height: 50px;"></div>
