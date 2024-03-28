@@ -7,14 +7,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-
 public interface SkillJPARepository extends JpaRepository<Skill, Integer> {
 
     @Query("select s from Skill s where s.jobs.id = :jobsId")
     List<Skill> findAllById(@Param("jobsId") Integer jobsId);
-
-    @Query("select s from Skill s where s.resume.id = :resumeId")
-    List<Skill> findAllByResumeId(@Param("resumeId") Integer resumeId);
 
     @Query("select s from Skill s where s.jobs.id = :jobsId")
     List<Skill> findAllByJobsId(@Param("jobsId") Integer jobsId);
@@ -31,4 +27,7 @@ public interface SkillJPARepository extends JpaRepository<Skill, Integer> {
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("delete from Skill s where s.jobs.id = :jobsId")
     void deleteByJobsId(@Param("jobsId") Integer jobsId);
+
+    @Query("select s from Skill s where s.resume.id = :resumeId")
+    List<Skill> findAllByResumeId(@Param("resumeId") Integer a);
 }

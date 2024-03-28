@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.util.ApiUtil;
+import shop.mtcoding.blog.model.apply.Apply;
+import shop.mtcoding.blog.model.apply.ApplyResponse;
+import shop.mtcoding.blog.model.apply.ApplyService;
 import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.jobs.JobsService;
 import shop.mtcoding.blog.model.resume.ResumeRequest;
@@ -23,6 +26,33 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
     private final ResumeService resumeService;
+    private final ApplyService applyService;
+
+
+
+
+    //user의 지원 내역
+    @GetMapping("/user/{id}/resume-home")
+    public String resumeHome(@PathVariable Integer id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = userService.findById(sessionUser.getId());
+
+        Integer resumeId = 1; // 지워야함
+
+        List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO = userService.userResumeSkillDTO(newSessionUser.getId(), resumeId);
+        //No 카운트 뽑으려고 for문 돌림
+        for (int i = 0; i < userResumeSkillDTO.size(); i++) {
+            userResumeSkillDTO.get(i).setId(i + 1);
+        }
+
+
+        request.setAttribute("user", sessionUser);
+        request.setAttribute("userResumeSkill", userResumeSkillDTO);
+
+//        return "redirect:/";
+        return "/user/resume-home";
+    }
+
 
     @GetMapping("/user/join-form")
     public String joinForm() {
@@ -127,11 +157,13 @@ public class UserController {
     public String userHome(@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
 
-        List<ResumeRequest.UserViewDTO> resumeList = userService.userHome();
+        List<ResumeRequest.UserViewDTO> resumeList = userService.userHome(sessionUser.getId());
+        ApplyResponse.stateViewDTO applies = applyService.findAll(id);
 
+        System.out.println("결과값=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n"+applies);
         request.setAttribute("resumeList", resumeList);
         request.setAttribute("sessionUserId", sessionUser.getId());
-
+        request.setAttribute("applyState",applies);
         return "/user/user-home";
     }
 

@@ -45,6 +45,13 @@ public class CompController {
         return "comp/comp-index";
     }
 
+    @GetMapping("/comp/read-resume")
+    public String readResume(HttpServletRequest request) {
+        List<CompResponse.ResumeUserSkillDTO> rusList = compService.findAllRusList();
+        request.setAttribute("rusList", rusList);
+        return "/comp/read-resume";
+    }
+
     @GetMapping("/comp/{id}/comp-home")
     public String compHome(@PathVariable Integer id, HttpServletRequest request) {
         List<JobsResponse.JobsListDTO> jobsList = compService.findAllJobsId(id);
@@ -53,6 +60,8 @@ public class CompController {
 
         return "/comp/comp-home";
     }
+
+
 
     @GetMapping("/comp/{id}/apply")
     public String offer(@PathVariable Integer id) {
@@ -81,14 +90,7 @@ public class CompController {
         return "/comp/profile-update-form";
     }
 
-    @GetMapping("/comp/read-resume")
-    public String readResume(HttpServletRequest request) {
 
-        List<ResumeResponse.ResumeDTO> resumes = resumeService.findAll();
-        request.setAttribute("readResumeList", resumes);
-
-        return "/comp/read-resume";
-    }
 
     @GetMapping("/comp/{id}/scrap")
     public String scrap(@PathVariable Integer id) {

@@ -20,6 +20,7 @@ public class ResumeRequest {
         private String introduce;
         private String portLink;
         private List<String> skill;
+
     }
 
     @Data
