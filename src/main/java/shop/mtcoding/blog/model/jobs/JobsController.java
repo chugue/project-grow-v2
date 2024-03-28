@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
+import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.user.User;
 
 import java.util.List;
@@ -73,5 +74,26 @@ public class JobsController {
         jobsService.delete(id);
 
         return "redirect:/comp/" + sessionComp.getId() + "/comp-home";
+    }
+
+    @PostMapping("/jobs/{id}/update")
+    public String update(@PathVariable Integer id, JobsRequest.UpdateDTO reqDTO) {
+        User sessionComp = (User)session.getAttribute("sessionComp");
+        jobsService.update(id, reqDTO);
+
+        return "redirect:/comp/" + sessionComp.getId() + "/comp-home";
+    }
+
+    @GetMapping("/jobs/{id}/update-jobs-form")
+    public String updateForm (@PathVariable Integer id, HttpServletRequest request) {
+        User sessionComp = (User)session.getAttribute("sessionComp");
+
+        // sessionComp 라고 주면 오류나서 sessionC라고 하였음
+        request.setAttribute("sessionC", sessionComp);
+
+        JobsResponse.JobUpdateDTO job = jobsService.updateForm(id);
+        request.setAttribute("job", job);
+
+        return "/jobs/update-jobs-form";
     }
 }

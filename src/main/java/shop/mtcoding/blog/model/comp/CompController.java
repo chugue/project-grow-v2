@@ -50,7 +50,6 @@ public class CompController {
         List<JobsResponse.JobsListDTO> jobsList = compService.findAllJobsId(id);
         request.setAttribute("jobList", jobsList);
         request.setAttribute("sessionC", id);
-        System.out.println(jobsList.toString());
 
         return "/comp/comp-home";
     }

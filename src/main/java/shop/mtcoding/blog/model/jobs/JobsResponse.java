@@ -4,7 +4,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.blog.model.resume.Resume;
+import shop.mtcoding.blog.model.resume.ResumeRequest;
 import shop.mtcoding.blog.model.skill.Skill;
+import shop.mtcoding.blog.model.skill.SkillRequest;
+import shop.mtcoding.blog.model.skill.SkillResponse;
 import shop.mtcoding.blog.model.user.User;
 
 import java.time.LocalDate;
@@ -156,6 +159,56 @@ public class JobsResponse {
         }
     }
 
+    @Data
+    public static class JobUpdateDTO {
+        private Integer id;
+        private String compName;
+        private String phone;
+        private String businessNumber;
+        private String homepage;
+        private String title;
+        private String edu;
+        private String career;
+        private String content;
+        private String area;
+        private LocalDate deadLine;
+        private String task;
+        private SkillResponse.SkillCheckedDTO skillChecked;
+
+        @Builder
+        public JobUpdateDTO(Integer id, String compName, String phone, String businessNumber, String homepage, String title, String edu, String career, String content, String area, LocalDate deadLine, String task, SkillResponse.SkillCheckedDTO skillChecked) {
+            this.id = id;
+            this.compName = compName;
+            this.phone = phone;
+            this.businessNumber = businessNumber;
+            this.homepage = homepage;
+            this.title = title;
+            this.edu = edu;
+            this.career = career;
+            this.content = content;
+            this.area = area;
+            this.deadLine = deadLine;
+            this.task = task;
+            this.skillChecked = skillChecked;
+        }
+    }
+
+    @Data
+    public static class saveDTO {
+        private Integer id;
+        private String compName;
+        private String phone;
+        private String businessNumber;
+        private String homepage;
+        private String title;
+        private String edu;
+        private String career;
+        private String content;
+        private String area;
+        private LocalDate deadLine;
+        private String task;
+        private List<String> skill;
+    }
 }
 
 

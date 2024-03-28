@@ -7,10 +7,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
+import shop.mtcoding.blog._core.errors.exception.Exception403;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
+import shop.mtcoding.blog.model.resume.Resume;
+import shop.mtcoding.blog.model.resume.ResumeRequest;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
+import shop.mtcoding.blog.model.skill.SkillResponse;
 import shop.mtcoding.blog.model.skill.SkillService;
 import shop.mtcoding.blog.model.user.User;
 import shop.mtcoding.blog.model.user.UserJPARepository;
@@ -94,5 +98,68 @@ public class JobsService {
 
         jobsRepo.deleteById(id);
     }
+
+    @Transactional
+    public void update(Integer id, JobsRequest.UpdateDTO reqDTO) {
+        Jobs jobs = jobsRepo.findById(id)
+                .orElseThrow(() -> new Exception404("해당 공고를 찾을 수 없습니다."));
+
+        User sessionComp = (User) session.getAttribute("sessionComp");
+        if (sessionComp.getId() != jobs.getUser().getId()) {
+            throw new Exception403("이력서를 수정할 권한이 없습니다");
+        }
+
+        jobs.setTitle(reqDTO.getTitle());
+        jobs.setEdu(reqDTO.getEdu());
+        jobs.setCareer(reqDTO.getCareer());
+        jobs.setContent(reqDTO.getContent());
+        jobs.setArea(reqDTO.getArea());
+        jobs.setDeadline(reqDTO.getDeadLine());
+        jobs.setTask(reqDTO.getTask());
+
+        List<Skill> skill = skillRepo.findAllByJobsId(id);
+
+
+    }
+
+    public JobsResponse.JobUpdateDTO updateForm(Integer id) {
+        Jobs jobs = jobsRepo.findById(id)
+                .orElseThrow(() -> new Exception404("이력서를 찾을 수 없습니다."));
+
+        User sessionComp = (User) session.getAttribute("sessionComp");
+        if (sessionComp.getId() != jobs.getUser().getId()) {
+            throw new Exception403("이력서를 수정할 권한이 없습니다");
+        }
+        List<Skill> skill = skillRepo.findAllByJobsId(id);
+        JobsResponse.JobUpdateDTO reqDTO = JobsResponse.JobUpdateDTO.builder()
+                .id(jobs.getId())
+                .compName(jobs.getUser().getCompName())
+                .phone(jobs.getUser().getPhone())
+                .businessNumber(jobs.getUser().getBusinessNumber())
+                .homepage(jobs.getUser().getHomepage())
+                .title(jobs.getTitle())
+                .edu(jobs.getEdu())
+                .career(jobs.getCareer())
+                .content(jobs.getContent())
+                .area(jobs.getArea())
+                .deadLine(jobs.getDeadline())
+                .task(jobs.getTask())
+                .skillChecked(new SkillResponse.SkillCheckedDTO(skill)).build();
+        return reqDTO;
+    }
+
+//    @Transactional
+//    public void update(int id, int sessionUserId, ResumeRequest.UpdateDTO reqDTO){
+//        // 1. 조회 및 예외처리
+//        Resume resume = resumeJPARepo.findById(id)
+//                .orElseThrow(() -> new Exception404("해당 이력서를 찾을 수 없습니다"));
+//        // 2. 권한 처리
+//        if (sessionUserId != resume.getUser().getId()) {
+//            throw new Exception403("이력서를 수정할 권한이 없습니다");
+//        }
+//        // 3. 이력서 수정하기
+//        resume.setResumeUpdate(reqDTO);
+//        System.out.println("수정된 데이터 : " +reqDTO);
+//    } // 더티체킹
 }
 
