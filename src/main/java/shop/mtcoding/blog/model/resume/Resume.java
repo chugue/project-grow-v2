@@ -89,4 +89,5 @@ public class Resume {
         this.introduce = reqDTO.getIntroduce();
         this.portLink = reqDTO.getPortLink();
     }
+
 }

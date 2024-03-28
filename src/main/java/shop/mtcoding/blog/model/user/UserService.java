@@ -19,6 +19,7 @@ import shop.mtcoding.blog.model.skill.SkillJPARepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -33,7 +34,6 @@ public class UserService {
 
     public List<UserResponse.UrsDTO> ursDTOS (Integer userId, Integer resumeId) {
         List<Apply> applyList = applyRepo.findAppliesByNot1ByResumeId(resumeId);
-
         List<UserResponse.UrsDTO> jobsSkillList = new ArrayList<>();
 
         User user = userRepo.findById(userId)
