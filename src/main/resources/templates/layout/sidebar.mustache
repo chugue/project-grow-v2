@@ -13,7 +13,7 @@
                         <a href="/user/profile-update-form"
                            onclick="window.open(this.href, '_blank', 'width=1200,height=900,toolbars=no,scrollbars=no, resizable=no'); return false;">
                             <div class="user-img">
-                                <img src="/upload/{{imgFileName}}" class="rounded" alt="Cinque Terre"
+                                <img src="/upload/{{sessionUser.imgFileName}}" class="rounded" alt="Cinque Terre"
                                      style="max-width: 80px;">
                             </div>
                         </a>
@@ -33,7 +33,7 @@
 
 
 
-                            <a id="offer" href="/resume/{{sessionUser.id}}/resume-home" class="nav-link sub-menu a p-1 mb-1">지원 내역</a>
+                            <a id="offer" href="/user/{{sessionUser.id}}/resume-home" class="nav-link sub-menu a p-1 mb-1">지원 내역</a>
 
 
 

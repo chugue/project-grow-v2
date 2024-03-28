@@ -12,6 +12,9 @@ public interface SkillJPARepository extends JpaRepository<Skill, Integer> {
     @Query("select s from Skill s where s.jobs.id = :jobsId")
     List<Skill> findAllById(@Param("jobsId") Integer jobsId);
 
+    @Query("select s from Skill s where s.jobs.id = :jobsId")
+    List<Skill> findAllByJobsId(@Param("jobsId") Integer jobsId);
+
     @Query("select s from Skill s where s.resume.id = :resumeId")
     List<Skill> findAllByResumeId(@Param("resumeId") Integer a);
 

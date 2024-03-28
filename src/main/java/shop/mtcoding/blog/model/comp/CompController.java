@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
 import shop.mtcoding.blog.model.user.User;
@@ -32,23 +33,25 @@ public class CompController {
     public String updateForm(@PathVariable int id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User newSessionUser = compService.findById(sessionUser.getId());
-        request.setAttribute("sessionUser", newSessionUser);
+        request.setAttribute("user", newSessionUser);
 
-        return "/user/update-form";
+        return "/comp/update-form";
     }
 
     @GetMapping("/comp/comp-index")
     public String compIndex(HttpServletRequest request) {
-
-
-        List<ResumeResponse.ResumeDTO> resumes = resumeService.findAll();
-        request.setAttribute("readResumeList", resumes);
-
+        List<CompResponse.ResumeUserSkillDTO> rusList = compService.findAllRusList();
+        request.setAttribute("rusList", rusList);
         return "comp/comp-index";
     }
 
     @GetMapping("/comp/{id}/comp-home")
-    public String compHome(@PathVariable Integer id) {
+    public String compHome(@PathVariable Integer id, HttpServletRequest request) {
+        List<JobsResponse.JobsListDTO> jobsList = compService.findAllJobsId(id);
+        request.setAttribute("jobList", jobsList);
+        request.setAttribute("sessionC", id);
+        System.out.println(jobsList.toString());
+
         return "/comp/comp-home";
     }
 
@@ -66,12 +69,16 @@ public class CompController {
 
     @PostMapping("/comp/join")
     public String compJoin(CompRequest.CompJoinDTO reqDTO) {
-        compService.join(reqDTO);
+        User user = compService.join(reqDTO);
+        session.setAttribute("sessionComp", user);
         return "redirect:/comp/read-resume";
     }
 
     @GetMapping("/comp/profile-update-form")
-    public String profileUpdateForm() {
+    public String profileUpdateForm(HttpServletRequest request) {
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        request.setAttribute("imgFileName",sessionUser.getImgFileName());
         return "/comp/profile-update-form";
     }
 

@@ -61,7 +61,7 @@ public class ResumeService {
         return resume;
     }
 
-    //이력서 신청
+
     @Transactional
     public void update(int id, int sessionUserId, ResumeRequest.UpdateDTO reqDTO){
         // 1. 조회 및 예외처리
@@ -80,6 +80,8 @@ public class ResumeService {
         System.out.println("수정된 데이터 : " +reqDTO);
     } // 더티체킹
 
+
+    //이력서 신청
     @Transactional
     public void save(ResumeRequest.SaveDTO saveDTO) {
         //1. 인증처리 : 유저가 세션을가지고있는지 로그인상태 확인
@@ -87,23 +89,31 @@ public class ResumeService {
         if (sessionUser == null) {
             throw new Exception401("로그인이 필요한 서비스입니다");
         }
+
         //2. 이력서 작성
         Resume resume = saveDTO.toEntity(sessionUser);
         resumeJPARepo.save(resume);
-        System.out.println("============================" + resume.getId());
+        System.out.println("------------------" + resume.getId());
 
         // 3. 스킬 작성
+
+        String colors = "";
+
         saveDTO.getSkill().stream()
-                .map((skilName) -> {
+                .map((skillName) -> {
                     return Skill.builder()
-                            .name(skilName)
+                            .name(skillName)
+                            .color(colors)
                             .role(sessionUser.getRole())
                             .resume(resume)
                             .build();
                 })
+
                 .forEach((skill) -> {
                     skillJPARepo.save(skill);
+
                 });
+
     }
 
     //이력서 삭제
@@ -123,7 +133,7 @@ public class ResumeService {
         }
 
         //3. 삭제하기
-        resumeJPARepo.delete(resume);
+        resumeJPARepo.deleteById(resume.getId());
     }
 
 }

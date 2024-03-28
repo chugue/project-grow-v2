@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Controller
 public class ApplyController {
-
     private final ApplyService applyService;
 
     @PostMapping("/jobs/apply")
-    public String applySave() {
+    public String applySave(@RequestParam(name = "jobsId") Integer jobsId, @RequestParam(name = "resumeId") Integer resumeId) {
+        applyService.newApply(jobsId,resumeId);
 
         return "redirect:/";
     }

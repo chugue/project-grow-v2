@@ -31,7 +31,7 @@ public class ResumeController {
         return "/resume/manage-resume";
     }
 
-    @GetMapping("/resume/write-resume-form")
+    @GetMapping("/resume/{id}/write-resume-form")
     public String writeResumeForm() {
 
         return "/resume/write-resume-form";
@@ -57,33 +57,19 @@ public class ResumeController {
 
     @PostMapping("/resume/save")
     public String save(ResumeRequest.SaveDTO reqDTO) {
-
+        User sessionUser = (User) session.getAttribute("sessionUser");
         resumeService.save(reqDTO);
-        return "redirect:/";
+        return "redirect:/user/"+sessionUser.getId()+"/user-home";
     }
 
     @PostMapping("/resume/{id}/delete")
-    public String delete(@PathVariable int id) {
+    public String delete(@PathVariable Integer id) {
 
         resumeService.delete(id);
 
-        return "redirect:/user/user-home";
+        return "redirect:/user/"+id+"/user-home";
 
     }
 
-
-    @GetMapping("/resume/{id}/resume-home")
-    public String resumeHome(@PathVariable Integer id, HttpServletRequest request) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        //조회하고 들어가는게 맞지않아요?
-
-        List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO = userService.UserResumeSkillDTO(sessionUser.getId());
-
-        request.setAttribute("user", sessionUser);
-        request.setAttribute("userResumeSkill", userResumeSkillDTO);
-
-//        return "redirect:/";
-        return "/resume/resume-home";
-    }
 
 }

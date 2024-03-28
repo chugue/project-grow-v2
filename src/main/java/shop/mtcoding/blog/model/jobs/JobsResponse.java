@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class JobsResponse {
 
     @Data
-    public static class DetailDTO{
+    public static class DetailDTO {
         private Integer id;
         private String title;
         private String area;
@@ -41,12 +41,13 @@ public class JobsResponse {
     }
 
     @Data
-    public static class UserDetailDTO{
+    public static class UserDetailDTO {
         private Integer id;
         private String compName;
         private String phone;
         private String address;
         private String homepage;
+        private String imgFileName;
 
         @Builder
         public UserDetailDTO(User user) {
@@ -55,6 +56,7 @@ public class JobsResponse {
             this.phone = user.getPhone();
             this.address = user.getAddress();
             this.homepage = user.getHomepage();
+            this.imgFileName = user.getImgFileName();
         }
     }
 
@@ -86,13 +88,38 @@ public class JobsResponse {
     }
 
     @Data
+    public static class JobsListDTO {
+        private Integer id;
+        private String title;
+        private String career;
+        private String task;
+        private UserDTO user;
+        private List<SkillDTO> skills;
+
+        @Builder
+        public JobsListDTO(Jobs jobs, User user, List<Skill> skills) {
+            this.id = jobs.getId();
+            this.title = jobs.getTitle();
+            this.career = jobs.getCareer();
+            this.task = jobs.getTask();
+            this.user = new UserDTO(user);
+
+            this.skills = skills.stream()
+                    .map(skill -> new SkillDTO(skill))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    @Data
     public static class UserDTO {
         private Integer id;
-        private String myName;
+        private String compName;
+        private String imgFileName;
 
         public UserDTO(User user) {
             this.id = user.getId();
-            this.myName = user.getMyName();
+            this.compName = user.getCompName();
+            this.imgFileName = user.getImgFileName();
         }
     }
 

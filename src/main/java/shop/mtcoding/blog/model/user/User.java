@@ -45,7 +45,7 @@ public class User {
     private LocalDate createdAt;
 
     @Column
-    @ColumnDefault("'1e308313-4d3a-4997-b42c-d409e72034ec_noimage.png'")
+    @ColumnDefault("'2cfe3a66-74cb-4688-9f41-f417b1db694e_naver.jpg'")
     private String imgFileName;
 
     @Builder

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.util.ApiUtil;
+import shop.mtcoding.blog.model.apply.ApplyService;
 import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.jobs.JobsService;
 import shop.mtcoding.blog.model.resume.ResumeRequest;
@@ -23,6 +24,30 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
     private final ResumeService resumeService;
+    private final ApplyService applyService;
+
+    //user의 지원 내역
+    @GetMapping("/user/{id}/resume-home")
+    public String resumeHome(@PathVariable Integer id, @RequestParam ("resumeId") Integer resumeId, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = userService.findById(sessionUser.getId());
+
+        List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO = userService.userResumeSkillDTO(newSessionUser.getId(), resumeId);
+        //No 카운트 뽑으려고 for문 돌림
+        for (int i = 0; i < userResumeSkillDTO.size(); i++) {
+            userResumeSkillDTO.get(i).setId(i + 1);
+        }
+
+      List<UserResponse.UrsDTO> UrsDTOList = userService.ursDTOS(newSessionUser.getId(), resumeId);
+
+        request.setAttribute("user", sessionUser);
+        request.setAttribute("userResumeSkill", userResumeSkillDTO);
+        request.setAttribute("UrsDTOList", UrsDTOList);
+
+//        return "redirect:/";
+        return "/user/resume-home";
+    }
+
 
     @GetMapping("/user/join-form")
     public String joinForm() {
@@ -75,7 +100,7 @@ public class UserController {
                 return "redirect:/";
             } else if (role == 2) {
                 session.setAttribute("sessionComp", user);
-                return  "redirect:/comp/read-resume";
+                return  "redirect:/comp/comp-index";
 
             }
         }
@@ -127,7 +152,7 @@ public class UserController {
     public String userHome(@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
 
-        List<ResumeRequest.UserViewDTO> resumeList = userService.userHome(id);
+        List<ResumeRequest.UserViewDTO> resumeList = userService.userHome(sessionUser.getId());
 
         request.setAttribute("resumeList", resumeList);
         request.setAttribute("sessionUserId", sessionUser.getId());
