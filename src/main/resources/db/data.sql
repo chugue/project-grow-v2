@@ -1,6 +1,6 @@
 -- 사용자 테이블
 insert into user_tb(email, my_name, password, phone, address, birth, role, img_file_name,created_at)
-values ('bluepig4b@naver.com','심유주','1234','010-9011-5822','부산광역시 부산진구 범향빌딩 405호','1999-09-30',1,'0ff7e86a-d0db-4d7c-ad5b-bd68682ccb11_user01.png',now());
+values ('bluepig4b@naver.com','심유주','1234','010-9011-5822','부산광역시 부산진구 범향빌딩 405호','1999-09-30',1,'517f9d79-8671-40d0-bb5e-6d272e767a9d_user09.png',now());
 insert into user_tb(email, my_name, password, phone, address, birth, role, img_file_name,created_at)
 values ('blueocean@naver.com','이서현','1234','010-1555-5842','부산광역시 사상구 괘법동 234번지 괘법아파트','2000-10-06',1,'702385bb-c937-4204-a142-7583f908bfaf_user02.png',now());
 insert into user_tb(email, my_name, password, phone, address, birth, role, img_file_name,created_at)
