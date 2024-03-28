@@ -91,9 +91,9 @@ public class ResumeService {
 
         // 3. 스킬 작성
         saveDTO.getSkill().stream()
-                .map((skilName) -> {
+                .map((skillName) -> {
                     return Skill.builder()
-                            .name(skilName)
+                            .name(skillName)
                             .role(sessionUser.getRole())
                             .resume(resume)
                             .build();
@@ -101,6 +101,8 @@ public class ResumeService {
                 .forEach((skill) -> {
                     skillJPARepo.save(skill);
                 });
+
+
     }
 
     //이력서 삭제
