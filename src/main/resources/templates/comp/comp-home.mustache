@@ -20,14 +20,14 @@
                     </div>
                     <div class="components-div">
                         <table class="table table-hover offer-table scroll"
-                               style="text-align: center; border-top:2px solid #ddd">
+                               style="border-top:2px solid #ddd">
                             <thead>
                             <tr>
                                 <th>No</th>
                                 <th>현재 열린 공고</th>
                                 <th>포지션</th>
                                 <th>경력</th>
-                                <th>공고 관련</th>
+                                <th style="text-align: center">공고 관련</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -39,27 +39,27 @@
                                         <div>{{title}}</div>
 
                                         <div class="new-skill-box">
-                                            {{#skillList}}
+                                            {{#skills}}
                                                 <div class="{{color}}">{{name}}</div>
-                                            {{/skillList}}
+                                            {{/skills}}
                                         </div>
                                     </td>
                                     <td>{{task}}</td>
                                     <td>{{career}}</td>
 
-                                    <td class="d-flex justify-content-between ">
+                                    <td class="d-flex justify-content-between" style="height: 100%">
                                         <div class="new-create-button">
-                                            <a href="/comp/{{sessionComp.id}}/comphome?jobsId={{id}}">
+                                            <a href="/comp/{{sessionC}}/comphome?jobsId={{id}}">
                                             <button type="button" class="btn btn-mint offer-table-btn">지원자 보기</button>
                                             </a>
                                         </div>
                                         <div class="new-create-button">
-                                            <a href="/jobs/{{id}}/updateJobsForm">
+                                            <a href="/jobs/{{id}}/update-jobs-form">
                                                 <button type="button" class="btn btn-mint offer-table-btn">공고 수정</button>
                                             </a>
                                         </div>
                                         <div class="new-create-button">
-                                            <form action="/jobs/{{id}}/delete" method="post">
+                                            <form action="/jobs/{{id}}/delete" method="post" style="width: 100%">
                                                 <button class="btn btn-mint offer-table-btn">공고 삭제</button>
                                             </form>
                                         </div>
@@ -106,7 +106,7 @@
                                     <td style="text-align: right;">
                                         <div class="d-flex justify-content-end">
                                             <div class="new-create-button">
-                                                <form action="/resume/resumeDetail/{{id}}">
+                                                <form action="/resume/resume-detail/{{id}}">
                                                     <input type="hidden" name="jobsId" value="{{jobsId}}">
                                                     <button type="submit" class="btn btn-mint offer-table-btn">상세보기</button>
                                                 </form>

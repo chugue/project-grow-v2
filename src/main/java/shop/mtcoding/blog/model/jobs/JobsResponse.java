@@ -88,6 +88,29 @@ public class JobsResponse {
     }
 
     @Data
+    public static class JobsListDTO {
+        private Integer id;
+        private String title;
+        private String career;
+        private String task;
+        private UserDTO user;
+        private List<SkillDTO> skills;
+
+        @Builder
+        public JobsListDTO(Jobs jobs, User user, List<Skill> skills) {
+            this.id = jobs.getId();
+            this.title = jobs.getTitle();
+            this.career = jobs.getCareer();
+            this.task = jobs.getTask();
+            this.user = new UserDTO(user);
+
+            this.skills = skills.stream()
+                    .map(skill -> new SkillDTO(skill))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    @Data
     public static class UserDTO {
         private Integer id;
         private String compName;

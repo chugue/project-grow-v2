@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
@@ -58,6 +59,7 @@ public class JobsService {
         return listDTOS;
     }
 
+    @Transactional
     public void save(JobsRequest.JobWriterDTO reqDTO) {
 
         // 인증체크
