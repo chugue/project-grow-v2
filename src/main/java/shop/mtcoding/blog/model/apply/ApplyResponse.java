@@ -62,7 +62,7 @@ public class ApplyResponse {
         private Integer userId;
 
         @Builder
-        public ApplyUserViewDTO(Resume resume, Jobs jobs, String isPass, Integer id,User user) {
+        public ApplyUserViewDTO(Resume resume, Jobs jobs, String isPass, Integer id, User user) {
             this.id = id;
             this.resumeId = resume.getId();
             this.jobsId = jobs.getId();
