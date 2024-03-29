@@ -43,7 +43,6 @@ public class ResumeService {
         for (int i = 0; i < resumeDetailDTO.size(); i++) {
             List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
             resumeDetailDTO.add(ResumeResponse.DetailDTO.builder()
-                    .resume(resume)
                     .skillList(skills).build());
         }
 
