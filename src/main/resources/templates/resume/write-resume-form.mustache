@@ -69,8 +69,8 @@
                                             <tr>
                                                 <th>희망 근무 지역 <span class="red" style="color: red;"> (필수)</span></th>
                                                 <td>
-                                                    <select class="form-select" name="area" id="area">
-                                                        <option selected disabled>지역별</option>
+                                                    <select class="form-select" name="area" id="area" required>
+                                                        <option selected disabled value="">지역별</option>
                                                         <option value="서울특벽시">서울특별시</option>
                                                         <option value="부산광역시">부산광역시</option>
                                                         <option value="인천광역시">인천광역시</option>
@@ -88,7 +88,7 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <div class="form-group">
-                                                <input type="text" name="title" id="title" class="form-control">
+                                                <input type="text" name="title" id="title" class="form-control" required>
                                             </div>
                                         </div>
                                     </div>
@@ -99,8 +99,8 @@
                                     <div class="card-header resume-info-hdtitle">학력 사항<span style="color: red">(필수)</span></div>
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <select class="form-select" name="edu" id="edu">
-                                                <option selected>학력</option>
+                                            <select class="form-select" name="edu" id="edu" required>
+                                                <option selected value="">학력</option>
                                                 <option value="고졸">고졸</option>
                                                 <option value="대졸">대졸</option>
                                             </select>
@@ -112,8 +112,8 @@
                                     <div class="card-header resume-info-hdtitle">경력 사항<span style="color: red">(필수)</span></div>
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <select class="form-select" name="career" id="career">
-                                                <option selected>경력별</option>
+                                            <select class="form-select" name="career" id="career" required>
+                                                <option selected value="">경력별</option>
                                                 <option value="신입">신입</option>
                                                 <option value="미들">미들(4~8년)</option>
                                                 <option value="시니어">시니어(10년 이상)</option>
@@ -198,7 +198,7 @@
                                             <div class="card-body">
                                                 <div class="form-group">
                                                 <textarea class="form-control" name="introduce" id="introduce"
-                                                          rows="3"></textarea>
+                                                          rows="3" required></textarea>
                                                 </div>
                                             </div>
                                         </div>
