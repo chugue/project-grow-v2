@@ -28,7 +28,7 @@ public class ResumeResponse {
         private String portLink;
         private Integer userId;
         private List<SkillDTO2> skillList = new ArrayList<>();
-        private Boolean isOwner;
+//        private Boolean isOwner;
 
 
         @Builder
@@ -42,13 +42,13 @@ public class ResumeResponse {
             this.userId = resume.getUser().getId();
             this.skillList = resume.getSkillList().stream().map(skill ->
                     new SkillDTO2(skill)).toList();
-            this.isOwner = resume.isOwner();
-
-            if (sessionUser != null) {
-                if (sessionUser.getRole() == 2) {
-                    isOwner = true;
-                }
-            }
+//            this.isOwner = resume.isOwner();
+//
+//            if (sessionUser != null) {
+//                if (sessionUser.getRole() == 2) {
+//                    isOwner = true;
+//                }
+//            }
 
         }
 
