@@ -36,6 +36,9 @@ public class ResumeService {
     public Resume resumeDetail(Integer resumeId, User sessionUser) {
         Resume resume = resumeJPARepo.findByIdJoinUser(resumeId);
 
+        boolean isOwner = resume.getUser().equals(sessionUser);
+        resume.setOwner(isOwner);
+
         List<ResumeResponse.DetailDTO> resumeDetailDTO = new ArrayList<>();
         for (int i = 0; i < resumeDetailDTO.size(); i++) {
             List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());

@@ -131,45 +131,54 @@
             <div class="side-button">
                 <div id="rButton">
                     <br>
-                    <div class="row p-1">
-                        <div>
-                            <div id="scrap-${rDto.resumeId}-render">
-                                <div id="scrap-${rDto.resumeId}-remove">
-                                    {{#scrap.isScrap}}
-                                        <form action="/resume/scrap/{{scrap.id}}/delete" method="post">
-                                            <input type="hidden" name="resumeId" value="{{resume.id}}">
-                                            <button type="submit" class="btn btn-mint w-100 mb-10">스크랩 취소</button>
-                                        </form>
-                                    {{/scrap.isScrap}}
-                                    {{#offer.isScrap}}
-                                        <form action="/resume/offer/{{scrap.id}}/delete" method="post">
-                                            <input type="hidden" name="resumeId" value="{{resume.id}}">
-                                            <button type="submit" class="btn btn-outline-mint w-100">제안 취소</button>
-                                        </form>
-                                    {{/offer.isScrap}}
-                                    {{^scrap.isScrap}}
-                                        <form action="/resume/scrap/save" method="post"
-                                              enctype="application/x-www-form-urlencoded">
-                                            <input type="hidden" name="resumeId" value="{{id}}">
-                                            <button type="submit" class="btn btn-mint w-100 mb-10">합격</button>
-                                        </form>
-                                    {{/scrap.isScrap}}
-                                    {{^offer.isScrap}}
-                                        <form action="/resume/offer/save" method="post"
-                                              enctype="application/x-www-form-urlencoded">
-                                            {{#jobsList}}
-                                                {{title}} {{compName}}: <input type="radio" name="jobsId"
-                                                                               value="{{id}}">
-                                            {{/jobsList}}
+<!--                    기업이면 해당 버튼이 보임-->
 
-                                            <input type="hidden" name="resumeId" value="{{id}}">
-                                            <button type="submit" class="btn btn-outline-mint w-100">불합격</button>
-                                        </form>
-                                    {{/offer.isScrap}}
+                        <div class="row p-1">
+                            <div>
+                                <div id="scrap-${rDto.resumeId}-render">
+                                    <div id="scrap-${rDto.resumeId}-remove">
+                                        {{#scrap.isScrap}}
+
+                                            <form action="/resume/scrap/{{scrap.id}}/delete" method="post">
+                                                <input type="hidden" name="resumeId" value="{{resume.id}}">
+                                                <button type="submit" class="btn btn-mint w-100 mb-10">스크랩 취소</button>
+                                            </form>
+                                        {{/scrap.isScrap}}
+                                        {{#offer.isScrap}}
+                                            <form action="/resume/offer/{{scrap.id}}/delete" method="post">
+                                                <input type="hidden" name="resumeId" value="{{resume.id}}">
+                                                <button type="submit" class="btn btn-outline-mint w-100">제안 취소</button>
+                                            </form>
+                                        {{/offer.isScrap}}
+                                        {{^scrap.isScrap}}
+                                            {{^resume.isOwner}}
+
+                                            <form action="/resume/scrap/save" method="post"
+                                                  enctype="application/x-www-form-urlencoded">
+                                                <input type="hidden" name="resumeId" value="{{id}}">
+                                                <button type="submit" class="btn btn-mint w-100 mb-10">스크랩하기</button>
+                                            </form>
+
+                                            {{/resume.isOwner}}
+                                        {{/scrap.isScrap}}
+                                        {{^offer.isScrap}}
+                                            <form action="/resume/offer/save" method="post"
+                                                  enctype="application/x-www-form-urlencoded">
+                                                {{#jobsList}}
+                                                    {{title}} {{compName}}: <input type="radio" name="jobsId"
+                                                                                   value="{{id}}">
+                                                {{/jobsList}}
+
+                                                <input type="hidden" name="resumeId" value="{{id}}">
+                                                <!--                                            <button type="submit" class="btn btn-outline-mint w-100">불합격</button>-->
+                                            </form>
+                                        {{/offer.isScrap}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+
                 </div>
             </div>
         </div>

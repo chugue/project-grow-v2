@@ -58,8 +58,8 @@ public class UserService {
 
     }
 
+    public List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO(Integer userId) {
 
-    public List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO(Integer userId, Integer resumeId) {
         List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();
         List<Resume> resumeList = resumeRepo.findAllByUserId(userId);
         User user = userRepo.findById(userId)

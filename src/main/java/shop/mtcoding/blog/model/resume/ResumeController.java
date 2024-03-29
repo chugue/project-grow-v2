@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.user.User;
-import shop.mtcoding.blog.model.user.UserResponse;
 import shop.mtcoding.blog.model.user.UserService;
-
-import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -28,7 +25,7 @@ public class ResumeController {
         Resume resume = resumeService.resumeDetail(id, newSessionUser);
         request.setAttribute("resume", resume);
 
-        return "/resume/resume-detail";
+        return "resume/resume-detail";
     }
 
     @GetMapping("/resume/{id}/manage-resume")
