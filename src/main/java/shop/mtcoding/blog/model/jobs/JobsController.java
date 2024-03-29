@@ -38,7 +38,7 @@ public class JobsController {
 
         //사용자 이력서 보유내역과 지원상태를 가져오는 ResumeApplyDTO
         List<ResumeResponse.ResumeApplyDTO> resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionUser.getId(), jobsId);
-        System.out.println("resumeApplyDTOList: " + resumeApplyDTOList.get(1).getIsApply());
+//        System.out.println("resumeApplyDTOList: " + resumeApplyDTOList.get(1).getIsApply()); /kjh
         request.setAttribute("resumeApplyDTOList", resumeApplyDTOList);
         request.setAttribute("detailDTO", detailDTO);
         return "jobs/jobs-detail";
