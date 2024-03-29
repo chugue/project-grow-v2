@@ -30,6 +30,7 @@ public class ResumeResponse {
         private Integer userId;
         private List<SkillDTO2> skillList = new ArrayList<>();
 
+
         @Builder
         public DetailDTO(Resume resume, User user, List<Skill> skillList) {
             this.id = resume.getId();

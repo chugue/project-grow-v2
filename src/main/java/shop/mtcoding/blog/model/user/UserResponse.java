@@ -127,6 +127,12 @@ public class UserResponse {
                 this.color = "badge badge-pill bg-info";
             } else if (this.name.equals("React")) {
                 this.color = "badge badge-pill bg-dark";
+            } else if (this.name.equals("Vue.js")) {
+                this.color = "badge badge-pill bg-Indigo";
+            } else if (this.name.equals("Oracle")) {
+                this.color = "badge badge-pill bg-brown";
+            } else if (this.name.equals("MySql")) {
+                this.color = "badge badge-pill bg-purple";
             }
             // 추가 양식
             // else if (this.name.equals("언어")){

@@ -37,19 +37,19 @@ public class ResumeService {
         for (int i = 0; i < resumeDetailDTO.size(); i++) {
             List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
             resumeDetailDTO.add(ResumeResponse.DetailDTO.builder()
-                    .resume(resume)
                     .skillList(skills).build());
         }
 
-//        List<ResumeResponse.DetailDTO> resumeDetailDTO = new ArrayList<>();
-//        for (int i = 0; i < resumeDetailDTO.size(); i++) {
-//            List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
-//            resumeDetailDTO.add(ResumeResponse.DetailDTO.builder()
-//                    .resume(resume)
-//                    .user(sessionUser)
-//                    .skillList(skills).build());
-//
-//        }
+        //이력서 상세보기 버튼 기업이면 합격이 보이고, 유저면 안보임
+        Integer isUserOwnerNum = 1;
+        Boolean isUserOwner = false;
+        if (sessionUser != null) {
+            if (sessionUser.getRole().equals(1) == isUserOwnerNum.equals(1)) {
+                isUserOwner = true;
+            }
+        }
+        resume.setResumeOwner(isUserOwner);
+
         return resume;
     }
     // 지원하기 수정 서비스 ===========================================================================
