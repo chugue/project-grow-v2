@@ -10,4 +10,6 @@ import java.util.List;
 public class SkillService {
     private final SkillJPARepository skillJPARepository;
 
+
+
 }

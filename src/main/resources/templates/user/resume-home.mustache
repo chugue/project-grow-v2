@@ -95,15 +95,12 @@
 
 <script>
     function render(ursDTO) {
-
         let temp = `<tr class="offer-table">
             <td>id</td>
             <td>
                 <div style="text-align: left; font-size: 15px;font-weight: 700;margin-bottom: 5px;">
                     ${ursDTO.compName}
                 </div>
-
-
             <td>${ursDTO.jobsTitle}</td>
             <td>${ursDTO.jobsCareer}</td>
             <!--타이틀, 보유스킬-->
@@ -111,6 +108,7 @@
                 <div style="text-align: start"></div>
                 <div class="new-skill-box">
 `;
+
         ursDTO.skillList.forEach(s=>{
             temp += `<span class="${s.color}">${s.name}</span>`;
         });
@@ -153,10 +151,10 @@
         $.ajax({
             url: "/api/find-jobs-resume?resumeId="+resumeId,
             type: "post"
-        }).done((resp)=>{
+        }).done((resp)=>{ // resp는 List의 한 요소, 객체
             $("#jobList").empty();
-            console.log(resp);
-            resp.forEach(item => {
+            console.log(resp);  //이걸 먼저 찍어서 테스트
+            resp.forEach(item => { // forEach 쓰는 이유는 List이기 때문
                 let htmlContent = render(item);
                 $('#jobList').html(htmlContent);
             });

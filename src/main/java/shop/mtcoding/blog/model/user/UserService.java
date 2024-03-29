@@ -32,6 +32,7 @@ public class UserService {
     private final JobsJPARepository jobsRepo;
     private final ApplyJPARepository applyRepo;
 
+
     public List<UserResponse.UrsDTO> ursDTOS(Integer resumeId) {
         List<Apply> applyList = applyRepo.findAppliesByNot1ByResumeId(resumeId);
         Resume resume = resumeRepo.findById(resumeId)
@@ -58,6 +59,7 @@ public class UserService {
     }
 
     public List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO(Integer userId) {
+
         List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();
         List<Resume> resumeList = resumeRepo.findAllByUserId(userId);
         User user = userRepo.findById(userId)
