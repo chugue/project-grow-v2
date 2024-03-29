@@ -20,7 +20,12 @@ public class ResumeController {
     private final UserService userService;
 
     @GetMapping("/resume/resume-detail/{id}")
-    public String resumeDetail(@PathVariable Integer id) {
+    public String resumeDetail(@PathVariable Integer id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = userService.findById(sessionUser.getId());
+
+        Resume resume = resumeService.resumeDetail(id, newSessionUser);
+        request.setAttribute("resume", resume);
 
         return "/resume/resume-detail";
     }
@@ -65,10 +70,10 @@ public class ResumeController {
 
     @PostMapping("/resume/{id}/delete")
     public String delete(@PathVariable Integer id) {
-
+        User sessionUser = (User) session.getAttribute("sessionUser");
         resumeService.delete(id);
 
-        return "redirect:/user/"+id+"/user-home";
+        return "redirect:/user/"+sessionUser.getId()+"/user-home";
 
     }
 

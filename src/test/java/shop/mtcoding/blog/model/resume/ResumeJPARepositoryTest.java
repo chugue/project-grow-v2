@@ -19,6 +19,12 @@ public class ResumeJPARepositoryTest {
     private EntityManager em;
 
 
+    @Test
+    public void findByIdJoinUser_test() {
+        int resumeId = 1;
+        Resume resume = resumeJPARepository.findByIdJoinUser(resumeId);
+        System.out.println(resume);
+    }
 
     @Test
     public void delete_test(){

@@ -1,18 +1,24 @@
 package shop.mtcoding.blog.model.jobs;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import lombok.Builder;
 import lombok.Data;
+import shop.mtcoding.blog.model.resume.Resume;
+import shop.mtcoding.blog.model.resume.ResumeRequest;
+import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.user.User;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class JobsRequest {
 
     // 공고작성 DTO
     @Data
-    public static class JobWriterDTO{
+    public static class JobWriterDTO {
         private String title;
         private String area;
         private String edu;
@@ -34,5 +40,22 @@ public class JobsRequest {
                     .user(user)
                     .build();
         }
+    }
+
+    @Data
+    public static class UpdateDTO {
+        private Integer id;
+        private String compName;
+        private String phone;
+        private String businessNumber;
+        private String homepage;
+        private String title;
+        private String edu;
+        private String career;
+        private String content;
+        private String area;
+        private LocalDate deadLine;
+        private String task;
+        private List<String> skill;
     }
 }

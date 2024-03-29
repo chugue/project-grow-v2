@@ -17,18 +17,20 @@
                         <div class="card" style=" border-color: #2cb457; color: #2cb457; margin-bottom: 80px;">
                             <div class="card-body mt-3">
                                 <div class="apply-present row " style="font-weight: 900; font-size: 16px;">
+                                    {{#applyState}}
                                     <div class="col-4 text-center">
                                         <div class="apply">총지원</div>
-                                        <div class="count">0개</div>
+                                        <div class="count">{{applyCount}}개</div>
                                     </div>
                                     <div class="col-4 text-center">
                                         <div class="waiting">대기중</div>
-                                        <div class="count">0개</div>
+                                        <div class="count">{{waitCount}}개</div>
                                     </div>
                                     <div class="col-4 text-center">
                                         <div class="">결과발표</div>
-                                        <div class="count">0개</div>
+                                        <div class="count">{{resultCount}}개</div>
                                     </div>
+                                    {{/applyState}}
                                 </div>
                             </div>
                         </div>
@@ -79,11 +81,7 @@
                                             <div class="d-flex" style="justify-content: flex-end;">
                                                 <input type="hidden" value="" name="" id="">
                                                 <div class="mb-2 mr-10" style="">
-                                                    <form action="/resume/resume-detail/{{id}}" method="get">
-                                                        <button type="submit" class="btn btn-mint">
-                                                            상세보기
-                                                        </button>
-                                                    </form>
+<!--                                                    상세보기 였던 자리 -->
                                                 </div>
                                                 <div class="mb-2 mr-10" style="">
                                                     <form action="/resume/{{id}}/update-resume-form" method="get">

@@ -11,7 +11,7 @@
                         <div class="font mb-3">이력서 내역</div>
                         <div>
                             <button type="button" class="btn btn-mint offer-table-btn mb-3"><a
-                                    href="/jobs/writeJobsForm">이력서 작성</a></button>
+                                    href="/resume/{{sessionUser.id}}/write-resume-form">이력서 작성</a></button>
                         </div>
                     </div>
                     <div class="components-div">
@@ -29,7 +29,7 @@
                             </tr>
                             </thead>
                             {{#userResumeSkill}}
-                            <tbody>
+                                <tbody>
 
                                 <tr class="offer-table">
                                     <th scope="row">{{id}}</th>
@@ -51,11 +51,15 @@
                                             </form>
                                         </div>
                                         <div class="new-create-button">
-                                            <form action="/apply/pass/update/{{id}}" method="post">
-                                                <input type="hidden" name="resumeId" value="{{resumeId}}">
-                                                <button type="submit" class="btn btn-mint offer-table-btn">지원내역</button>
+                                            <form>
+                                                <input type="hidden" id="resumeId" value="{{resumeId}}">
+                                                <button type="button" onclick="apply()" class="btn btn-mint offer-table-btn">지원내역</button>
                                             </form>
                                         </div>
+                                        <script>
+
+
+                                        </script>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -81,59 +85,9 @@
                                 <th>현재 상태</th>
                             </tr>
                             </thead>
+                                <tbody id = "jobList">
 
-
-                            {{#UrsDTOList}}
-                            <tbody>
-
-                            <tr class="offer-table">
-                                <td>id</td>
-                                <td>
-                                    <div style="text-align: left; font-size: 20px;font-weight: 700;margin-bottom: 5px;">
-                                        {{compName}}
-                                    </div>
-
-
-                                <td>title</td>
-                                <td>career</td>
-                                <!--타이틀, 보유스킬-->
-                                <td class="col-3" style="text-align: center">
-                                    <div style="text-align: start"> </div>
-                                    <div class="new-skill-box">
-
-                                        <div class="color">name</div>
-
-                                    </div>
-                                </td>
-
-                                <td>career</td>
-
-                                <!--공고 관련 버튼-->
-                                <!--여기 UI부분 눈을 헤쳐서 고쳤어요-->
-                                <td class="col-3" style="text-align: center">
-                                    <div class="">
-                                        <div class="new-create-button">
-                                            <a href="/comp/{{user.id}}/comphome?jobsId=id">
-                                                <button type="button" class="btn btn-mint offer-table-btn">상세보기
-                                                </button>
-                                            </a>
-                                        </div>
-                                        <div class="new-create-button">
-                                            <a href="/jobs/{{id}}/updateJobsForm">
-                                                <button type="button" class="btn btn-mint offer-table-btn">지원취소
-                                                </button>
-                                            </a>
-                                        </div>
-                                        <!--                                        <div class="new-create-button">-->
-
-                                    </div>
-
-                                </td>
-                            </tr>
-
-                            </tbody>
-                            {{/UrsDTOList}}
-
+                                </tbody>
                         </table>
 
                     </div>
@@ -142,4 +96,77 @@
         </div>
     </div>
 </div>
+
+<script>
+    function render(ursDTO) {
+
+        let temp = `<tr class="offer-table">
+            <td>id</td>
+            <td>
+                <div style="text-align: left; font-size: 15px;font-weight: 700;margin-bottom: 5px;">
+                    ${ursDTO.compName}
+                </div>
+
+
+            <td>${ursDTO.jobsTitle}</td>
+            <td>${ursDTO.jobsCareer}</td>
+            <!--타이틀, 보유스킬-->
+            <td class="col-3" style="text-align: center">
+                <div style="text-align: start"></div>
+                <div class="new-skill-box">
+`;
+        ursDTO.skillList.forEach(s=>{
+            temp += `<span class="color">${s.name}</span>`;
+        });
+
+
+        temp += `
+                </div>
+            </td>
+
+            <td>${ursDTO.jobsCareer}</td>
+
+            <!--공고 관련 버튼-->
+            <!--여기 UI부분 눈을 헤쳐서 고쳤어요-->
+            <td class="col-3" style="text-align: center">
+                <div class="">
+                    <div class="new-create-button">
+                        <a href="/comp/${ursDTO.id}/comphome?jobsId=id">
+                            <button type="button" class="btn btn-mint offer-table-btn">상세보기
+                            </button>
+                        </a>
+                    </div>
+                    <div class="new-create-button">
+                        <a href="/jobs/${ursDTO.id}/updateJobsForm">
+                            <button type="button" class="btn btn-mint offer-table-btn">지원취소
+                            </button>
+                        </a>
+                    </div>
+                    <!--<div class="new-create-button">-->
+                </div>
+            </td>
+        </tr>`;
+
+
+
+        return temp;
+    }
+
+    function apply(){
+        let resumeId = $("#resumeId").val();
+        $.ajax({
+            url: "/api/find-jobs-resume?resumeId="+resumeId,
+            type: "post"
+        }).done((resp)=>{
+            $("#jobList").empty();
+            console.log(resp);
+            resp.forEach(item => {
+                let htmlContent = render(item);
+                $('#jobList').html(htmlContent);
+            });
+        });
+    }
+
+
+</script>
 {{> layout/footer}}

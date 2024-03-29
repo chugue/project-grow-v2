@@ -27,11 +27,37 @@ public class ResumeService {
     private final ResumeJPARepository resumeJPARepo;
     private final ApplyJPARepository applyJPARepo;
     private final SkillJPARepository skillJPARepo;
-    private final UserJPARepository userJPARepository;
     private final HttpSession session;
     private final UserService userService;
+    private final UserJPARepository userRepo;
 
 
+    //이력서 상세보기
+    public Resume resumeDetail(Integer resumeId, User sessionUser) {
+        Resume resume = resumeJPARepo.findByIdJoinUser(resumeId);
+
+        List<ResumeResponse.DetailDTO> resumeDetailDTO = new ArrayList<>();
+        for (int i = 0; i < resumeDetailDTO.size(); i++) {
+            List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
+            resumeDetailDTO.add(ResumeResponse.DetailDTO.builder()
+                    .resume(resume)
+                    .skillList(skills).build());
+        }
+
+
+
+//        List<ResumeResponse.DetailDTO> resumeDetailDTO = new ArrayList<>();
+//        for (int i = 0; i < resumeDetailDTO.size(); i++) {
+//            List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
+//            resumeDetailDTO.add(ResumeResponse.DetailDTO.builder()
+//                    .resume(resume)
+//                    .user(sessionUser)
+//                    .skillList(skills).build());
+//
+//        }
+
+        return resume;
+    }
 
     public List<ResumeResponse.ResumeApplyDTO> findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {
         List<Resume> resumeList = resumeJPARepo.findAllByUserId(userId);
@@ -99,13 +125,12 @@ public class ResumeService {
 
         // 3. 스킬 작성
 
-        String colors = "";
+
 
         saveDTO.getSkill().stream()
                 .map((skillName) -> {
                     return Skill.builder()
                             .name(skillName)
-                            .color(colors)
                             .role(sessionUser.getRole())
                             .resume(resume)
                             .build();
