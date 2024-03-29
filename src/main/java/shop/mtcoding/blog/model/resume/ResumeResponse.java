@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.skill.Skill;
+import shop.mtcoding.blog.model.skill.SkillResponse;
 import shop.mtcoding.blog.model.user.User;
 
 import java.sql.Date;
@@ -16,6 +17,31 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ResumeResponse {
+
+    // 이력서 수정
+    @Data
+    public static class UpdateDTO{
+        private String title;
+        private String area;
+        private String edu;
+        private String career;
+        private String introduce;
+        private String portLink;
+        private SkillResponse.SkillCheckedDTO skillChecked;
+
+        @Builder
+        public UpdateDTO(String title, String area, String edu, String career, String introduce, String portLink, SkillResponse.SkillCheckedDTO skillChecked) {
+            this.title = title;
+            this.area = area;
+            this.edu = edu;
+            this.career = career;
+            this.introduce = introduce;
+            this.portLink = portLink;
+            this.skillChecked = skillChecked;
+
+        }
+    }
+
 
     //이력서 상세보기 DTO
     @Data

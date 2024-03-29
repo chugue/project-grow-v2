@@ -11,14 +11,13 @@ import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.apply.ApplyJPARepository;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
+import shop.mtcoding.blog.model.skill.SkillResponse;
 import shop.mtcoding.blog.model.user.User;
 import shop.mtcoding.blog.model.user.UserJPARepository;
-import shop.mtcoding.blog.model.user.UserResponse;
 import shop.mtcoding.blog.model.user.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -27,6 +26,7 @@ public class ResumeService {
     private final ResumeJPARepository resumeJPARepo;
     private final ApplyJPARepository applyJPARepo;
     private final SkillJPARepository skillJPARepo;
+    private final SkillJPARepository skillRepo;
     private final HttpSession session;
     private final UserService userService;
     private final UserJPARepository userRepo;
@@ -43,18 +43,6 @@ public class ResumeService {
                     .resume(resume)
                     .skillList(skills).build());
         }
-
-
-
-//        List<ResumeResponse.DetailDTO> resumeDetailDTO = new ArrayList<>();
-//        for (int i = 0; i < resumeDetailDTO.size(); i++) {
-//            List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
-//            resumeDetailDTO.add(ResumeResponse.DetailDTO.builder()
-//                    .resume(resume)
-//                    .user(sessionUser)
-//                    .skillList(skills).build());
-//
-//        }
 
         return resume;
     }
@@ -84,15 +72,27 @@ public class ResumeService {
         return resumes.stream().map(resume -> resume.toDTO()).collect(Collectors.toList());
     }
 
-    public Resume updateForm (int id) {
+    // 이력서 수정
+    public ResumeResponse.UpdateDTO updateForm (Integer id) {
         Resume resume = resumeJPARepo.findById(id)
                 .orElseThrow(() -> new Exception404("이력서를 찾을 수 없습니다"));
-        return resume;
+
+        List<Skill> skill = skillRepo.findAllByResumeId(id);
+        ResumeResponse.UpdateDTO reqDTO = ResumeResponse.UpdateDTO.builder()
+                .title(resume.getTitle())
+                .area(resume.getArea())
+                .edu(resume.getEdu())
+                .career(resume.getCareer())
+                .introduce(resume.getIntroduce())
+                .portLink(resume.getPortLink())
+                .skillChecked(new SkillResponse.SkillCheckedDTO(skill)).build();
+        return reqDTO;
     }
 
 
     @Transactional
-    public void update(int id, int sessionUserId, ResumeRequest.UpdateDTO reqDTO){
+    public void update(Integer id, Integer sessionUserId, ResumeRequest.UpdateDTO reqDTO){
+        User sessionUser = (User) session.getAttribute("sessionUser");
         // 1. 조회 및 예외처리
         // 주어진 resumeId로 이력서를 찾습니다.
         Resume resume = resumeJPARepo.findById(id)
@@ -104,6 +104,20 @@ public class ResumeService {
         // 3. 이력서 수정하기
         resume.setResumeUpdate(reqDTO); // 요청으로부터 받은 정보로 이력서를 업데이트합니다.
 
+        skillRepo.deleteByresumeId(id);
+
+        // 스킬뿌리기
+        reqDTO.getSkill().stream().map((skill) -> {
+            return Skill.builder()
+                    .name(skill)
+                    .role(sessionUser.getRole())
+                    .resume(resume)
+                    .build();
+        }).forEach(skill -> {
+            // 반복문으로 스킬 돌면서 뿌림
+            skillRepo.save(skill);
+        });
+        
         System.out.println("수정된 데이터 : " +reqDTO);
     } // 더티체킹
 
@@ -124,9 +138,6 @@ public class ResumeService {
         System.out.println("------------------" + resume.getId());
 
         // 3. 스킬 작성
-
-
-
         saveDTO.getSkill().stream()
                 .map((skillName) -> {
                     return Skill.builder()
