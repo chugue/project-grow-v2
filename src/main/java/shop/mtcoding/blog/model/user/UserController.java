@@ -45,7 +45,6 @@ public class UserController {
             userResumeSkillDTO.get(i).setId(i + 1);
         }
 
-
         request.setAttribute("user", sessionUser);
         request.setAttribute("userResumeSkill", userResumeSkillDTO);
 
