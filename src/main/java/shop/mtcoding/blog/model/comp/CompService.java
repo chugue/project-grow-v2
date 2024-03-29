@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
+import shop.mtcoding.blog.model.apply.Apply;
+import shop.mtcoding.blog.model.apply.ApplyJPARepository;
 import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.jobs.JobsJPARepository;
 import shop.mtcoding.blog.model.jobs.JobsRequest;
@@ -32,6 +34,7 @@ public class CompService {
     private final ResumeJPARepository resumeJPARepo;
     private final SkillJPARepository skillJPARepo;
     private final JobsJPARepository jobsJPARepo;
+    private final ApplyJPARepository applyJPARepo;
 //    private final HttpSession session;
 
     // 기업 회원가입
@@ -48,6 +51,7 @@ public class CompService {
 
         List<Jobs> jobsList = jobsJPARepo.findAllByJobsId(id);
         List<JobsResponse.JobsListDTO> listDTOS = new ArrayList<>();
+        Integer jobsSize = jobsList.size();
 
         for (int i = 0; i < jobsList.size(); i++) {
             User user = userJPARepo.findById(jobsList.get(i).getUser().getId())
@@ -57,6 +61,21 @@ public class CompService {
             listDTOS.add(JobsResponse.JobsListDTO.builder()
                     .jobs(jobsList.get(i))
                     .user(user)
+                    .jobsSize(jobsSize)
+                    .skills(skillList)
+                    .build());
+        }
+
+        List<Apply> applyList = applyJPARepo.findAllByJobsId(id);
+
+        Integer applySize = applyList.size();
+
+        for (int i = 0; i < applyList.size(); i++) {
+            List<Skill> skillList = skillJPARepo.findAllByResumeId(applyList.get(i).getResume().getId());
+            listDTOS.add(JobsResponse.JobsListDTO.builder()
+                    .apply(applyList.get(i))
+                    .resume(applyList.get(i).getResume())
+                    .applySize(applySize)
                     .skills(skillList)
                     .build());
         }

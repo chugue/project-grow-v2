@@ -31,7 +31,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{#jobList}}
+                            {{#jobsSize}}
 
                                 <tr class="offer-table">
                                     <td>{{id}}</td>
@@ -51,7 +51,7 @@
                                     <td class="col-3" style="text-align: center">
                                         <div>
                                             <div class="new-create-button">
-                                                <a href="/comp/{{sessionC}}/comphome?jobsId={{id}}">
+                                                <a href="/comp/{{user.id}}/comp-home?jobsId={{id}}">
                                                 <button type="button" class="btn btn-mint offer-table-btn">지원자 보기</button>
                                                 </a>
                                             </div>
@@ -69,7 +69,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            {{/jobList}}
+                            {{/jobsSize}}
                             </tbody>
                         </table>
                     </div>
@@ -92,7 +92,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{#compResumeList}}
+                            {{#applySize}}
                                 <tr class="offer-table">
                                     <th scope="row">{{id}}</th>
                                     <td>{{myName}}</td>
@@ -130,7 +130,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            {{/compResumeList}}
+                            {{/applySize}}
                             </tbody>
                         </table>
                     </div>

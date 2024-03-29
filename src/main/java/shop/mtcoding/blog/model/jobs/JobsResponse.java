@@ -3,6 +3,7 @@ package shop.mtcoding.blog.model.jobs;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeRequest;
 import shop.mtcoding.blog.model.skill.Skill;
@@ -92,19 +93,33 @@ public class JobsResponse {
 
     @Data
     public static class JobsListDTO {
-        private Integer id;
-        private String title;
-        private String career;
+        private Integer jobsId;
+        private Integer resumeId;
+        private Integer jobsSize;
+        private Integer applySize;
+        private Integer applyJobsId;
+        private String jobsTitle;
+        private String resumeTitle;
+        private String jobsCareer;
+        private String resumeCareer;
         private String task;
+        private String myName;
         private UserDTO user;
         private List<SkillDTO> skills;
 
         @Builder
-        public JobsListDTO(Jobs jobs, User user, List<Skill> skills) {
-            this.id = jobs.getId();
-            this.title = jobs.getTitle();
-            this.career = jobs.getCareer();
+        public JobsListDTO(Jobs jobs, Integer jobsSize, Integer applySize, User user, Apply apply, Resume resume, List<Skill> skills) {
+            this.jobsId = jobs.getId();
+            this.resumeId = resume.getId();
+            this.applyJobsId = apply.getJobs().getId();
+            this.jobsSize = jobsSize;
+            this.applySize = applySize;
+            this.jobsTitle = jobs.getTitle();
+            this.resumeTitle = resume.getTitle();
+            this.jobsCareer = jobs.getCareer();
+            this.resumeCareer = resume.getCareer();
             this.task = jobs.getTask();
+            this.myName = jobs.getTask();
             this.user = new UserDTO(user);
 
             this.skills = skills.stream()
@@ -117,6 +132,7 @@ public class JobsResponse {
     public static class UserDTO {
         private Integer id;
         private String compName;
+        private String myName;
         private String imgFileName;
 
         public UserDTO(User user) {
@@ -152,11 +168,11 @@ public class JobsResponse {
             } else if (this.name.equals("React")) {
                 this.color = "badge badge-pill bg-dark";
             } else if (this.name.equals("Vue.js")) {
-                this.color = "badge badge-pill bg-success";
+                this.color = "badge badge-pill bg-Indigo";
             } else if (this.name.equals("Oracle")) {
-                this.color = "badge badge-pill bg-info";
+                this.color = "badge badge-pill bg-brown";
             } else if (this.name.equals("MySql")) {
-                this.color = "badge badge-pill bg-success";
+                this.color = "badge badge-pill bg-purple";
             }
             // 추가 양식
             // else if (this.name.equals("언어")){

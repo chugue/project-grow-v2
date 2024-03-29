@@ -53,15 +53,12 @@ public class CompController {
     }
 
     @GetMapping("/comp/{id}/comp-home")
-    public String compHome(@PathVariable Integer id, HttpServletRequest request) {
+    public String compHome(@PathVariable Integer id, @RequestParam(required = false, defaultValue = "0") Integer jobsId, HttpServletRequest request) {
         List<JobsResponse.JobsListDTO> jobsList = compService.findAllJobsId(id);
         request.setAttribute("jobList", jobsList);
-        request.setAttribute("sessionC", id);
 
         return "/comp/comp-home";
     }
-
-
 
     @GetMapping("/comp/{id}/apply")
     public String offer(@PathVariable Integer id) {
