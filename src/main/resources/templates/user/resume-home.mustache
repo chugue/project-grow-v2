@@ -9,12 +9,10 @@
                 <div class="components">
                     <div class="components-div p-tb-10 d-flex justify-content-between">
                         <div class="font mb-3">이력서 내역</div>
-
-<!--                        <div>-->
-<!--                            <button type="button" class="btn btn-mint offer-table-btn mb-3"><a-->
-<!--                                    href="/jobs/writeJobsForm">이력서 작성</a></button>-->
-<!--                        </div>-->
-
+                        <div>
+                            <button type="button" class="btn btn-mint offer-table-btn mb-3"><a
+                                    href="/jobs/writeJobsForm">이력서 작성</a></button>
+                        </div>
                     </div>
                     <div class="components-div">
                         <table class="table table-hover offer-table scroll"
@@ -41,7 +39,7 @@
                                     <td>
                                         <div class="new-skill-box">
                                             {{#skillList}}
-                                                <div class="{{color}}">{{name}}</div>
+                                                <div class="color">{{name}}</div>
                                             {{/skillList}}
                                         </div>
                                     </td>
@@ -58,10 +56,6 @@
                                                 <button type="button" onclick="apply()" class="btn btn-mint offer-table-btn">지원내역</button>
                                             </form>
                                         </div>
-                                        <script>
-
-
-                                        </script>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -118,7 +112,7 @@
                 <div class="new-skill-box">
 `;
         ursDTO.skillList.forEach(s=>{
-            temp += `<span class="${s.color}">${s.name}</span>`;
+            temp += `<span class="color">${s.name}</span>`;
         });
 
 
