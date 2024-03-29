@@ -36,7 +36,7 @@ public class Resume {
     private String portLink;
 
     @Transient
-    private boolean isResumeOwner;
+    private boolean isOwner;
 
     @OneToMany(mappedBy = "resume", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Skill> skillList = new ArrayList<>();
@@ -54,7 +54,7 @@ public class Resume {
     private Timestamp createdAt;
 
     @Builder
-    public Resume(Integer id, User user, String title, String area, String edu, String career, String introduce, String portLink, Timestamp createdAt) {
+    public Resume(Integer id, User user, String title, String area, String edu, String career, String introduce, String portLink, boolean isOwner, Timestamp createdAt) {
         this.id = id;
         this.user = user;
         this.title = title;
@@ -63,6 +63,7 @@ public class Resume {
         this.career = career;
         this.introduce = introduce;
         this.portLink = portLink;
+        this.isOwner = isOwner;
         this.createdAt = createdAt;
     }
 
