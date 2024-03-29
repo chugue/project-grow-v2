@@ -32,6 +32,7 @@ public class UserService {
     private final JobsJPARepository jobsRepo;
     private final ApplyJPARepository applyRepo;
 
+
     public List<UserResponse.UrsDTO> ursDTOS (Integer userId, Integer resumeId) {
         List<Apply> applyList = applyRepo.findAppliesByNot1ByResumeId(resumeId);
         List<UserResponse.UrsDTO> jobsSkillList = new ArrayList<>();
@@ -53,6 +54,22 @@ public class UserService {
         return jobsSkillList;
 
     }
+
+//
+    public UserResponse.UserResumeSkillV2DTO UserResumeSkillV2DTO (Integer userId, Integer resumeId){
+        User user =  userRepo.findById(userId)
+                .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
+        Resume resume = resumeRepo.findById(resumeId)
+                .orElseThrow(() ->  new Exception404("이력서를 찾을 수 없습니다."));
+        List<Skill> skillList = skillRepo.findAllByResumeId(resumeId);
+
+        UserResponse.UserResumeSkillV2DTO dto = UserResponse.UserResumeSkillV2DTO.builder()
+                .user(user)
+                .resume(resume)
+                .skillList(skillList).build();
+        return dto;
+    }
+
 
     public List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO (Integer userId, Integer resumeId){
         List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();

@@ -13,6 +13,8 @@ import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
 import shop.mtcoding.blog.model.user.User;
 import shop.mtcoding.blog.model.user.UserJPARepository;
+import shop.mtcoding.blog.model.user.UserResponse;
+import shop.mtcoding.blog.model.user.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class ResumeService {
     private final SkillJPARepository skillJPARepo;
     private final UserJPARepository userJPARepository;
     private final HttpSession session;
+    private final UserService userService;
 
 
 
@@ -65,6 +68,7 @@ public class ResumeService {
     @Transactional
     public void update(int id, int sessionUserId, ResumeRequest.UpdateDTO reqDTO){
         // 1. 조회 및 예외처리
+        // 주어진 resumeId로 이력서를 찾습니다.
         Resume resume = resumeJPARepo.findById(id)
                 .orElseThrow(() -> new Exception404("해당 이력서를 찾을 수 없습니다"));
         // 2. 권한 처리
@@ -72,13 +76,11 @@ public class ResumeService {
             throw new Exception403("이력서를 수정할 권한이 없습니다");
         }
         // 3. 이력서 수정하기
-        resume.setResumeUpdate(reqDTO);
-
-        // 3. 스킬 작성
-
+        resume.setResumeUpdate(reqDTO); // 요청으로부터 받은 정보로 이력서를 업데이트합니다.
 
         System.out.println("수정된 데이터 : " +reqDTO);
     } // 더티체킹
+
 
 
     //이력서 신청
