@@ -25,19 +25,14 @@ public class ApplyService {
     private final ResumeJPARepository resumeJPARepo;
     private final UserJPARepository userJPARepo;
 
-
-
     @Transactional
-    public void applyCancel (Integer jobsId) {
-        Apply apply = applyJPARepo.findById(jobsId)
+    public void cancel (Integer jobsId, Integer resumeId) {
+        Apply apply = applyJPARepo.findByJidRid(jobsId, resumeId)
                 .orElseThrow(() -> new Exception404("정보를 찾을 수 없습니다."));
-        apply.setIsPass("1");
+        applyJPARepo.delete(apply);
     }
 
 
-    public void t (Integer resumeId) {
-        applyJPARepo.findAppliesByNot1ByResumeId(resumeId);
-    }
 
     //이력서로 공고에 막 지원했을때 사용되는 메소드
     public void newApply(Integer jobsId, Integer resumeId) {

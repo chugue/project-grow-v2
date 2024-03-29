@@ -99,7 +99,7 @@
 <script>
     function render(ursDTO) {
         let temp = `
-            <tr class="offer-table">
+            <tr class="offer-table" id="applyCancel-${ursDTO.id}">
             <td>id</td>
             <td>
                 <div style="text-align: left; font-size: 15px;font-weight: 700;margin-bottom: 5px;">
@@ -135,8 +135,8 @@
                         </a>
                     </div>
                     <div class="new-create-button">
-                        <a href="/apply/${ursDTO.jobsId}/cancel">
-                            <button type="button" class="btn btn-mint offer-table-btn">지원취소
+<!--                         <a href="/apply/${ursDTO.jobsId}/cancel/${ursDTO.resumeId}">-->
+                            <button type="button" onclick= "applyCancel(${ursDTO.jobsId},${ursDTO.resumeId},${ursDTO.id})" class="btn btn-mint offer-table-btn">지원취소
                             </button>
                         </a>
                     </div>
@@ -161,6 +161,23 @@
                 $('#jobList').html(htmlContent);
             });
         });
+    }
+
+    function applyCancel(jobsId, resumeId, elementId) {
+        console.log(jobsId, resumeId, elementId)
+        if (confirm("지원을 정말 취소하시겠습니까?")) {
+            $.ajax({
+                url: "/apply/cancel",
+                type: "post",
+                data: {
+                    jobsId: jobsId,
+                    resumeId: resumeId
+                }
+            }).done(() => {
+                console.log(`Element to empty:` + `#applyCancel-${elementId}`);
+                $(`#applyCancel-${elementId}`).empty();
+            });
+        }
     }
 
 
