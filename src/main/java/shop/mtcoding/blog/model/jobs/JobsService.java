@@ -143,6 +143,7 @@ public class JobsService {
         List<Skill> skill = skillRepo.findAllByJobsId(id);
         JobsResponse.JobUpdateDTO reqDTO = JobsResponse.JobUpdateDTO.builder()
                 .id(jobs.getId())
+                .user(jobs.getUser())
                 .compName(jobs.getUser().getCompName())
                 .phone(jobs.getUser().getPhone())
                 .businessNumber(jobs.getUser().getBusinessNumber())

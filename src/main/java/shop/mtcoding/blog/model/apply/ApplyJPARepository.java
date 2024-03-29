@@ -3,6 +3,7 @@ package shop.mtcoding.blog.model.apply;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.resume.Resume;
 
 import java.util.List;
@@ -23,6 +24,6 @@ public interface ApplyJPARepository extends JpaRepository<Apply, Integer> {
     @Query("select a from Apply a where a.isPass not in ('1') and a.resume.id = :resumeId")
     List<Apply> findAppliesByNot1ByResumeId (@Param("resumeId") Integer resumeId);
 
-    @Query("select a, r, u from Apply a join fetch Resume r on a.resume.id = r.id join fetch User u on u.id = r.user.id where a.jobs.id = :jobsId")
+    @Query("select a, r, u FROM Apply a join fetch Resume r on a.resume.id = r.id join fetch User u on u.id = r.user.id WHERE a.jobs.id = :jobsId")
     List<Apply> findAllByJobsId(@Param("jobsId") Integer jobsId);
 }

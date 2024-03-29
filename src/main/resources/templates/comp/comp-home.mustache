@@ -31,8 +31,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{#jobsSize}}
-
+                            {{#jobsList}}
                                 <tr class="offer-table">
                                     <td>{{id}}</td>
                                     <td>
@@ -51,7 +50,7 @@
                                     <td class="col-3" style="text-align: center">
                                         <div>
                                             <div class="new-create-button">
-                                                <a href="/comp/{{user.id}}/comp-home?jobsId={{id}}">
+                                                <a href="/comp/{{userId}}/comp-home?jobsId={{id}}">
                                                 <button type="button" class="btn btn-mint offer-table-btn">지원자 보기</button>
                                                 </a>
                                             </div>
@@ -69,7 +68,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            {{/jobsSize}}
+                            {{/jobsList}}
                             </tbody>
                         </table>
                     </div>
@@ -92,7 +91,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{#applySize}}
+                            {{#resumeList}}
                                 <tr class="offer-table">
                                     <th scope="row">{{id}}</th>
                                     <td>{{myName}}</td>
@@ -100,9 +99,9 @@
                                     <td>{{career}}</td>
                                     <td>
                                         <div class="new-skill-box">
-                                            {{#skillList}}
+                                            {{#skills}}
                                                 <div class="{{color}}">{{name}}</div>
-                                            {{/skillList}}
+                                            {{/skills}}
                                         </div>
                                     </td>
 
@@ -130,7 +129,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            {{/applySize}}
+                            {{/resumeList}}
                             </tbody>
                         </table>
                     </div>

@@ -47,35 +47,33 @@ public class CompService {
         return comp;
     }
 
-    public List<JobsResponse.JobsListDTO> findAllJobsId(Integer id) {
+    public List<JobsResponse.ApplyResumeListDTO> findAllByJobsId(Integer jobsId, User sessionComp) {
+        List<Apply> applyList = applyJPARepo.findAllByJobsId(jobsId);
+        List<JobsResponse.ApplyResumeListDTO> listDTOS = new ArrayList<>();
 
-        List<Jobs> jobsList = jobsJPARepo.findAllByJobsId(id);
-        List<JobsResponse.JobsListDTO> listDTOS = new ArrayList<>();
-        Integer jobsSize = jobsList.size();
-
-        for (int i = 0; i < jobsList.size(); i++) {
-            User user = userJPARepo.findById(jobsList.get(i).getUser().getId())
-                    .orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
-            List<Skill> skillList = skillJPARepo.findAllByJobsId(jobsList.get(i).getId());
-
-            listDTOS.add(JobsResponse.JobsListDTO.builder()
-                    .jobs(jobsList.get(i))
-                    .user(user)
-                    .jobsSize(jobsSize)
+        for (int i = 0; i < applyList.size(); i++) {
+            List<Skill> skillList = skillJPARepo.findAllByJoinResumeId(applyList.get(i).getResume().getId());
+            listDTOS.add(JobsResponse.ApplyResumeListDTO.builder()
+                    .resume(applyList.get(i).getResume())
+                    .myName(applyList.get(i).getResume().getUser().getMyName())
+                    .jobs(applyList.get(i).getJobs())
                     .skills(skillList)
                     .build());
         }
 
-        List<Apply> applyList = applyJPARepo.findAllByJobsId(id);
 
-        Integer applySize = applyList.size();
+        return listDTOS;
+    }
 
-        for (int i = 0; i < applyList.size(); i++) {
-            List<Skill> skillList = skillJPARepo.findAllByResumeId(applyList.get(i).getResume().getId());
-            listDTOS.add(JobsResponse.JobsListDTO.builder()
-                    .apply(applyList.get(i))
-                    .resume(applyList.get(i).getResume())
-                    .applySize(applySize)
+    public List<JobsResponse.ApplyJobsListDTO> findAllByUserId(User sessionComp) {
+        List<Jobs> jobsList = jobsJPARepo.findAllByUserId(sessionComp.getId());
+        List<JobsResponse.ApplyJobsListDTO> listDTOS = new ArrayList<>();
+
+        for (int i = 0; i < jobsList.size(); i++) {
+            List<Skill> skillList = skillJPARepo.findAllByJoinJobsId(jobsList.get(i).getId());
+            listDTOS.add(JobsResponse.ApplyJobsListDTO.builder()
+                    .jobs(jobsList.get(i))
+                    .userId(sessionComp.getId())
                     .skills(skillList)
                     .build());
         }
@@ -83,10 +81,11 @@ public class CompService {
         return listDTOS;
     }
 
+
     // 기업 로그인하면 보여줄 이력서 목록들
-    public List <CompResponse.ResumeUserSkillDTO> findAllRusList() {
+    public List<CompResponse.ResumeUserSkillDTO> findAllRusList() {
         List<Resume> resumeList = resumeJPARepo.findAll();
-        List <CompResponse.ResumeUserSkillDTO> rusList = new ArrayList<>();
+        List<CompResponse.ResumeUserSkillDTO> rusList = new ArrayList<>();
 
         for (int i = 0; i < resumeList.size(); i++) {
             User user = userJPARepo.findById(resumeList.get(i).getUser().getId())
@@ -127,7 +126,6 @@ public class CompService {
         return user;
 
     }
-
 
 
 }
