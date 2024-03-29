@@ -158,7 +158,7 @@
             console.log(resp);  //이걸 먼저 찍어서 테스트
             resp.forEach(item => { // forEach 쓰는 이유는 List이기 때문
                 let htmlContent = render(item);
-                $('#jobList').html(htmlContent);
+                $('#jobList').append(htmlContent);
             });
         });
     }
@@ -174,8 +174,7 @@
                     resumeId: resumeId
                 }
             }).done(() => {
-                console.log(`Element to empty:` + `#applyCancel-${elementId}`);
-                $(`#applyCancel-${elementId}`).empty();
+                $(`#applyCancel-${elementId}`).remove(); // 제가 생각할 떄 엠티는 공간을 비우는 것이고 저기 자체를 없애는 다른 단어
             });
         }
     }

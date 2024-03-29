@@ -32,8 +32,6 @@ public class ApplyService {
         applyJPARepo.delete(apply);
     }
 
-
-
     //이력서로 공고에 막 지원했을때 사용되는 메소드
     public void newApply(Integer jobsId, Integer resumeId) {
         Jobs jobs = jobsJPARepo.findById(jobsId).orElseThrow(() -> new Exception404("공고를 찾을 수 없습니다."));
