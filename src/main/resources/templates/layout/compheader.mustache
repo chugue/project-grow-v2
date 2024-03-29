@@ -56,7 +56,7 @@
 
         {{^sessionComp}}
             <div class="container-fluid">
-                <a href="/comp/comp-index" class="navbar-brand"><img src="/images/logo.png"></a>
+                <a href="/" class="navbar-brand"><img src="/images/logo.png"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
@@ -64,14 +64,14 @@
                 <div class="collapse navbar-collapse d-flex justify-content-between" id="collapsibleNavbar">
                     <ul class="navbar-nav d-flex justify-content-start">
                         <li class="nav-item mx-3 fs-5">
-                            <a class="nav-link text-dark" href="/comp/jobs-info">채용정보</a>
+                            <a class="nav-link text-dark" href="/jobs/info">채용정보</a>
                         </li>
                         <li class="nav-item mx-3 fs-5">
-                            <a class="nav-link text-dark" href="/user/login">이력서</a>
+                            <a class="nav-link text-dark" href="/user/{{id}}/user-home">이력서</a>
                         </li>
-                        <li class="nav-item mx-3 fs-5">
-                            <a class="nav-link text-dark" href="/jobs/login">관심기업</a>
-                        </li>
+<!--                        <li class="nav-item mx-3 fs-5">-->
+<!--                            <a class="nav-link text-dark" href="/jobs/login">관심기업</a>-->
+<!--                        </li>-->
                     </ul>
 
                     <ul class="navbar-nav d-flex justify-content-end">
