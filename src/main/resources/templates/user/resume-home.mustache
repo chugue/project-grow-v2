@@ -8,11 +8,19 @@
             <div id="content" class="my-4 layer2-right-container" style="flex: 0 0 auto; width: calc(100% - 270px);">
                 <div class="components">
                     <div class="components-div p-tb-10 d-flex justify-content-between">
+
+                        <div class="font mb-3">이력서 내역</div>
+                        <div>
+                            <button type="button" class="btn btn-mint offer-table-btn mb-3"><a
+                                    href="/resume/write-resume-form">이력서 작성</a></button>
+                        </div>
+
                         <div class="font mb-3">지원 내역</div>
 <!--                        <div>-->
 <!--                            <button type="button" class="btn btn-mint offer-table-btn mb-3"><a-->
 <!--                                    href="/jobs/writeJobsForm">이력서 작성</a></button>-->
 <!--                        </div>-->
+
                     </div>
                     <div class="components-div">
                         <table class="table table-hover offer-table scroll"
@@ -28,7 +36,7 @@
                                 <th class="center-align col"></th>
                             </tr>
                             </thead>
-                            {{#userResumeSkill}}
+                            {{#ursList}}
                                 <tbody>
 
                                 <tr class="offer-table">
@@ -52,14 +60,17 @@
                                         </div>
                                         <div class="new-create-button">
                                             <form>
-                                                <input type="hidden" id="resumeId" value="{{resumeId}}">
-                                                <button type="button" onclick="apply()" class="btn btn-mint offer-table-btn">지원내역</button>
+                                                <input type="hidden" id="resumeId">
+                                                <!--resumeId를 직접 apply 함수의 파라메터로 전달-->
+                                                <button type="button" onclick="apply({{resumeId}})"
+                                                        class="btn btn-mint offer-table-btn">지원내역
+                                                </button>
                                             </form>
                                         </div>
                                     </td>
                                 </tr>
                                 </tbody>
-                            {{/userResumeSkill}}
+                            {{/ursList}}
                         </table>
                     </div>
 
@@ -81,9 +92,9 @@
                                 <th>현재 상태</th>
                             </tr>
                             </thead>
-                                <tbody id = "jobList">
+                            <tbody id="jobList">
 
-                                </tbody>
+                            </tbody>
                         </table>
 
                     </div>
@@ -95,7 +106,8 @@
 
 <script>
     function render(ursDTO) {
-        let temp = `<tr class="offer-table">
+        let temp = `
+            <tr class="offer-table" id="applyCancel-${ursDTO.id}">
             <td>id</td>
             <td>
                 <div style="text-align: left; font-size: 15px;font-weight: 700;margin-bottom: 5px;">
@@ -107,9 +119,9 @@
             <td class="col-3" style="text-align: center">
                 <div style="text-align: start"></div>
                 <div class="new-skill-box">
-`;
+        `;
 
-        ursDTO.skillList.forEach(s=>{
+        ursDTO.skillList.forEach(s => {
             temp += `<span class="${s.color}">${s.name}</span>`;
         });
 
@@ -125,40 +137,54 @@
             <td class="col-3" style="text-align: center">
                 <div class="">
                     <div class="new-create-button">
-                        <a href="/comp/${ursDTO.id}/comphome?jobsId=id">
+                        <a href="/jobs/jobs-detail/${ursDTO.jobsId}">
                             <button type="button" class="btn btn-mint offer-table-btn">상세보기
                             </button>
                         </a>
                     </div>
                     <div class="new-create-button">
-                        <a href="/jobs/${ursDTO.id}/updateJobsForm">
-                            <button type="button" class="btn btn-mint offer-table-btn">지원취소
+<!--                         <a href="/apply/${ursDTO.jobsId}/cancel/${ursDTO.resumeId}">-->
+                            <button type="button" onclick= "applyCancel(${ursDTO.jobsId},${ursDTO.resumeId},${ursDTO.id})" class="btn btn-mint offer-table-btn">지원취소
                             </button>
                         </a>
                     </div>
                     <!--<div class="new-create-button">-->
                 </div>
             </td>
-        </tr>`;
-
-
-
+        </tr>
+        `;
         return temp;
     }
 
-    function apply(){
-        let resumeId = $("#resumeId").val();
+    function apply(resumeId) {
         $.ajax({
-            url: "/api/find-jobs-resume?resumeId="+resumeId,
-            type: "post"
-        }).done((resp)=>{ // resp는 List의 한 요소, 객체
+            url: "/api/find-jobs-resume",
+            type: "post",
+            data: {resumeId: resumeId}
+        }).done((resp) => { // resp는 List의 한 요소, 객체
             $("#jobList").empty();
             console.log(resp);  //이걸 먼저 찍어서 테스트
             resp.forEach(item => { // forEach 쓰는 이유는 List이기 때문
                 let htmlContent = render(item);
-                $('#jobList').html(htmlContent);
+                $('#jobList').append(htmlContent);
             });
         });
+    }
+
+    function applyCancel(jobsId, resumeId, elementId) {
+        console.log(jobsId, resumeId, elementId)
+        if (confirm("지원을 정말 취소하시겠습니까?")) {
+            $.ajax({
+                url: "/apply/cancel",
+                type: "post",
+                data: {
+                    jobsId: jobsId,
+                    resumeId: resumeId
+                }
+            }).done(() => {
+                $(`#applyCancel-${elementId}`).remove(); // 제가 생각할 떄 엠티는 공간을 비우는 것이고 저기 자체를 없애는 다른 단어
+            });
+        }
     }
 
 
