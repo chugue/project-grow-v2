@@ -152,8 +152,10 @@ public class UserController {
 
         System.out.println("결과값=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n"+applies);
         request.setAttribute("resumeList", resumeList);
+        System.out.println("resumeList:n " + resumeList);
         request.setAttribute("sessionUserId", sessionUser.getId());
         request.setAttribute("applyState",applies);
+        System.out.println("applies :"+applies);
         return "/user/user-home";
     }
 

@@ -35,8 +35,21 @@ public class UserResponse {
                     .map(skill -> new Skill2DTO(skill))
              .collect(Collectors.toList());
         }
-
     }
+
+    @Data
+    public static class SkillV2DTO{
+        private Integer id;
+        private String name;
+        private String color;
+
+        public SkillV2DTO(Skill skill) {
+            this.id = skill.getId();
+            this.name = skill.getName();
+            this.color = skill.getColor();
+        }
+    }
+
 
     @Data
     public static class UrsDTO {

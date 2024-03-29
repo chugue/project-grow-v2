@@ -63,6 +63,7 @@ public class UserService {
 
     //사용자 정보와 이력서에 들어간 스킬을 구해다 주는 DTO
     public List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO(Integer userId) {
+
         List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();
 
         List<Resume> resumeList = resumeRepo.findAllByUserId(userId);
