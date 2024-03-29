@@ -41,8 +41,6 @@ public class ResumeService {
                     .skillList(skills).build());
         }
 
-
-
 //        List<ResumeResponse.DetailDTO> resumeDetailDTO = new ArrayList<>();
 //        for (int i = 0; i < resumeDetailDTO.size(); i++) {
 //            List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
@@ -52,15 +50,16 @@ public class ResumeService {
 //                    .skillList(skills).build());
 //
 //        }
-
         return resume;
     }
-
+    // 지원하기 수정 서비스 ===========================================================================
     public List<ResumeResponse.ResumeApplyDTO> findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {
         List<Resume> resumeList = resumeJPARepo.findAllByUserId(userId);
 
         List<ResumeResponse.ResumeApplyDTO> resumeApplyDTOList = new ArrayList<>();
 
+//        boolean allEnabled = resumeApplyDTOList.stream()
+//                .allMatch(resumeApplyDTO -> resumeApplyDTO.getIsApply().equals("1"));  // 1 가지고 있으면 true 아니면 false
         for (int i = 0; i < resumeList.size(); i++) {
             Apply apply = applyJPARepo.findByResumeIdAndJobsId(resumeList.get(i).getId(), jobsId)
                     .orElse(Apply.builder().isPass("1").build());
@@ -68,9 +67,21 @@ public class ResumeService {
             resumeApplyDTOList.add(ResumeResponse.ResumeApplyDTO.builder()
                     .apply(apply)
                     .resume(resumeList.get(i)).build());
+
+            System.out.println(resumeList.get(i).getId());
+            System.out.println(resumeList.get(i).getUser().getId());
             System.out.println(resumeApplyDTOList.get(i).getIsPass());
-            System.out.println(resumeApplyDTOList.get(i).getIsApply());
+//            System.out.println(resumeApplyDTOList.get(i).getIsApply());
+
         }
+
+
+        boolean disabled = resumeList.stream()
+                .anyMatch(resumeApplyDTO -> resumeApplyDTO.getApplyList().equals("1"));
+
+        // isPass  = 지원을 했냐 안했냐 상태?
+        // 맞으면 true 아니면 false
+
         return resumeApplyDTOList;
     }
 

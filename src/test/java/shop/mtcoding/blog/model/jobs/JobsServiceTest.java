@@ -9,6 +9,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Sort;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
+import shop.mtcoding.blog.model.apply.Apply;
+import shop.mtcoding.blog.model.apply.ApplyJPARepository;
+import shop.mtcoding.blog.model.resume.Resume;
+import shop.mtcoding.blog.model.resume.ResumeJPARepository;
+import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
 import shop.mtcoding.blog.model.skill.SkillService;
@@ -27,7 +32,38 @@ public class JobsServiceTest {
     private UserJPARepository userRepo;
     @Autowired
     private SkillJPARepository skillRepo;
+    @Autowired
+    private ResumeJPARepository resumeJPARepo;
+    @Autowired
+    private ApplyJPARepository applyJPARepo;
 
+
+    @Test
+    public void test_test() {
+
+
+        int userId = 1;
+        int jobsId = 3;
+        List<Resume> resumeList = resumeJPARepo.findAllByUserId(userId);
+
+        List<ResumeResponse.ResumeApplyDTO> resumeApplyDTOList = new ArrayList<>();
+
+        for (int i = 0; i < resumeList.size(); i++) {
+            Apply apply = applyJPARepo.findByResumeIdAndJobsId(resumeList.get(i).getId(), jobsId)
+                    .orElse(Apply.builder().isPass("1").build());
+
+            resumeApplyDTOList.add(ResumeResponse.ResumeApplyDTO.builder()
+                    .apply(apply)
+                    .resume(resumeList.get(i)).build());
+
+
+            System.out.println("이력서 번호 : " + resumeList.get(i).getId()); //  이력서 번호
+            System.out.println("사용자 번호 : " +resumeList.get(i).getUser().getId()); // 이력서 주인  id
+            System.out.println("공고 번호 : " + jobsId); // 이력서 주인  id
+            System.out.println(resumeApplyDTOList.get(i).getIsPass());
+            System.out.println(resumeApplyDTOList.get(i).getIsApply());
+        }
+    }
 
     @Test
     public void detailDTO_test(){

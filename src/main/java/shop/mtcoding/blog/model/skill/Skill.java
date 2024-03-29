@@ -71,7 +71,7 @@ public class Skill {
             colorClass = "badge bg-info";
         }
         else if(name.equals("MySql")){
-            colorClass = "badge bg-info";
+            colorClass = "badge bg-purple";
         }
 
         return ResumeResponse.SkillDTO.builder()

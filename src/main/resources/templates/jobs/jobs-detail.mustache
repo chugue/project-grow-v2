@@ -179,17 +179,6 @@
                         <button type="button" class="btn btn-outline-mint w-100"
                                 disabled>지원완료
                         </button>
-                        {{#resumeApplyDTOList.apply.isPass}}
-                            <button type="button" class="btn btn-outline-mint w-100"
-                                    disabled>합격
-                            </button>
-                        {{/resumeApplyDTOList.apply.isPass}}
-                        {{^resumeApplyDTOList.apply.isApply}}
-                            <button type="button" class="btn btn-outline-mint w-100"
-                                    disabled>불합격
-                            </button>
-                        {{/resumeApplyDTOList.apply.isApply}}
-
                     {{/resumeApplyDTOList.apply.isApply}}
                     {{^resumeApplyDTOList.apply.isApply}}
                         <input type="hidden" name="jobsId" value="{{detailDTO.id}}">

@@ -30,7 +30,7 @@ public class JobsService {
     private final JobsJPARepository jobsRepo;
     private final UserJPARepository userRepo;
     private final SkillJPARepository skillRepo;
-    private final HttpSession session;
+
 
     public JobsResponse.DetailDTO DetailDTO (Integer jobsId){
         Jobs jobs = jobsRepo.findById(jobsId)
@@ -64,10 +64,9 @@ public class JobsService {
     }
 
     @Transactional
-    public void save(JobsRequest.JobWriterDTO reqDTO) {
+    public void save(User sessionComp, JobsRequest.JobWriterDTO reqDTO) {
 
         // 인증체크
-        User sessionComp = (User) session.getAttribute("sessionComp");
         if (sessionComp == null) {
             throw new Exception401("로그인이 필요한 서비스입니다");
         }
@@ -90,8 +89,7 @@ public class JobsService {
     }
 
     @Transactional
-    public void delete(Integer id) {
-        User sessionComp = (User) session.getAttribute("sessionComp");
+    public void delete(Integer id, User sessionComp) {
         if (sessionComp == null) {
             throw new Exception401("로그인이 필요한 서비스입니다");
         }
@@ -100,11 +98,11 @@ public class JobsService {
     }
 
     @Transactional
-    public void update(Integer id, JobsRequest.UpdateDTO reqDTO) {
+    public void update(Integer id, User sessionComp , JobsRequest.UpdateDTO reqDTO) {
         Jobs jobs = jobsRepo.findById(id)
                 .orElseThrow(() -> new Exception404("해당 공고를 찾을 수 없습니다."));
 
-        User sessionComp = (User) session.getAttribute("sessionComp");
+
         if (sessionComp.getId() != jobs.getUser().getId()) {
             throw new Exception403("이력서를 수정할 권한이 없습니다");
         }
@@ -132,11 +130,11 @@ public class JobsService {
         });
     }
 
-    public JobsResponse.JobUpdateDTO updateForm(Integer id) {
+    public JobsResponse.JobUpdateDTO updateForm(Integer id, User sessionComp) {
         Jobs jobs = jobsRepo.findById(id)
                 .orElseThrow(() -> new Exception404("이력서를 찾을 수 없습니다."));
 
-        User sessionComp = (User) session.getAttribute("sessionComp");
+
         if (sessionComp.getId() != jobs.getUser().getId()) {
             throw new Exception403("이력서를 수정할 권한이 없습니다");
         }

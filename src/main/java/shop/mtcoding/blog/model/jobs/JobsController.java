@@ -38,7 +38,7 @@ public class JobsController {
 
         //사용자 이력서 보유내역과 지원상태를 가져오는 ResumeApplyDTO
         List<ResumeResponse.ResumeApplyDTO> resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionUser.getId(), jobsId);
-        System.out.println("resumeApplyDTOList: " + resumeApplyDTOList);
+        System.out.println("resumeApplyDTOList: " + resumeApplyDTOList.get(1).getIsApply());
         request.setAttribute("resumeApplyDTOList", resumeApplyDTOList);
         request.setAttribute("detailDTO", detailDTO);
         return "jobs/jobs-detail";
@@ -64,7 +64,7 @@ public class JobsController {
     @PostMapping("/jobs/save")
     public String save (JobsRequest.JobWriterDTO reqDTO) {
         User sessionComp = (User)session.getAttribute("sessionComp");
-        jobsService.save(reqDTO);
+        jobsService.save(sessionComp, reqDTO);
 
         return "redirect:/comp/" + sessionComp.getId() + "/comp-home";
     }
@@ -72,7 +72,7 @@ public class JobsController {
     @PostMapping("/jobs/{id}/delete")
     public String delete(@PathVariable Integer id) {
         User sessionComp = (User)session.getAttribute("sessionComp");
-        jobsService.delete(id);
+        jobsService.delete(id, sessionComp);
 
         return "redirect:/comp/" + sessionComp.getId() + "/comp-home";
     }
@@ -80,7 +80,7 @@ public class JobsController {
     @PostMapping("/jobs/{id}/update")
     public String update(@PathVariable Integer id, JobsRequest.UpdateDTO reqDTO) {
         User sessionComp = (User)session.getAttribute("sessionComp");
-        jobsService.update(id, reqDTO);
+        jobsService.update(id, sessionComp, reqDTO);
 
 
         return "redirect:/comp/" + sessionComp.getId() + "/comp-home";
@@ -93,7 +93,7 @@ public class JobsController {
         // sessionComp 라고 주면 오류나서 sessionC라고 하였음
         request.setAttribute("sessionC", sessionComp);
 
-        JobsResponse.JobUpdateDTO job = jobsService.updateForm(id);
+        JobsResponse.JobUpdateDTO job = jobsService.updateForm(id , sessionComp);
         request.setAttribute("job", job);
 
         return "/jobs/update-jobs-form";

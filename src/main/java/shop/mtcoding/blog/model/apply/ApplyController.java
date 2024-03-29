@@ -11,6 +11,7 @@ import shop.mtcoding.blog.model.user.User;
 public class ApplyController {
     private final ApplyService applyService;
     private final HttpSession session;
+
     @PostMapping("/jobs/apply")
     public String applySave(@RequestParam(name = "jobsId") Integer jobsId, @RequestParam(name = "resumeId") Integer resumeId) {
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -18,7 +19,7 @@ public class ApplyController {
 
         return "redirect:/user/"+sessionUser.getId()+"/user-home";
     }
-
+    
     @PutMapping("/apply/pass/{id}")
     public String applyPassUpDate(@PathVariable Integer id) {
         return "redirect:/";
