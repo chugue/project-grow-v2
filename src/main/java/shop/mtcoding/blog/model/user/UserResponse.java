@@ -44,6 +44,7 @@ public class UserResponse {
         private Integer id;
         private String compName;
         //jobs
+        private Integer jobsId;
         private String jobsTitle;
         private String jobsCareer;
         //Apply
@@ -56,6 +57,7 @@ public class UserResponse {
         public UrsDTO(User user, Jobs jobs, Apply apply,Resume resume, List<Skill> skillList) {
             this.id = user.getId();
             this.compName = user.getCompName();
+            this.jobsId = jobs.getId();
             this.jobsTitle = jobs.getTitle();
             this.jobsCareer = jobs.getCareer();
             this.isPass = apply.getIsPass();

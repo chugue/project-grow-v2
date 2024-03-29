@@ -29,7 +29,7 @@ public interface SkillJPARepository extends JpaRepository<Skill, Integer> {
     void deleteByJobsId(@Param("jobsId") Integer jobsId);
 
     @Query("select s from Skill s where s.resume.id = :resumeId")
-    List<Skill> findAllByResumeId(@Param("resumeId") Integer a);
+    List<Skill> findAllByResumeId(@Param("resumeId") Integer resumeId);
 
 }
 

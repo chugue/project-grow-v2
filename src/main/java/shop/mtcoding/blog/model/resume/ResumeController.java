@@ -33,8 +33,8 @@ public class ResumeController {
         return "/resume/manage-resume";
     }
 
-    @GetMapping("/resume/{id}/write-resume-form")
-    public String writeResumeForm() {
+    @GetMapping("/resume/write-resume-form")
+    public String writeResumeForm(){
 
         return "/resume/write-resume-form";
     }

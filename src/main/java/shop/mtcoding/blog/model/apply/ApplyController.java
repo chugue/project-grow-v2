@@ -11,12 +11,19 @@ import shop.mtcoding.blog.model.user.User;
 public class ApplyController {
     private final ApplyService applyService;
     private final HttpSession session;
+
+    @PostMapping("/apply/{jobsId}/cancel")
+    public void applyCancel (@PathVariable Integer jobsId) {
+        applyService.applyCancel(jobsId);
+    }
+
+
     @PostMapping("/jobs/apply")
     public String applySave(@RequestParam(name = "jobsId") Integer jobsId, @RequestParam(name = "resumeId") Integer resumeId) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        applyService.newApply(jobsId,resumeId);
+        applyService.newApply(jobsId, resumeId);
 
-        return "redirect:/user/"+sessionUser.getId()+"/user-home";
+        return "redirect:/user/" + sessionUser.getId() + "/user-home";
     }
 
     @PutMapping("/apply/pass/{id}")

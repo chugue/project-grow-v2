@@ -11,7 +11,7 @@
                         <div class="font mb-3">이력서 내역</div>
                         <div>
                             <button type="button" class="btn btn-mint offer-table-btn mb-3"><a
-                                    href="/jobs/writeJobsForm">이력서 작성</a></button>
+                                    href="/resume/write-resume-form">이력서 작성</a></button>
                         </div>
                     </div>
                     <div class="components-div">
@@ -28,7 +28,7 @@
                                 <th class="center-align col"></th>
                             </tr>
                             </thead>
-                            {{#userResumeSkill}}
+                            {{#ursList}}
                                 <tbody>
 
                                 <tr class="offer-table">
@@ -52,14 +52,17 @@
                                         </div>
                                         <div class="new-create-button">
                                             <form>
-                                                <input type="hidden" id="resumeId" value="{{resumeId}}">
-                                                <button type="button" onclick="apply()" class="btn btn-mint offer-table-btn">지원내역</button>
+                                                <input type="hidden" id="resumeId">
+                                                <!--resumeId를 직접 apply 함수의 파라메터로 전달-->
+                                                <button type="button" onclick="apply({{resumeId}})"
+                                                        class="btn btn-mint offer-table-btn">지원내역
+                                                </button>
                                             </form>
                                         </div>
                                     </td>
                                 </tr>
                                 </tbody>
-                            {{/userResumeSkill}}
+                            {{/ursList}}
                         </table>
                     </div>
 
@@ -81,9 +84,9 @@
                                 <th>현재 상태</th>
                             </tr>
                             </thead>
-                                <tbody id = "jobList">
+                            <tbody id="jobList">
 
-                                </tbody>
+                            </tbody>
                         </table>
 
                     </div>
@@ -95,7 +98,8 @@
 
 <script>
     function render(ursDTO) {
-        let temp = `<tr class="offer-table">
+        let temp = `
+            <tr class="offer-table">
             <td>id</td>
             <td>
                 <div style="text-align: left; font-size: 15px;font-weight: 700;margin-bottom: 5px;">
@@ -107,9 +111,9 @@
             <td class="col-3" style="text-align: center">
                 <div style="text-align: start"></div>
                 <div class="new-skill-box">
-`;
+        `;
 
-        ursDTO.skillList.forEach(s=>{
+        ursDTO.skillList.forEach(s => {
             temp += `<span class="${s.color}">${s.name}</span>`;
         });
 
@@ -125,13 +129,13 @@
             <td class="col-3" style="text-align: center">
                 <div class="">
                     <div class="new-create-button">
-                        <a href="/comp/${ursDTO.id}/comphome?jobsId=id">
+                        <a href="/jobs/jobs-detail/${ursDTO.jobsId}">
                             <button type="button" class="btn btn-mint offer-table-btn">상세보기
                             </button>
                         </a>
                     </div>
                     <div class="new-create-button">
-                        <a href="/jobs/${ursDTO.id}/updateJobsForm">
+                        <a href="/apply/${ursDTO.jobsId}/cancel">
                             <button type="button" class="btn btn-mint offer-table-btn">지원취소
                             </button>
                         </a>
@@ -139,19 +143,17 @@
                     <!--<div class="new-create-button">-->
                 </div>
             </td>
-        </tr>`;
-
-
-
+        </tr>
+        `;
         return temp;
     }
 
-    function apply(){
-        let resumeId = $("#resumeId").val();
+    function apply(resumeId) {
         $.ajax({
-            url: "/api/find-jobs-resume?resumeId="+resumeId,
-            type: "post"
-        }).done((resp)=>{ // resp는 List의 한 요소, 객체
+            url: "/api/find-jobs-resume",
+            type: "post",
+            data: {resumeId: resumeId}
+        }).done((resp) => { // resp는 List의 한 요소, 객체
             $("#jobList").empty();
             console.log(resp);  //이걸 먼저 찍어서 테스트
             resp.forEach(item => { // forEach 쓰는 이유는 List이기 때문
