@@ -35,6 +35,9 @@ public class Resume {
     private String introduce;
     private String portLink;
 
+    @Transient
+    private boolean isResumeOwner;
+
     @OneToMany(mappedBy = "resume", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Skill> skillList = new ArrayList<>();
 
