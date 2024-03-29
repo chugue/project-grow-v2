@@ -35,21 +35,15 @@ public class UserController {
     @GetMapping("/user/{id}/resume-home")
     public String resumeHome(@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        User newSessionUser = userService.findById(sessionUser.getId());
 
-        Integer resumeId = 1; // 지워야함
-
-        List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO = userService.userResumeSkillDTO(newSessionUser.getId(), resumeId);
+        List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO = userService.userResumeSkillDTO(sessionUser.getId());
         //No 카운트 뽑으려고 for문 돌림
         for (int i = 0; i < userResumeSkillDTO.size(); i++) {
             userResumeSkillDTO.get(i).setId(i + 1);
         }
 
-
-        request.setAttribute("user", sessionUser);
         request.setAttribute("userResumeSkill", userResumeSkillDTO);
 
-//        return "redirect:/";
         return "/user/resume-home";
     }
 

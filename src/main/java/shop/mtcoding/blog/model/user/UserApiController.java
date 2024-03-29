@@ -14,13 +14,13 @@ import java.util.List;
 @RestController
 public class UserApiController {
     private final UserService userService;
-    private final HttpSession session;
 
 
     @PostMapping("/api/find-jobs-resume")
     public List<UserResponse.UrsDTO> findAllJobsByResumeId(@RequestParam(name = "resumeId") Integer resumeId, HttpServletRequest request){
         List<UserResponse.UrsDTO> ursDTOList = userService.ursDTOS(resumeId);
         request.setAttribute("ursDTOList", ursDTOList);
+        System.out.println(resumeId);
         return ursDTOList;
     }
 
