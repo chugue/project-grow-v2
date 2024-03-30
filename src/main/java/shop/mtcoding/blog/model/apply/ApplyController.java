@@ -30,16 +30,18 @@ public class ApplyController {
 
     @PostMapping("/apply/pass/update/{resumeId}")
     public String applyPassUpDate(@PathVariable Integer resumeId, @RequestParam("jobsId")Integer jobsId) {
+        User user = (User) session.getAttribute("sessionComp");
         applyService.pass(resumeId, jobsId);
 
-        return "redirect:/resume/resume-detail/" + resumeId + "?jobsId=" + jobsId;
+        return "redirect:/comp/" + user.getId() + "/comp-home?jobsId=" + jobsId;
     }
 
     @PostMapping("/apply/fail/update/{resumeId}")
     public String applyFailUpDate(@PathVariable Integer resumeId, @RequestParam("jobsId")Integer jobsId) {
+        User user = (User) session.getAttribute("sessionComp");
         applyService.fail(resumeId, jobsId);
 
-        return "redirect:/resume/resume-detail/" + resumeId + "?jobsId=" + jobsId;
+        return "redirect:/comp/" + user.getId() + "/comp-home?jobsId=" + jobsId;
     }
 
     @PostMapping("/apply/pass2/{id}")

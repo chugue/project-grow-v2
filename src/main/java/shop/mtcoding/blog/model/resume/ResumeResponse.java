@@ -44,11 +44,51 @@ public class ResumeResponse {
         }
     }
 
+    @Data
+    public static class DetailDTO2 {
+        private Integer id;
+        private String title;
+        private String edu;
+        private String introduce;
+        private String imgFileName;
+        private String myName;
+        private LocalDate birth;
+        private String phone;
+        private String email;
+        private String address;
+        private String area;
+        private String career;
+        private String portLink;
+        private Integer userId;
+        private List<SkillDTO2> skills;
+
+        @Builder
+        public DetailDTO2(Resume resume, User user, List<Skill> skills) {
+            this.id = resume.getId();
+            this.title = resume.getTitle();
+            this.edu = resume.getEdu();
+            this.introduce = resume.getIntroduce();
+            this.imgFileName = user.getImgFileName();
+            this.myName = user.getMyName();
+            this.birth = user.getBirth();
+            this.phone = user.getPhone();
+            this.email = user.getEmail();
+            this.address = user.getAddress();
+            this.area = resume.getArea();
+            this.career = resume.getCareer();
+            this.portLink = resume.getPortLink();
+            this.userId = user.getId();
+            this.skills = skills.stream()
+                    .map(skill -> new SkillDTO2(skill))
+                    .collect(Collectors.toList());
+        }
+    }
 
     //이력서 상세보기 DTO
     @Data
     public static class DetailDTO {
         private Integer id;
+        private Integer jobsId;
         private String title;
         private String edu;
         private String introduce;
@@ -72,8 +112,9 @@ public class ResumeResponse {
         private List<SkillDTO2> skills;
 
         @Builder
-        public DetailDTO(Resume resume, String isApply, User user, Integer role, List<Skill> skills) {
+        public DetailDTO(Resume resume, Integer jobsId, String isApply, User user, Integer role, List<Skill> skills) {
             this.id = resume.getId();
+            this.jobsId = jobsId;
             this.title = resume.getTitle();
             this.edu = resume.getEdu();
             this.introduce = resume.getIntroduce();
