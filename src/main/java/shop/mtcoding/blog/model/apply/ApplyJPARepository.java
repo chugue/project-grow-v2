@@ -28,5 +28,8 @@ public interface ApplyJPARepository extends JpaRepository<Apply, Integer> {
 
     @Query("select a from Apply a where a.jobs.id = :jobsId and a.resume.id = :resumeId")
     Optional<Apply> findByJidRid(@Param("jobsId") Integer jobsId, @Param("resumeId") Integer resumeId);
+
+    @Query("select a from Apply a where a.isPass not in ('1') and a.jobs.id = :jobsId")
+    List<Apply> findAllByJidAn1(@Param("jobsId") Integer jobsId);
 }
 

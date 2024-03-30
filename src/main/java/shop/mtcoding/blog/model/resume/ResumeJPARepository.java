@@ -17,6 +17,7 @@ public interface ResumeJPARepository extends JpaRepository<Resume, Integer> {
     List<Resume> findAllJoinUser();
 
 
+
     @Query("select r from Resume r where r.id = :id order by r.id desc")
     List<Resume> findAllUserId(@Param("id") Integer id);
 

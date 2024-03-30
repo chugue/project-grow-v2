@@ -2,6 +2,7 @@ package shop.mtcoding.blog.model.comp;
 
 import lombok.Builder;
 import lombok.Data;
+import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.user.User;
@@ -11,6 +12,47 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CompResponse {
+
+    @Data // Resume랑 User랑 SkillList랑 Apply를 담을 DTO
+    public static class RusaDTO {
+        private Integer id;
+        // user
+        private String myName;
+        // resume
+        private Integer resumeId;
+        private String title;
+        private String career;
+        private List<SkillDTO> skillList;
+        // apply
+        private Boolean isPass;
+        private Boolean isApply;
+
+        @Builder
+        public RusaDTO(Integer id, User user, Resume resume, Apply apply) {
+            this.id = id;
+            this.myName = user.getMyName();
+            this.resumeId = resume.getId();
+            this.title = resume.getTitle();
+            this.career = resume.getCareer();
+            this.skillList = resume.getSkillList().stream()
+                    .map(SkillDTO::new)
+                    .collect(Collectors.toList());
+
+            // 1. 지원x 2.지원중 3.합격 4.불합격
+            if (apply.getIsPass().equals("1")) {
+                this.isApply = false;
+            } else if (apply.getIsPass().equals("2")) {
+                this.isApply = true;
+            } else if (apply.getIsPass().equals("3")) {
+                this.isApply = true;
+                this.isPass = true;
+            } else if (apply.getIsPass().equals("4")) {
+                this.isApply = true;
+                this.isPass = false;
+            }
+        }
+    }
+
 
     @Data
     public static class ResumeUserSkillDTO {

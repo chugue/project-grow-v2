@@ -14,13 +14,6 @@
                             <button type="button" class="btn btn-mint offer-table-btn mb-3"><a
                                     href="/resume/write-resume-form">이력서 작성</a></button>
                         </div>
-
-                        <div class="font mb-3">지원 내역</div>
-<!--                        <div>-->
-<!--                            <button type="button" class="btn btn-mint offer-table-btn mb-3"><a-->
-<!--                                    href="/jobs/writeJobsForm">이력서 작성</a></button>-->
-<!--                        </div>-->
-
                     </div>
                     <div class="components-div">
                         <table class="table table-hover offer-table scroll"
@@ -108,7 +101,7 @@
     function render(ursDTO) {
         let temp = `
             <tr class="offer-table" id="applyCancel-${ursDTO.id}">
-            <td>id</td>
+            <td>${ursDTO.id}</td>
             <td>
                 <div style="text-align: left; font-size: 15px;font-weight: 700;margin-bottom: 5px;">
                     ${ursDTO.compName}
@@ -143,12 +136,10 @@
                         </a>
                     </div>
                     <div class="new-create-button">
-<!--                         <a href="/apply/${ursDTO.jobsId}/cancel/${ursDTO.resumeId}">-->
                             <button type="button" onclick= "applyCancel(${ursDTO.jobsId},${ursDTO.resumeId},${ursDTO.id})" class="btn btn-mint offer-table-btn">지원취소
                             </button>
                         </a>
                     </div>
-                    <!--<div class="new-create-button">-->
                 </div>
             </td>
         </tr>
@@ -156,6 +147,15 @@
         return temp;
     }
 
+    /*
+    * 지원 내역을 호출하는 함수
+    * 1. 지원 내역 버튼을 누르면 onclick = "apply(resumeId)"호출
+    * 2. apply 함수에서 ajax로 "/api/find-jobs-resume" 호출
+    * 3. List를 반환하고 그 반환 값을 forEach문으로 render()함수 호출
+    * 4. render함수는 List사이즈 만큼 반복
+    * 5. render함수 내부에 SkillList반복문은 내부 html을 skill반복문 전과 후로 나누어 변수 temp로 지정
+    * 6. 나누어진 곳에 자바스크립트 로직으로 html 리턴값을 반복하여 넣음
+    * */
     function apply(resumeId) {
         $.ajax({
             url: "/api/find-jobs-resume",
@@ -166,12 +166,13 @@
             console.log(resp);  //이걸 먼저 찍어서 테스트
             resp.forEach(item => { // forEach 쓰는 이유는 List이기 때문
                 let htmlContent = render(item);
-                $('#jobList').append(htmlContent);
+                $('#jobList').append(htmlContent); //.html은 그자리를 계속 대체함, append가 되어야 추가됨
             });
         });
     }
 
     function applyCancel(jobsId, resumeId, elementId) {
+        // 참조하는 같은 id값이 여러개면 제일 처음 값을 찾기 때문에, elementId로 반복문 id값이 동적으로 바뀔 수 있게 해야함.
         console.log(jobsId, resumeId, elementId)
         if (confirm("지원을 정말 취소하시겠습니까?")) {
             $.ajax({
@@ -182,7 +183,8 @@
                     resumeId: resumeId
                 }
             }).done(() => {
-                $(`#applyCancel-${elementId}`).remove(); // 제가 생각할 떄 엠티는 공간을 비우는 것이고 저기 자체를 없애는 다른 단어
+                //empty()로 지우면 빈공간이 남으므로, remove로 지워야 지운자리에 남은 요소들이 채움
+                $(`#applyCancel-${elementId}`).remove();
             });
         }
     }

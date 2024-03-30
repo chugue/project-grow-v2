@@ -93,6 +93,7 @@ public class JobsResponse {
     @Data
     public static class JobsListDTO {
         private Integer id;
+        private Integer jobsId;
         private String title;
         private String career;
         private String task;
@@ -101,7 +102,7 @@ public class JobsResponse {
 
         @Builder
         public JobsListDTO(Jobs jobs, User user, List<Skill> skills) {
-            this.id = jobs.getId();
+            this.jobsId = jobs.getId();
             this.title = jobs.getTitle();
             this.career = jobs.getCareer();
             this.task = jobs.getTask();
