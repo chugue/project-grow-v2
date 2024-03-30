@@ -3,6 +3,7 @@ package shop.mtcoding.blog.model.apply;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog.model.jobs.Jobs;
@@ -22,11 +23,13 @@ public class ApplyService {
     private final ApplyJPARepository applyJPARepo;
     private final JobsJPARepository jobsJPARepo;
     private final ResumeJPARepository resumeJPARepo;
-    private final HttpSession session;
     private final UserJPARepository userJPARepo;
 
-    public void t (Integer resumeId) {
-        applyJPARepo.findAppliesByNot1ByResumeId(resumeId);
+    @Transactional
+    public void cancel (Integer jobsId, Integer resumeId) {
+        Apply apply = applyJPARepo.findByJidRid(jobsId, resumeId)
+                .orElseThrow(() -> new Exception404("정보를 찾을 수 없습니다."));
+        applyJPARepo.delete(apply);
     }
 
     //이력서로 공고에 막 지원했을때 사용되는 메소드

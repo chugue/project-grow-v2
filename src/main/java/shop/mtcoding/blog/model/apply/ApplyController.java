@@ -2,6 +2,7 @@ package shop.mtcoding.blog.model.apply;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import shop.mtcoding.blog.model.user.User;
@@ -11,12 +12,20 @@ import shop.mtcoding.blog.model.user.User;
 public class ApplyController {
     private final ApplyService applyService;
     private final HttpSession session;
+
+    @PostMapping("/apply/cancel")
+    public ResponseEntity<?> applyCancel (@RequestParam("jobsId") Integer jobsId, @RequestParam("resumeId") Integer resumeId) {
+        applyService.cancel(jobsId, resumeId);
+        return ResponseEntity.ok().body("Cancelled successfully");
+    }
+
+
     @PostMapping("/jobs/apply")
     public String applySave(@RequestParam(name = "jobsId") Integer jobsId, @RequestParam(name = "resumeId") Integer resumeId) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        applyService.newApply(jobsId,resumeId);
+        applyService.newApply(jobsId, resumeId);
 
-        return "redirect:/user/"+sessionUser.getId()+"/user-home";
+        return "redirect:/user/" + sessionUser.getId() + "/user-home";
     }
 
     @PutMapping("/apply/pass/{id}")

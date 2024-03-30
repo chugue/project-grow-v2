@@ -32,34 +32,42 @@ public class UserService {
     private final JobsJPARepository jobsRepo;
     private final ApplyJPARepository applyRepo;
 
+
     public List<UserResponse.UrsDTO> ursDTOS(Integer resumeId) {
         List<Apply> applyList = applyRepo.findAppliesByNot1ByResumeId(resumeId);
+
         Resume resume = resumeRepo.findById(resumeId)
                 .orElseThrow(() -> new Exception404("정보를 찾을 수 없습니다."));
-        List<UserResponse.UrsDTO> ursDTOList = new ArrayList<>();
 
-        for (int i = 0; i < applyList.size(); i++) {
-            Jobs jobs = jobsRepo.findById(applyList.get(i).getJobs().getId())
-                    .orElseThrow(() -> new Exception404("공고를 찾을 수 없습니다."));
-            List<Skill> skills = skillRepo.findAllByJobsId(applyList.get(i).getJobs().getId());
-            User compUser = userRepo.findById(jobs.getUser().getId())
-                    .orElseThrow(() -> new Exception404(" 사용자를 찾을 수 없습니다."));
+        List<UserResponse.UrsDTO> ursDTOList = applyList.stream()
+                .map(apply -> {
+                    Jobs jobs = jobsRepo.findById(apply.getJobs().getId())
+                            .orElseThrow(() -> new Exception404("공고를 찾을 수 없습니다."));
 
-            ursDTOList.add(UserResponse.UrsDTO.builder()
-                    .user(compUser)
-                    .jobs(jobs)
-                    .apply(applyList.get(i))
-                    .resume(resume)
-                    .skillList(skills).build());
-        }
+                    User compUser = userRepo.findById(jobs.getUser().getId())
+                            .orElseThrow(() -> new Exception404(" 사용자를 찾을 수 없습니다."));
+
+                    List<Skill> skills = skillRepo.findAllByJobsId(apply.getJobs().getId());
+
+                    return UserResponse.UrsDTO.builder()
+                            .user(compUser)
+                            .jobs(jobs)
+                            .apply(apply)
+                            .resume(resume)
+                            .skillList(skills).build();
+                        }).collect(Collectors.toList());
 
         return ursDTOList;
 
     }
 
-    public List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO(Integer userId, Integer resumeId) {
+    //사용자 정보와 이력서에 들어간 스킬을 구해다 주는 DTO
+    public List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO(Integer userId) {
+
         List<UserResponse.UserResumeSkillDTO> ursList = new ArrayList<>();
+
         List<Resume> resumeList = resumeRepo.findAllByUserId(userId);
+
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new Exception401("사용자를 찾을 수 없습니다."));
 

@@ -29,27 +29,17 @@ public class UserController {
     private final ApplyService applyService;
 
 
-
-
     //user의 지원 내역
     @GetMapping("/user/{id}/resume-home")
     public String resumeHome(@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        User newSessionUser = userService.findById(sessionUser.getId());
 
-        Integer resumeId = 1; // 지워야함
-
-        List<UserResponse.UserResumeSkillDTO> userResumeSkillDTO = userService.userResumeSkillDTO(newSessionUser.getId(), resumeId);
+        List<UserResponse.UserResumeSkillDTO> ursList = userService.userResumeSkillDTO(sessionUser.getId());
         //No 카운트 뽑으려고 for문 돌림
-        for (int i = 0; i < userResumeSkillDTO.size(); i++) {
-            userResumeSkillDTO.get(i).setId(i + 1);
+        for (int i = 0; i < ursList.size(); i++) {
+            ursList.get(i).setId(i + 1);
         }
-
-
-        request.setAttribute("user", sessionUser);
-        request.setAttribute("userResumeSkill", userResumeSkillDTO);
-
-//        return "redirect:/";
+        request.setAttribute("ursList", ursList);
         return "/user/resume-home";
     }
 
@@ -162,8 +152,10 @@ public class UserController {
 
         System.out.println("결과값=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n"+applies);
         request.setAttribute("resumeList", resumeList);
+        System.out.println("resumeList:n " + resumeList);
         request.setAttribute("sessionUserId", sessionUser.getId());
         request.setAttribute("applyState",applies);
+        System.out.println("applies :"+applies);
         return "/user/user-home";
     }
 

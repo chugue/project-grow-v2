@@ -158,19 +158,5 @@ public class JobsService {
                 .skillChecked(new SkillResponse.SkillCheckedDTO(skill)).build();
         return reqDTO;
     }
-
-//    @Transactional
-//    public void update(int id, int sessionUserId, ResumeRequest.UpdateDTO reqDTO){
-//        // 1. 조회 및 예외처리
-//        Resume resume = resumeJPARepo.findById(id)
-//                .orElseThrow(() -> new Exception404("해당 이력서를 찾을 수 없습니다"));
-//        // 2. 권한 처리
-//        if (sessionUserId != resume.getUser().getId()) {
-//            throw new Exception403("이력서를 수정할 권한이 없습니다");
-//        }
-//        // 3. 이력서 수정하기
-//        resume.setResumeUpdate(reqDTO);
-//        System.out.println("수정된 데이터 : " +reqDTO);
-//    } // 더티체킹
 }
 

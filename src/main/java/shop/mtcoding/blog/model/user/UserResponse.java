@@ -35,8 +35,21 @@ public class UserResponse {
                     .map(skill -> new Skill2DTO(skill))
              .collect(Collectors.toList());
         }
-
     }
+
+    @Data
+    public static class SkillV2DTO{
+        private Integer id;
+        private String name;
+        private String color;
+
+        public SkillV2DTO(Skill skill) {
+            this.id = skill.getId();
+            this.name = skill.getName();
+            this.color = skill.getColor();
+        }
+    }
+
 
     @Data
     public static class UrsDTO {
@@ -44,6 +57,7 @@ public class UserResponse {
         private Integer id;
         private String compName;
         //jobs
+        private Integer jobsId;
         private String jobsTitle;
         private String jobsCareer;
         //Apply
@@ -56,6 +70,7 @@ public class UserResponse {
         public UrsDTO(User user, Jobs jobs, Apply apply,Resume resume, List<Skill> skillList) {
             this.id = user.getId();
             this.compName = user.getCompName();
+            this.jobsId = jobs.getId();
             this.jobsTitle = jobs.getTitle();
             this.jobsCareer = jobs.getCareer();
             this.isPass = apply.getIsPass();
@@ -127,6 +142,12 @@ public class UserResponse {
                 this.color = "badge badge-pill bg-info";
             } else if (this.name.equals("React")) {
                 this.color = "badge badge-pill bg-dark";
+            } else if (this.name.equals("Vue.js")) {
+                this.color = "badge badge-pill bg-Indigo";
+            } else if (this.name.equals("Oracle")) {
+                this.color = "badge badge-pill bg-brown";
+            } else if (this.name.equals("MySql")) {
+                this.color = "badge badge-pill bg-purple";
             }
             // 추가 양식
             // else if (this.name.equals("언어")){
