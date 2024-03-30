@@ -47,7 +47,7 @@ public class CompService {
         return comp;
     }
 
-    public List<JobsResponse.ApplyResumeListDTO> findAllByJobsId(Integer jobsId, User sessionComp) {
+    public List<JobsResponse.ApplyResumeListDTO> findAllByJobsId(Integer jobsId) {
         List<Apply> applyList = applyJPARepo.findAllByJobsId(jobsId);
         List<JobsResponse.ApplyResumeListDTO> listDTOS = new ArrayList<>();
 
@@ -57,10 +57,10 @@ public class CompService {
                     .resume(applyList.get(i).getResume())
                     .myName(applyList.get(i).getResume().getUser().getMyName())
                     .jobs(applyList.get(i).getJobs())
+                    .isPass(applyList.get(i).getIsPass())
                     .skills(skillList)
                     .build());
         }
-
 
         return listDTOS;
     }

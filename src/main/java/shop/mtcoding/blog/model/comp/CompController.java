@@ -57,7 +57,7 @@ public class CompController {
         User sessionComp = (User) session.getAttribute("sessionComp");
         List<JobsResponse.ApplyJobsListDTO> jobsList = compService.findAllByUserId(sessionComp);
         request.setAttribute("jobsList", jobsList);
-        List<JobsResponse.ApplyResumeListDTO> resumeList = compService.findAllByJobsId(jobsId, sessionComp);
+        List<JobsResponse.ApplyResumeListDTO> resumeList = compService.findAllByJobsId(jobsId);
         request.setAttribute("resumeList", resumeList);
         return "/comp/comp-home";
     }

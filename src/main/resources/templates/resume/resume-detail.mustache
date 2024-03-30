@@ -40,43 +40,40 @@
     <div class="new-container my-5 py-5 pt-80">
         {{#resume}}
             <div style="width:calc(100% - 270px);">
-                <form action="" method="">
-
                     <div class="new-head">
                         <div class="resume-info-img col-3 mt-3"
                              style="width: 200px; height: auto; margin-top: 0 !important; display: flex; align-items: center; justify-content: center; border-radius: 10px; overflow: hidden;">
-                            <img class="" src="/upload/{{user.imgFileName}}" alt="" srcset="" style="width: 100%;"
+                            <img class="" src="/upload/{{imgFileName}}" alt="" srcset="" style="width: 100%;"
                                  id="photo">
                         </div>
-                        <input type="hidden" value="{{id}}" name="compId"/>
                         <div class="resume-info-txt" style="width: calc(100% - 200px); margin-left: 100px;">
                             <div class="new-info-txt-wrapper">
                                 <div class="new-input-wrapper">
                                     <div class="new-wrapper-contnent">
                                         <div class="new-title">이름</div>
-                                        <div class="new-content bold">{{user.myName}}</div>
+                                        <div class="new-content bold">{{myName}}</div>
                                     </div>
                                 </div>
                                 <div class="new-input-wrapper">
                                     <div class="new-wrapper-contnent">
                                         <div class="new-title">생년월일</div>
-                                        <div class="new-content">{{user.birth}}</div>
+                                        <div class="new-content">{{birth}}</div>
                                     </div>
                                     <div class="new-wrapper-contnent">
                                         <div class="new-title">연락처</div>
-                                        <div class="new-content">{{user.phone}}</div>
+                                        <div class="new-content">{{phone}}</div>
                                     </div>
                                     <div class="new-wrapper-contnent">
                                         <div class="new-title">E-mail</div>
                                         <div class="new-content">
-                                            <div class="new-content">{{user.email}}</div>
+                                            <div class="new-content">{{email}}</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="new-input-wrapper">
                                     <div class="new-wrapper-contnent">
                                         <div class="new-title">주소</div>
-                                        <div class="new-content">{{user.address}}</div>
+                                        <div class="new-content">{{address}}</div>
                                     </div>
                                     <div class="new-wrapper-contnent">
                                         <div class="new-title">희망근무지역</div>
@@ -101,9 +98,9 @@
                             <div class="card-body">
                                 <div class="my-3" style="background-color: #f8f8f8; padding: 20px">
                                     <div class="new-skill-box">
-                                    {{#skillList}}
-                                            <div class="">{{name}}</div>
-                                    {{/skillList}}
+                                        {{#skills}}
+                                            <div class="{{color}}">{{name}}</div>
+                                        {{/skills}}
                                     </div>
                                 </div>
                             </div>
@@ -124,134 +121,97 @@
                             </div>
                         </div>
                     </div>
-                </form>
             </div>
         {{/resume}}
+        {{#resume.isComp}}
         <div class="side-button-container">
             <div class="side-button">
                 <div id="rButton">
                     <br>
-<!--                    기업이면 해당 버튼이 보임-->
-
                         <div class="row p-1">
                             <div>
                                 <div id="scrap-${rDto.resumeId}-render">
                                     <div id="scrap-${rDto.resumeId}-remove">
-                                        {{#scrap.isScrap}}
-
-                                            <form action="/resume/scrap/{{scrap.id}}/delete" method="post">
+                                        {{#resume.isWaiting}}
+                                        <form id="passForm" method="post" enctype="application/x-www-form-urlencoded">
+                                            <input type="hidden" name="resumeId" value="{{resume.id}}">
+                                            <button type="submit" class="btn btn-mint w-100 mb-10"
+                                                    onclick="submitFormWithJobsId('pass')">합격
+                                            </button>
+                                        </form>
+                                        <form id="failForm" method="post" enctype="application/x-www-form-urlencoded">
+                                            <input type="hidden" name="resumeId" value="{{resume.id}}">
+                                            <button type="submit" class="btn btn-mint w-100"
+                                                    onclick="submitFormWithJobsId('fail')">불합격
+                                            </button>
+                                        </form>
+                                        {{/resume.isWaiting}}
+                                        {{#resume.isPass}}
+                                            <div class="btn btn-outline-mint w-100 mb-10">합격 시켯습니다.</div>
+                                            <form id="failForm" method="post" enctype="application/x-www-form-urlencoded">
                                                 <input type="hidden" name="resumeId" value="{{resume.id}}">
-                                                <button type="submit" class="btn btn-mint w-100 mb-10">스크랩 취소</button>
+                                                <button type="submit" class="btn btn-mint w-100"
+                                                        onclick="submitFormWithJobsId('fail')">불합격
+                                                </button>
                                             </form>
-                                        {{/scrap.isScrap}}
-                                        {{#offer.isScrap}}
-                                            <form action="/resume/offer/{{scrap.id}}/delete" method="post">
+                                        {{/resume.isPass}}
+                                        {{#resume.isFail}}
+                                            <form id="passForm" method="post" enctype="application/x-www-form-urlencoded">
                                                 <input type="hidden" name="resumeId" value="{{resume.id}}">
-                                                <button type="submit" class="btn btn-outline-mint w-100">제안 취소</button>
+                                                <button type="submit" class="btn btn-mint w-100 mb-10"
+                                                        onclick="submitFormWithJobsId('pass')">합격
+                                                </button>
                                             </form>
-                                        {{/offer.isScrap}}
-                                        {{^scrap.isScrap}}
-                                            {{^resume.isOwner}}
+                                            <div class="btn btn-outline-mint w-100">불합격 시켯습니다.</div>
+                                        {{/resume.isFail}}
+                                        <script>
+                                            // 폼을 제출할 때 resumeId와 jobsId 값을 추가하는 함수
+                                            function submitFormWithJobsId(formType) {
+                                                // resumeId 추출
+                                                let resumeId = window.location.pathname.split('/').pop();
 
-                                            <form action="/resume/scrap/save" method="post"
-                                                  enctype="application/x-www-form-urlencoded">
-                                                <input type="hidden" name="resumeId" value="{{id}}">
-                                                <button type="submit" class="btn btn-mint w-100 mb-10">스크랩하기</button>
-                                            </form>
+                                                // jobsId 추출
+                                                let jobsId = new URLSearchParams(window.location.search).get('jobsId');
 
-                                            {{/resume.isOwner}}
-                                        {{/scrap.isScrap}}
-                                        {{^offer.isScrap}}
-                                            <form action="/resume/offer/save" method="post"
-                                                  enctype="application/x-www-form-urlencoded">
-                                                {{#jobsList}}
-                                                    {{title}} {{compName}}: <input type="radio" name="jobsId"
-                                                                                   value="{{id}}">
-                                                {{/jobsList}}
+                                                // 폼 타입에 따른 액션 URL 설정
+                                                let actionURL;
+                                                if (formType === 'pass') {
+                                                    actionURL = "/apply/pass/update/" + resumeId;
+                                                } else if (formType === 'fail') {
+                                                    actionURL = "/apply/fail/update/" + resumeId;
+                                                } else {
+                                                    console.error("Invalid form type.");
+                                                    return;
+                                                }
 
-                                                <input type="hidden" name="resumeId" value="{{id}}">
-                                                <!--                                            <button type="submit" class="btn btn-outline-mint w-100">불합격</button>-->
-                                            </form>
-                                        {{/offer.isScrap}}
+                                                // 폼 선택
+                                                let form = document.getElementById(formType + 'Form');
+
+                                                // 액션 URL 설정
+                                                form.action = actionURL;
+
+                                                // jobsId 값을 파라미터로 추가
+                                                let jobsIdInput = document.createElement("input");
+                                                jobsIdInput.type = "hidden";
+                                                jobsIdInput.name = "jobsId";
+                                                jobsIdInput.value = jobsId;
+
+                                                // jobsId 입력란 폼에 추가
+                                                form.appendChild(jobsIdInput);
+
+                                                // 폼 제출
+                                                form.submit();
+                                            }
+                                        </script>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-
                 </div>
             </div>
         </div>
+        {{/resume.isComp}}
     </div>
 </div>
-
-
-<!--버튼-->
-<div class="side-button-container">
-    <div class="side-button">
-        <div id="rButton" style="width: 12em;">
-            <br>
-            <div class="row p-1">
-                <div>
-                    <div id="scrap-${rDto.resumeId}-render">
-                        <div id="scrap-${rDto.resumeId}-remove">
-<!--                            <form id="passForm" method="post" enctype="application/x-www-form-urlencoded">-->
-<!--                                <button type="button" class="btn btn-mint w-100 mb-10"-->
-<!--                                        onclick="submitFormWithResumeAndJobsId('pass')">합격-->
-<!--                                </button>-->
-<!--                            </form>-->
-
-<!--                            &lt;!&ndash; 불합격 폼 &ndash;&gt;-->
-<!--                            <form id="failForm" method="post" enctype="application/x-www-form-urlencoded">-->
-<!--                                <button type="button" class="btn btn-outline-mint w-100"-->
-<!--                                        onclick="submitFormWithResumeAndJobsId('fail')">불합격-->
-<!--                                </button>-->
-<!--                            </form>-->
-                            <script>
-                                // 폼을 제출할 때 resumeId와 jobsId 값을 추가하는 함수
-                                function submitFormWithResumeAndJobsId(formType) {
-                                    // resumeId 추출
-                                    var resumeId = window.location.pathname.split('/').pop();
-
-                                    // jobsId 추출
-                                    var jobsId = new URLSearchParams(window.location.search).get('jobsId');
-
-                                    // 폼 타입에 따른 액션 URL 설정
-                                    var actionURL;
-                                    if (formType === 'pass') {
-                                        actionURL = "/apply/pass2/update/" + resumeId;
-                                    } else if (formType === 'fail') {
-                                        actionURL = "/apply/fail2/update/" + resumeId;
-                                    } else {
-                                        console.error("Invalid form type.");
-                                        return;
-                                    }
-
-                                    // 폼 선택
-                                    var form = document.getElementById(formType + 'Form');
-
-                                    // 액션 URL 설정
-                                    form.action = actionURL;
-
-                                    // jobsId 값을 파라미터로 추가
-                                    var jobsIdInput = document.createElement("input");
-                                    jobsIdInput.type = "hidden";
-                                    jobsIdInput.name = "jobsId";
-                                    jobsIdInput.value = jobsId;
-
-                                    // jobsId 입력란 폼에 추가
-                                    form.appendChild(jobsIdInput);
-
-                                    // 폼 제출
-                                    form.submit();
-                                }
-                            </script>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 {{> layout/footer}}

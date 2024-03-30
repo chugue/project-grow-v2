@@ -120,19 +120,30 @@ public class JobsResponse {
         private Integer jobsId;
         private String myName;
         private String title;
+        private String isPass;
+        private String state;
         private String career;
         private List<SkillDTO> skills;
 
         @Builder
-        public ApplyResumeListDTO(Resume resume, Jobs jobs, String myName, List<Skill> skills, User user) {
+        public ApplyResumeListDTO(Resume resume, Jobs jobs, String myName, String isPass, List<Skill> skills) {
             this.id = resume.getId();
             this.jobsId = jobs.getId();
             this.title = resume.getTitle();
+            this.isPass = isPass;
             this.career = resume.getCareer();
             this.myName = myName;
             this.skills = skills.stream()
                     .map(skill -> new SkillDTO(skill))
                     .collect(Collectors.toList());
+
+            if (this.isPass.equals("2")) {
+                this.state = "지원중";
+            } else if (this.isPass.equals("3")) {
+                this.state = "합격";
+            } else if (this.isPass.equals("4")) {
+                this.state = "불합격";
+            }
         }
     }
 
