@@ -18,6 +18,15 @@ public class CompServiceTest {
     @Autowired
     private HttpSession session;
     @Test
+    public void findApplicants_test(){
+        // given
+        int jobsId = 1;
+        // when
+        compService.findApplicants(jobsId);
+        // then
+    }
+
+    @Test
     public void findAllResumeUserSKill_test(){
         // given
         User sessionComp = (User) session.getAttribute("sessionComp");

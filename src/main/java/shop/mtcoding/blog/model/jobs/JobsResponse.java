@@ -92,27 +92,6 @@ public class JobsResponse {
         }
     }
 
-    @Data
-    public static class ApplyJobsListDTO {
-        private Integer id;
-        private String title;
-        private String task;
-        private String career;
-        private Integer userId;
-        private List<SkillDTO> skills;
-
-        @Builder
-        public ApplyJobsListDTO(Integer userId, Jobs jobs, List<Skill> skills) {
-            this.id = jobs.getId();
-            this.title = jobs.getTitle();
-            this.task = jobs.getTask();
-            this.career = jobs.getCareer();
-            this.userId = userId;
-            this.skills = skills.stream()
-                    .map(skill -> new SkillDTO(skill))
-                    .collect(Collectors.toList());
-        }
-    }
 
     @Data
     public static class ApplyResumeListDTO {
@@ -253,6 +232,8 @@ public class JobsResponse {
         private String task;
         private List<String> skill;
     }
+
+
 }
 
 

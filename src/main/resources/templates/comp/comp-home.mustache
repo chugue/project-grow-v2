@@ -48,17 +48,18 @@
                                     <td class="col-3" style="text-align: center">
                                         <div>
                                             <div class="new-create-button">
-                                                <a href="/comp/{{userId}}/comp-home?jobsId={{id}}">
-                                                    <button type="button" class="btn btn-mint offer-table-btn">지원자 보기</button>
+                                                <button type="button" onclick="findApplicant({{jobsId}})"
+                                                        class="btn btn-mint offer-table-btn">지원자 보기
+                                                </button>
+                                            </div>
+                                            <div class="new-create-button">
+                                                <a href="/jobs/{{jobsId}}/update-jobs-form">
+                                                    <button type="button" class="btn btn-mint offer-table-btn">공고 수정
+                                                    </button>
                                                 </a>
                                             </div>
                                             <div class="new-create-button">
-                                                <a href="/jobs/{{id}}/update-jobs-form">
-                                                    <button type="button" class="btn btn-mint offer-table-btn">공고 수정</button>
-                                                </a>
-                                            </div>
-                                            <div class="new-create-button">
-                                                <form action="/jobs/{{id}}/delete" method="post" style="width: 100%">
+                                                <form action="/jobs/{{jobsId}}/delete" method="post" style="width: 100%">
                                                     <button class="btn btn-mint offer-table-btn">공고 삭제</button>
                                                 </form>
                                             </div>
@@ -88,38 +89,9 @@
                                 <th class="center-align col">지원관련</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            {{#resumeList}}
-                                <tr class="offer-table">
-                                    <th scope="row">{{id}}</th>
-                                    <td style="text-align: center; font-size: 20px;font-weight: 700;">{{myName}}</td>
-                                    <td style="text-align: left; font-size: 17px;font-weight: 700;">{{title}}</td>
-                                    <td>{{career}}</td>
-                                    <td>
-                                        <div class="new-skill-box">
-                                            {{#skills}}
-                                                <div class="{{color}}">{{name}}</div>
-                                            {{/skills}}
-                                        </div>
-                                    </td>
+                            <tbody id="ursaList">
 
-                                    <td class="col-3" style="text-align: center;">
-                                        <div>
-                                            <div class="new-create-button">
-                                                <form action="/resume/resume-detail/{{id}}" style="width: 100%">
-                                                    <input type="hidden" name="jobsId" value="{{jobsId}}">
-                                                    <button type="submit" class="btn btn-mint offer-table-btn">상세보기</button>
-                                                </form>
-                                            </div>
-                                            <div class="new-create-button">
-                                                <div class="btn-mint"
-                                                     style="margin-top: 5px; width: 160px;
-                                                     border-radius: 6px; height: 26px;">{{state}}</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            {{/resumeList}}
+
                             </tbody>
                         </table>
                     </div>
@@ -128,4 +100,75 @@
         </div>
     </div>
 </div>
+
+<script>
+    function render(ursaDTO) {
+        console.log(ursaDTO)
+        let temp = `
+                <tr class="offer-table">
+                    <th scope="row">${ursaDTO.id}</th>
+                    <td>${ursaDTO.myName}</td>
+                    <td>${ursaDTO.title}</td>
+                    <td>${ursaDTO.career}</td>
+                    <td>
+                        <div class="new-skill-box">
+                        `;
+
+        ursaDTO.skillList.forEach(s => {
+            temp += `<span class="${s.color}">${s.name}</span>`;
+        });
+
+        temp += `
+                        </div>
+                    </td>
+
+                    <td style="text-align: right;">
+                        <div class="d-flex justify-content-end">
+                            <div class="new-create-button">
+                                <form action="/resume/resume-detail/${ursaDTO.resumeId}}">
+                                    <input type="hidden" name="jobsId" value="${ursaDTO.jobsId}">
+                                    <button type="submit" class="btn btn-mint offer-table-btn">상세보기</button>
+                                </form>
+                            </div>
+                            <div class="new-create-button">
+                                <!--무슨아이디로 검색하는 건지 명시할 필요있음--이력서 아이디로 검색 로직-->
+                                <form action="/apply/pass/update/${ursaDTO.resumeId}}" method="post">
+                                    <input type="hidden" name="jobsId" value="${ursaDTO.jobsId}">
+                                    <button type="submit" class="btn btn-mint offer-table-btn">합격</button>
+                                </form>
+                            </div>
+                            <div class="new-create-button">
+                                <!--무슨아이디로 검색하는 건지 명시할 필요있음--이력서 아이디로 검색 로직-->
+                                <form action="/apply/fail/update/${ursaDTO.resumeId}}" method="post">
+                                    <input type="hidden" name="jobsId" value="${ursaDTO.jobsId}">
+                                    <button type="submit" class="btn btn-mint offer-table-btn">불합격</button>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+        `;
+        return temp;
+    }
+
+    function findApplicant(jobsId) {
+        $.ajax({
+            url: "/api/find-applicants",
+            type: "post",
+            data: {
+                jobsId: jobsId
+            }
+        }).done((resp) => {
+            $("#ursaList").empty();
+            resp.forEach(item => {
+                let htmlContent = render(item);
+                $('#ursaList').append(htmlContent);
+            })
+        });
+    }
+
+</script>
 {{> layout/footer}}
+
+
+

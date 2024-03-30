@@ -2,6 +2,7 @@ package shop.mtcoding.blog.model.comp;
 
 import lombok.Builder;
 import lombok.Data;
+import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.skill.Skill;
@@ -13,6 +14,68 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CompResponse {
+
+    @Data
+    public static class ComphomeDTO {
+        private Integer id;
+        private String title;
+        private String task;
+        private String career;
+        private Integer jobsId;
+        private List<SkillDTO> skillList;
+        @Builder
+        public ComphomeDTO(Jobs jobs, List<Skill> skillList) {
+            this.title = jobs.getTitle();
+            this.task = jobs.getTask();
+            this.career = jobs.getCareer();
+            this.jobsId = jobs.getId();
+            this.skillList = skillList.stream().map(skill -> {
+                return new SkillDTO(skill);
+            }).collect(Collectors.toList());
+        }
+    }
+
+
+    @Data // Resume랑 User랑 SkillList랑 Apply를 담을 DTO
+    public static class RusaDTO {
+        private Integer id;
+        // user
+        private String myName;
+        // resume
+        private Integer resumeId;
+        private String title;
+        private String career;
+        private List<SkillDTO> skillList;
+        // apply
+        private Boolean isPass;
+        private Boolean isApply;
+
+        @Builder
+        public RusaDTO(Integer id, User user, Resume resume, Apply apply) {
+            this.id = id;
+            this.myName = user.getMyName();
+            this.resumeId = resume.getId();
+            this.title = resume.getTitle();
+            this.career = resume.getCareer();
+            this.skillList = resume.getSkillList().stream()
+                    .map(SkillDTO::new)
+                    .collect(Collectors.toList());
+
+            // 1. 지원x 2.지원중 3.합격 4.불합격
+            if (apply.getIsPass().equals("1")) {
+                this.isApply = false;
+            } else if (apply.getIsPass().equals("2")) {
+                this.isApply = true;
+            } else if (apply.getIsPass().equals("3")) {
+                this.isApply = true;
+                this.isPass = true;
+            } else if (apply.getIsPass().equals("4")) {
+                this.isApply = true;
+                this.isPass = false;
+            }
+        }
+    }
+
 
     @Data
     public static class JobsSkillDTO {
@@ -42,25 +105,26 @@ public class CompResponse {
 
     @Data
     public static class ResumeUserSkillDTO {
-        private Integer id;//resume
-        private String title;//resume
-        private String edu;//resume
-        private String career; //resume
-        private String area; //resume
-        private String myName;//user
-        private Integer userId;//user
-        private Integer jobsId;//user
-        private String imgFileName; //user
+        //resume
+        private Integer id;
+        private String title;
+        private String edu;
+        private String career;
+        private String area;
+        //user
+        private String myName;
+        private Integer userId;
+        private Integer jobsId;
+        private String imgFileName;
         private List<SkillDTO> skillList = new ArrayList<>();
 
         @Builder
-        public ResumeUserSkillDTO(Resume resume, Integer jobsId, User user, List<Skill> skillList) {
+        public ResumeUserSkillDTO(Resume resume, User user, List<Skill> skillList) {
             this.id = resume.getId();
             this.title = resume.getTitle();
             this.edu = resume.getEdu();
             this.career = resume.getCareer();
             this.area = resume.getArea();
-            this.jobsId = jobsId;
             this.myName = user.getMyName();
             this.userId = user.getId();
             this.imgFileName = user.getImgFileName();
