@@ -3,10 +3,12 @@ package shop.mtcoding.blog.model.comp;
 import lombok.Builder;
 import lombok.Data;
 import shop.mtcoding.blog.model.apply.Apply;
+import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.user.User;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,6 +57,32 @@ public class CompResponse {
 
 
     @Data
+    public static class JobsSkillDTO {
+        private Integer id;
+        private String compName;
+        private String title;
+        private String career;
+        private String area;
+        private LocalDate deadline;
+        private String imgFileName;
+        private List<SkillDTO> skillList = new ArrayList<>();
+
+        @Builder
+        public JobsSkillDTO(Jobs jobs, User user, List<Skill> skillList) {
+            this.id = jobs.getId();
+            this.compName = user.getCompName();
+            this.title = jobs.getTitle();
+            this.career = jobs.getCareer();
+            this.area = jobs.getArea();
+            this.deadline = jobs.getDeadline();
+            this.imgFileName = user.getImgFileName();
+            this.skillList = skillList.stream().map(skill -> new SkillDTO(skill)).collect(Collectors.toList());
+
+        }
+    }
+
+
+    @Data
     public static class ResumeUserSkillDTO {
         private Integer id;//resume
         private String title;//resume
@@ -63,22 +91,25 @@ public class CompResponse {
         private String area; //resume
         private String myName;//user
         private Integer userId;//user
+        private Integer jobsId;//user
         private String imgFileName; //user
         private List<SkillDTO> skillList = new ArrayList<>();
 
         @Builder
-        public ResumeUserSkillDTO(Resume resume, User user, List<Skill> skillList) {
+        public ResumeUserSkillDTO(Resume resume, Integer jobsId, User user, List<Skill> skillList) {
             this.id = resume.getId();
             this.title = resume.getTitle();
             this.edu = resume.getEdu();
             this.career = resume.getCareer();
             this.area = resume.getArea();
+            this.jobsId = jobsId;
             this.myName = user.getMyName();
             this.userId = user.getId();
             this.imgFileName = user.getImgFileName();
             this.skillList = skillList.stream()
                     .map(skill -> new SkillDTO(skill))
-                    .collect(Collectors.toList());;
+                    .collect(Collectors.toList());
+            ;
         }
     }
 
@@ -108,6 +139,12 @@ public class CompResponse {
                 this.color = "badge badge-pill bg-info";
             } else if (this.name.equals("React")) {
                 this.color = "badge badge-pill bg-dark";
+            } else if (this.name.equals("Vue.js")) {
+                this.color = "badge badge-pill bg-Indigo";
+            } else if (this.name.equals("Oracle")) {
+                this.color = "badge badge-pill bg-brown";
+            } else if (this.name.equals("MySql")) {
+                this.color = "badge badge-pill bg-purple";
             }
             // 추가 양식
             // else if (this.name.equals("언어")){

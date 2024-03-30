@@ -10,6 +10,8 @@ import shop.mtcoding.blog._core.util.ApiUtil;
 import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.apply.ApplyResponse;
 import shop.mtcoding.blog.model.apply.ApplyService;
+import shop.mtcoding.blog.model.jobs.Jobs;
+import shop.mtcoding.blog.model.jobs.JobsJPARepository;
 import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.jobs.JobsService;
 import shop.mtcoding.blog.model.resume.ResumeRequest;
@@ -40,6 +42,7 @@ public class UserController {
             ursList.get(i).setId(i + 1);
         }
         request.setAttribute("ursList", ursList);
+
         return "/user/resume-home";
     }
 
@@ -50,9 +53,18 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String index(HttpServletRequest request) {
-        List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
-        request.setAttribute("listDTOS", listDTOS);
+    public String index(HttpServletRequest request, @RequestParam (value = "keyword", defaultValue = "") String keyword) {
+
+        if (keyword.isBlank()) {
+            List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
+            request.setAttribute("listDTOS", listDTOS);
+
+        } else {
+            List<Jobs> jobsKeyword = jobsService.searchKeyword(keyword);
+            request.setAttribute("jobsKeyword", jobsKeyword);
+        }
+
+        request.setAttribute("keyword", keyword);
 
         return "index";
     }
@@ -150,7 +162,7 @@ public class UserController {
         List<ResumeRequest.UserViewDTO> resumeList = userService.userHome(sessionUser.getId());
         ApplyResponse.stateViewDTO applies = applyService.findAll(id);
 
-        System.out.println("결과값=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n"+applies);
+        
         request.setAttribute("resumeList", resumeList);
         System.out.println("resumeList:n " + resumeList);
         request.setAttribute("sessionUserId", sessionUser.getId());

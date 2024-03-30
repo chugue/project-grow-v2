@@ -9,7 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface JobsJPARepository extends JpaRepository <Jobs, Integer> {
-  
-    @Query("select j from Jobs j where j.user.id = :userId")
-    List<Jobs> findAllByJobsId(@Param("userId") Integer userId);
+
+    @Query("select j, u FROM Jobs j join fetch User u on j.user.id = u.id WHERE u.id = :userId")
+    List<Jobs> findAllByUserId(@Param("userId") Integer userId);
+
+    @Query("select j from Jobs j join fetch j.user u where j.title like %:keyword% or u.compName like %:keyword%")
+    List<Jobs> findAllKeyword(@Param("keyword") String keyword);
+
 }

@@ -64,6 +64,7 @@ public class CompService {
         return rusaDTOList;
     }
 
+
     // 기업 회원가입
     @Transactional
     public User join(CompRequest.CompJoinDTO reqDTO) {
@@ -74,28 +75,80 @@ public class CompService {
         return comp;
     }
 
-    public List<JobsResponse.JobsListDTO> findAllJobsId(Integer id) {
 
-        List<Jobs> jobsList = jobsJPARepo.findAllByJobsId(id);
-        List<JobsResponse.JobsListDTO> listDTOS = new ArrayList<>();
+//    List<Jobs> jobsList = jobsJPARepo.findAllByJobsId(id);
+//    List<JobsResponse.JobsListDTO> jobsListDTOS = new ArrayList<>();
+//
+//        jobsList.stream().map(jobs -> {
+//        User user = userJPARepo.findById(jobs.getUser().getId())
+//                .orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
+//        List<Skill> skillList = skillJPARepo.findAllByJobsId(jobs.getId());
+//        return jobsListDTOS.add(JobsResponse.JobsListDTO.builder()
+//                .jobs(jobs)
+//                .user(user)
+//                .skills(skillList).build());
+//    }).collect(Collectors.toList());
+//
+//    // 조회된 DTO에 목록 번호 붙이기
+//        for (int i = 0; i < listDTOS.size(); i++){
+//        listDTOS.get(i).setId(i + 1);
+//    }
 
-        jobsList.stream().map(jobs -> {
-            User user = userJPARepo.findById(jobs.getUser().getId())
-                    .orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
-            List<Skill> skillList = skillJPARepo.findAllByJobsId(jobs.getId());
-            return listDTOS.add(JobsResponse.JobsListDTO.builder()
-                    .jobs(jobs)
-                    .user(user)
-                    .skills(skillList).build());
-        }).collect(Collectors.toList());
 
-        // 조회된 DTO에 목록 번호 붙이기
-        for (int i = 0; i < listDTOS.size(); i++) {
-            listDTOS.get(i).setId(i + 1);
+    public List<JobsResponse.ApplyResumeListDTO> findAllByJobsId(Integer jobsId) {
+        List<Apply> applyList = applyJPARepo.findAllByJobsId(jobsId);
+        List<JobsResponse.ApplyResumeListDTO> listDTOS = new ArrayList<>();
+
+
+        for (int i = 0; i < applyList.size(); i++) {
+            List<Skill> skillList = skillJPARepo.findAllByJoinResumeId(applyList.get(i).getResume().getId());
+            listDTOS.add(JobsResponse.ApplyResumeListDTO.builder()
+                    .resume(applyList.get(i).getResume())
+                    .myName(applyList.get(i).getResume().getUser().getMyName())
+                    .jobs(applyList.get(i).getJobs())
+                    .isPass(applyList.get(i).getIsPass())
+                    .skills(skillList)
+                    .build());
+        }
+        return listDTOS;
+    }
+
+    public List<JobsResponse.ApplyJobsListDTO> findAllByUserId(User sessionComp) {
+        List<Jobs> jobsList = jobsJPARepo.findAllByUserId(sessionComp.getId());
+        List<JobsResponse.ApplyJobsListDTO> listDTOS = new ArrayList<>();
+
+        for (int i = 0; i < jobsList.size(); i++) {
+            List<Skill> skillList = skillJPARepo.findAllByJoinJobsId(jobsList.get(i).getId());
+            listDTOS.add(JobsResponse.ApplyJobsListDTO.builder()
+                    .jobs(jobsList.get(i))
+                    .userId(sessionComp.getId())
+                    .skills(skillList)
+                    .build());
         }
 
         return listDTOS;
     }
+
+    //기업 로그인하면 보여줄 채용 공고
+    public List<CompResponse.JobsSkillDTO> jobsList() {
+        List<Jobs> jobsList = jobsJPARepo.findAll();
+        List<CompResponse.JobsSkillDTO> jobsSkillList = new ArrayList<>();
+
+        for (int i = 0; i < jobsList.size(); i++) {
+            User user = userJPARepo.findById(jobsList.get(i).getUser().getId())
+                    .orElseThrow(() -> new Exception404("정보를 찾을 수 없습니다."));
+
+            List<Skill> skillList = skillJPARepo.findAllByJobsId(jobsList.get(i).getId());
+            jobsSkillList.add(CompResponse.JobsSkillDTO.builder()
+                    .jobs(jobsList.get(i))
+                    .user(user)
+                    .skillList(skillList)
+                    .build());
+        }
+        return jobsSkillList;
+
+    }
+
 
     // 기업 로그인하면 보여줄 이력서 목록들
     public List<CompResponse.ResumeUserSkillDTO> findAllRusList() {

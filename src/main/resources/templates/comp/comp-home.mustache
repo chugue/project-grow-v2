@@ -5,13 +5,11 @@
         <div class="new-container my-5 py-5 pt-80">
 
 
-            {{> comp/comp-sidebar}}
+            {{> layout/sidebar}}
             <div id="content" class="my-4 layer2-right-container" style="flex: 0 0 auto; width: calc(100% - 270px);">
                 <div class="components">
                     <div class="components-div p-tb-10 d-flex justify-content-between">
-
                         <div class="font mb-3">전체</div>
-
                         <div>
                             <button type="button" class="btn btn-mint offer-table-btn mb-3"><a
                                     href="/jobs/write-jobs-form">공고작성</a></button>
@@ -31,13 +29,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{#jobList}}
-
+                            {{#jobsList}}
                                 <tr class="offer-table">
                                     <td>{{id}}</td>
                                     <td>
-                                        <div style="    text-align: left; font-size: 20px;font-weight: 700;margin-bottom: 5px;">{{title}}</div>
-                                        <!--타이틀, 보유스킬-->
+<
+                                        <div style="text-align: left; font-size: 20px;font-weight: 700;margin-bottom: 5px;">{{title}}</div>
+                                    <!--타이틀, 보유스킬-->
                                     <td class="col-3" style="text-align: center">
                                         <div class="new-skill-box">
                                             {{#skills}}
@@ -70,7 +68,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            {{/jobList}}
+                            {{/jobsList}}
                             </tbody>
                         </table>
                     </div>
@@ -89,10 +87,11 @@
                                 <th class="center-align col">이력서 제목</th>
                                 <th class="center-align col-2">경력</th>
                                 <th class="center-align col">주요 기술</th>
-                                <th class="center-align col"></th>
+                                <th class="center-align col">지원관련</th>
                             </tr>
                             </thead>
                             <tbody id="ursaList">
+
 
                             </tbody>
                         </table>

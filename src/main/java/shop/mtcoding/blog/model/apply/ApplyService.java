@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.mtcoding.blog._core.errors.exception.Exception400;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog.model.jobs.Jobs;
@@ -96,5 +97,19 @@ public class ApplyService {
         return stateDTO;
     }
 
+    @Transactional
+    public void pass(Integer resumeId, Integer jobsId) {
+        Apply apply = applyJPARepo.findByResumeIdAndJobsId(resumeId, jobsId)
+                .orElseThrow(() -> new Exception400("잘못된 요청입니다."));
 
+        apply.setIsPass("3");
+    }
+
+    @Transactional
+    public void fail(Integer resumeId, Integer jobsId) {
+        Apply apply = applyJPARepo.findByResumeIdAndJobsId(resumeId, jobsId)
+                .orElseThrow(() -> new Exception400("잘못된 요청입니다."));
+
+        apply.setIsPass("4");
+    }
 }

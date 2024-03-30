@@ -37,8 +37,8 @@ public class JobsController {
         System.out.println("detailDTO :"+detailDTO);
 
         //사용자 이력서 보유내역과 지원상태를 가져오는 ResumeApplyDTO
-        List<ResumeResponse.ResumeApplyDTO> resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionUser.getId(), jobsId);
-        System.out.println("resumeApplyDTOList: " + resumeApplyDTOList);
+        ResumeResponse.ResumeStateDTO resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionUser.getId(), jobsId);
+        System.out.println("resumeApplyDTOList: " + resumeApplyDTOList.getApplys());
         request.setAttribute("resumeApplyDTOList", resumeApplyDTOList);
         request.setAttribute("detailDTO", detailDTO);
         return "jobs/jobs-detail";
@@ -88,11 +88,6 @@ public class JobsController {
 
     @GetMapping("/jobs/{id}/update-jobs-form")
     public String updateForm (@PathVariable Integer id, HttpServletRequest request) {
-        User sessionComp = (User)session.getAttribute("sessionComp");
-
-        // sessionComp 라고 주면 오류나서 sessionC라고 하였음
-        request.setAttribute("sessionC", sessionComp);
-
         JobsResponse.JobUpdateDTO job = jobsService.updateForm(id);
         request.setAttribute("job", job);
 
