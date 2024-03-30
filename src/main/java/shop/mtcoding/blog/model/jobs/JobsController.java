@@ -88,11 +88,6 @@ public class JobsController {
 
     @GetMapping("/jobs/{id}/update-jobs-form")
     public String updateForm (@PathVariable Integer id, HttpServletRequest request) {
-        User sessionComp = (User)session.getAttribute("sessionComp");
-
-        // sessionComp 라고 주면 오류나서 sessionC라고 하였음
-        request.setAttribute("sessionC", sessionComp);
-
         JobsResponse.JobUpdateDTO job = jobsService.updateForm(id);
         request.setAttribute("job", job);
 

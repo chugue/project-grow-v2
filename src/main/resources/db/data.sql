@@ -52,5 +52,6 @@ INSERT INTO apply_tb(resume_id, jobs_id, is_pass, created_at)
 VALUES (1,1,'4',NOW()),
        (2,1,'3',NOW()),
        (1,2,'2',NOW()),
-       (1,3,'2',NOW());
+       (2,2,'2',NOW()),
+       (3,2,'2',NOW());
 
