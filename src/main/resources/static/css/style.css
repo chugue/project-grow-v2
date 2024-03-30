@@ -568,4 +568,10 @@ aside{
     height: 100%;
 }
 
+.badge.bg-brown{
+    background: #795458;
+}
 
+.badge.bg-Indigo{
+    background: #071A52;
+}

@@ -3,6 +3,8 @@ package shop.mtcoding.blog.model.jobs;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
+import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeRequest;
 import shop.mtcoding.blog.model.skill.Skill;
@@ -91,22 +93,43 @@ public class JobsResponse {
     }
 
     @Data
-    public static class JobsListDTO {
+    public static class ApplyJobsListDTO {
         private Integer id;
         private String title;
-        private String career;
         private String task;
-        private UserDTO user;
+        private String career;
+        private Integer userId;
         private List<SkillDTO> skills;
 
         @Builder
-        public JobsListDTO(Jobs jobs, User user, List<Skill> skills) {
+        public ApplyJobsListDTO(Integer userId, Jobs jobs, User user, List<Skill> skills) {
             this.id = jobs.getId();
             this.title = jobs.getTitle();
-            this.career = jobs.getCareer();
             this.task = jobs.getTask();
-            this.user = new UserDTO(user);
+            this.career = jobs.getCareer();
+            this.userId = userId;
+            this.skills = skills.stream()
+                    .map(skill -> new SkillDTO(skill))
+                    .collect(Collectors.toList());
+        }
+    }
 
+    @Data
+    public static class ApplyResumeListDTO {
+        private Integer id;
+        private Integer jobsId;
+        private String myName;
+        private String title;
+        private String career;
+        private List<SkillDTO> skills;
+
+        @Builder
+        public ApplyResumeListDTO(Resume resume, Jobs jobs, String myName, List<Skill> skills, User user) {
+            this.id = resume.getId();
+            this.jobsId = jobs.getId();
+            this.title = resume.getTitle();
+            this.career = resume.getCareer();
+            this.myName = myName;
             this.skills = skills.stream()
                     .map(skill -> new SkillDTO(skill))
                     .collect(Collectors.toList());
@@ -117,11 +140,13 @@ public class JobsResponse {
     public static class UserDTO {
         private Integer id;
         private String compName;
+        private String myName;
         private String imgFileName;
 
         public UserDTO(User user) {
             this.id = user.getId();
             this.compName = user.getCompName();
+            this.myName = user.getMyName();
             this.imgFileName = user.getImgFileName();
         }
     }
@@ -152,11 +177,11 @@ public class JobsResponse {
             } else if (this.name.equals("React")) {
                 this.color = "badge badge-pill bg-dark";
             } else if (this.name.equals("Vue.js")) {
-                this.color = "badge badge-pill bg-success";
+                this.color = "badge badge-pill bg-Indigo";
             } else if (this.name.equals("Oracle")) {
-                this.color = "badge badge-pill bg-info";
+                this.color = "badge badge-pill bg-brown";
             } else if (this.name.equals("MySql")) {
-                this.color = "badge badge-pill bg-success";
+                this.color = "badge badge-pill bg-purple";
             }
             // 추가 양식
             // else if (this.name.equals("언어")){
@@ -168,6 +193,7 @@ public class JobsResponse {
     @Data
     public static class JobUpdateDTO {
         private Integer id;
+        private User user;
         private String compName;
         private String phone;
         private String businessNumber;
@@ -182,8 +208,9 @@ public class JobsResponse {
         private SkillResponse.SkillCheckedDTO skillChecked;
 
         @Builder
-        public JobUpdateDTO(Integer id, String compName, String phone, String businessNumber, String homepage, String title, String edu, String career, String content, String area, LocalDate deadLine, String task, SkillResponse.SkillCheckedDTO skillChecked) {
+        public JobUpdateDTO(Integer id, User user, String compName, String phone, String businessNumber, String homepage, String title, String edu, String career, String content, String area, LocalDate deadLine, String task, SkillResponse.SkillCheckedDTO skillChecked) {
             this.id = id;
+            this.user = user;
             this.compName = compName;
             this.phone = phone;
             this.businessNumber = businessNumber;

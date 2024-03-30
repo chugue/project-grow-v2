@@ -7,6 +7,8 @@ import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 
+import java.util.List;
+
 @NoArgsConstructor
 @Table(name = "skill_tb")
 @Data

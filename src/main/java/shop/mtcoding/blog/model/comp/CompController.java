@@ -53,15 +53,14 @@ public class CompController {
     }
 
     @GetMapping("/comp/{id}/comp-home")
-    public String compHome(@PathVariable Integer id, HttpServletRequest request) {
-        List<JobsResponse.JobsListDTO> jobsList = compService.findAllJobsId(id);
-        request.setAttribute("jobList", jobsList);
-        request.setAttribute("sessionC", id);
-
+    public String compHome(@PathVariable Integer id, @RequestParam(required = false, defaultValue = "0") Integer jobsId, HttpServletRequest request) {
+        User sessionComp = (User) session.getAttribute("sessionComp");
+        List<JobsResponse.ApplyJobsListDTO> jobsList = compService.findAllByUserId(sessionComp);
+        request.setAttribute("jobsList", jobsList);
+        List<JobsResponse.ApplyResumeListDTO> resumeList = compService.findAllByJobsId(jobsId, sessionComp);
+        request.setAttribute("resumeList", resumeList);
         return "/comp/comp-home";
     }
-
-
 
     @GetMapping("/comp/{id}/apply")
     public String offer(@PathVariable Integer id) {
@@ -86,10 +85,9 @@ public class CompController {
     public String profileUpdateForm(HttpServletRequest request) {
 
         User sessionUser = (User) session.getAttribute("sessionUser");
-        request.setAttribute("imgFileName",sessionUser.getImgFileName());
+        request.setAttribute("imgFileName", sessionUser.getImgFileName());
         return "/comp/profile-update-form";
     }
-
 
 
     @GetMapping("/comp/{id}/scrap")
