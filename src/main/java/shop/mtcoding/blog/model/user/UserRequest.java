@@ -25,13 +25,17 @@ public class UserRequest {
         private String myName;
         private String password;
         private String phone;
+        private LocalDate birth;
+        private String imgFileName;
 
-        public User toEntity (Integer role){
+        public User toEntity (Integer role, String imgFileName){
             return User.builder()
                     .email(email)
                     .myName(myName)
                     .password(password)
                     .phone(phone)
+                    .birth(birth)
+                    .imgFileName(imgFileName)
                     .role(role)
                     .build();
         }

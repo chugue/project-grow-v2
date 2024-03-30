@@ -62,7 +62,25 @@ public class ResumeService {
 
         List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
 
-        ResumeResponse.DetailDTO2 resumeDetailDTO = new ResumeResponse.DetailDTO2(resume, sessionUser, skills);
+
+        ResumeResponse.DetailDTO2 resumeDetailDTO = ResumeResponse.DetailDTO2.builder()
+                .id(resume.getId())
+                .title(resume.getTitle())
+                .edu(resume.getEdu())
+                .introduce(resume.getIntroduce())
+                .imgFileName(resume.getUser().getImgFileName())
+                .myName(resume.getUser().getMyName())
+                .birth(resume.getUser().getBirth())
+                .phone(resume.getUser().getPhone())
+                .email(resume.getUser().getEmail())
+                .address(resume.getUser().getAddress())
+                .area(resume.getArea())
+                .career(resume.getCareer())
+                .portLink(resume.getPortLink())
+                .userId(resume.getUser().getId())
+                .skills(skills)
+                .build();
+
 
         return  resumeDetailDTO;
     }
@@ -98,6 +116,8 @@ public class ResumeService {
 
         resumeStateDTO.setIsApply(isApply);
         resumeStateDTO.setApplys(resumeApplyDTOList);
+
+
 
         return resumeStateDTO;
     }
