@@ -175,43 +175,32 @@
         <div class="side-item-1">
             <form action="/jobs/apply" method="post" enctype="application/x-www-form-urlencoded">
                 <div id="scrap-${rDto.resumeId}-remove">
-                    {{#resumeApplyDTOList.apply.isApply}}
+                    {{#resumeApplyDTOList.isApply}}
                         <button type="button" class="btn btn-outline-mint w-100"
                                 disabled>지원완료
                         </button>
-                        {{#resumeApplyDTOList.apply.isPass}}
-                            <button type="button" class="btn btn-outline-mint w-100"
-                                    disabled>합격
-                            </button>
-                        {{/resumeApplyDTOList.apply.isPass}}
-                        {{^resumeApplyDTOList.apply.isApply}}
-                            <button type="button" class="btn btn-outline-mint w-100"
-                                    disabled>불합격
-                            </button>
-                        {{/resumeApplyDTOList.apply.isApply}}
-
-                    {{/resumeApplyDTOList.apply.isApply}}
-                    {{^resumeApplyDTOList.apply.isApply}}
+                    {{/resumeApplyDTOList.isApply}}
+                    {{^resumeApplyDTOList.isApply}}
                         <input type="hidden" name="jobsId" value="{{detailDTO.id}}">
                         <button type="submit" class="btn btn-outline-mint w-100">
                             지원하기
                         </button>
-                    {{/resumeApplyDTOList.apply.isApply}}
-                    <div>
-                        <div class="card mt-3">
-                            <h6 class="card-body text">내 이력서 선택</h6>
-                            <hr class="mb-4">
-                            {{#resumeApplyDTOList}}
-                                <div class="form-check mb-20">
-                                    <input type="radio" class="form-check-input"
-                                           id="radio1" name="resumeId"
-                                           value="{{id}}" checked>
-                                    <label class="form-check-label" for="radio1"
-                                           style="font-weight: 400">{{title}}</label>
-                                </div>
-                            {{/resumeApplyDTOList}}
+                        <div>
+                            <div class="card mt-3">
+                                <h6 class="card-body text">내 이력서 선택</h6>
+                                <hr class="mb-4">
+                                {{#resumeApplyDTOList.applys}}
+                                    <div class="form-check mb-20">
+                                        <label class="form-check-label" for="radio{{id}}" style="font-weight: 400">
+                                            <input type="radio" class="form-check-input" id="radio{{id}}" name="resumeId" value="{{id}}" checked>
+                                            {{title}}
+                                        </label>
+                                    </div>
+                                {{/resumeApplyDTOList.applys}}
+                            </div>
                         </div>
-                    </div>
+                    {{/resumeApplyDTOList.isApply}}
+
                 </div>
             </form>
         </div>

@@ -132,34 +132,30 @@ public class ResumeResponse {
         private String color;
     }
 
+
+    @Data
+    public static class ResumeStateDTO{
+        private Boolean isApply;
+        private List<ResumeApplyDTO> applys;
+
+    }
+
     @Data
     public static class ResumeApplyDTO {
         private Integer id;
         private String title;
         private Integer userId;
-        private Boolean isPass;
-        private Boolean isApply;
+        private String isPass;
 
         @Builder
         public ResumeApplyDTO(Resume resume, Apply apply) {
             this.id = resume.getId();
             this.title = resume.getTitle();
             this.userId = resume.getUser().getId();
-
-            // 1. 지원x 2.지원중 3.합격 4.불합격
-            if (apply.getIsPass().equals("1")) {
-                this.isApply = false;
-            } else if (apply.getIsPass().equals("2")) {
-                this.isApply = true;
-            } else if (apply.getIsPass().equals("3")) {
-                this.isApply = true;
-                this.isPass = true;
-            } else if (apply.getIsPass().equals("4")) {
-                this.isApply = true;
-                this.isPass = false;
-            }
+            this.isPass = apply.getIsPass();
         }
     }
 
 }
+
 
