@@ -38,7 +38,7 @@ public class ResumeController {
         ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(id, newSessionUser);
         request.setAttribute("resume", resume);
 
-        return "resume/resume-detail";
+        return "resume/resume-detail2";
     }
 
     @GetMapping("/resume/{id}/manage-resume")
