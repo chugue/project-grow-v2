@@ -28,23 +28,23 @@ public class ApplyController {
         return "redirect:/user/" + sessionUser.getId() + "/user-home";
     }
 
-    @PutMapping("/apply/pass/{id}")
-    public String applyPassUpDate(@PathVariable Integer id) {
+    @PostMapping("/apply/pass/{resumeId}")
+    public String applyPassUpDate(@PathVariable Integer resumeId, @RequestParam("jobsId")Integer jobsId) {
         return "redirect:/";
     }
 
-    @PutMapping("/apply/fail/{id}")
-    public String applyFailUpDate(@PathVariable Integer id) {
+    @PostMapping("/apply/fail/{resumeId}")
+    public String applyFailUpDate(@PathVariable Integer resumeId, @RequestParam("jobsId")Integer jobsId) {
         return "redirect:/";
     }
 
-    @PutMapping("/apply/pass2/{id}")
+    @PostMapping("/apply/pass2/{id}")
     public String applyPassUpDate2(@PathVariable Integer id) {
 
         return "redirect:/";
     }
 
-    @PutMapping("/apply/fail2/{id}")
+    @PostMapping("/apply/fail2/{id}")
     public String applyFailUpDate2(@PathVariable Integer id) {
 
         return "redirect:/";

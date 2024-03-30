@@ -28,25 +28,33 @@ public class ResumeService {
     private final SkillJPARepository skillJPARepo;
     private final SkillJPARepository skillRepo;
     private final HttpSession session;
-    private final UserService userService;
-    private final UserJPARepository userRepo;
 
 
     //이력서 상세보기
-    public Resume resumeDetail(Integer resumeId, User sessionUser) {
+    public ResumeResponse.DetailDTO resumeDetail(Integer resumeId, User sessionUser, User sessionComp) {
         Resume resume = resumeJPARepo.findByIdJoinUser(resumeId);
 
         boolean isOwner = resume.getUser().equals(sessionUser);
         resume.setOwner(isOwner);
 
-        List<ResumeResponse.DetailDTO> resumeDetailDTO = new ArrayList<>();
-        for (int i = 0; i < resumeDetailDTO.size(); i++) {
-            List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
-            resumeDetailDTO.add(ResumeResponse.DetailDTO.builder()
-                    .skillList(skills).build());
-        }
+        List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
+        if (sessionUser != null) {
+            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume, resume.getUser(), sessionUser.getRole(), skills);
 
-        return resume;
+            return resumeDetailDTO;
+        } else if (sessionComp != null) {
+            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume, resume.getUser(), sessionComp.getRole(), skills);
+
+            return resumeDetailDTO;
+        } else {
+            ResumeResponse.DetailDTO resumeDetailDTO = ResumeResponse.DetailDTO.builder()
+                    .resume(resume)
+                    .user(resume.getUser())
+                    .role(0)
+                    .skills(skills).build();
+
+            return resumeDetailDTO;
+        }
     }
 
     public List<ResumeResponse.ResumeApplyDTO> findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {
@@ -75,7 +83,7 @@ public class ResumeService {
     }
 
     // 이력서 수정
-    public ResumeResponse.UpdateDTO updateForm (Integer id) {
+    public ResumeResponse.UpdateDTO updateForm(Integer id) {
         Resume resume = resumeJPARepo.findById(id)
                 .orElseThrow(() -> new Exception404("이력서를 찾을 수 없습니다"));
 
@@ -93,7 +101,7 @@ public class ResumeService {
 
 
     @Transactional
-    public void update(Integer id, Integer sessionUserId, ResumeRequest.UpdateDTO reqDTO){
+    public void update(Integer id, Integer sessionUserId, ResumeRequest.UpdateDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         // 1. 조회 및 예외처리
         // 주어진 resumeId로 이력서를 찾습니다.
@@ -119,10 +127,9 @@ public class ResumeService {
             // 반복문으로 스킬 돌면서 뿌림
             skillRepo.save(skill);
         });
-        
-        System.out.println("수정된 데이터 : " +reqDTO);
-    } // 더티체킹
 
+        System.out.println("수정된 데이터 : " + reqDTO);
+    } // 더티체킹
 
 
     //이력서 신청
@@ -158,17 +165,17 @@ public class ResumeService {
 
     //이력서 삭제
     @Transactional
-    public void delete(Integer boardId){
+    public void delete(Integer boardId) {
         //1. 인증처리
         User sessionUser = (User) session.getAttribute("sessionUser");
 
-        if (sessionUser.getId() == null){
+        if (sessionUser.getId() == null) {
             throw new Exception401("서비스가 필요한 서비스입니다.");
         }
         Resume resume = resumeJPARepo.findById(boardId)
                 .orElseThrow(() -> new Exception404("해당 게시글을 찾을 수 없습니다"));
         //2.권한처리
-        if (sessionUser.getId() != resume.getUser().getId()){
+        if (sessionUser.getId() != resume.getUser().getId()) {
             throw new Exception403("해당 게시글을 삭제할 권한이 없습니다");
         }
 
