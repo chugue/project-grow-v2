@@ -35,6 +35,7 @@ public class CompResponse {
             this.deadline = jobs.getDeadline();
             this.imgFileName = user.getImgFileName();
             this.skillList = skillList.stream().map(skill -> new SkillDTO(skill)).collect(Collectors.toList());
+
         }
     }
 
