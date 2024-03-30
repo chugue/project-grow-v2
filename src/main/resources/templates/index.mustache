@@ -220,6 +220,61 @@
                     </a>
                 </div>
                 {{/listDTOS}}
+        </div>
+            <div class="info" style=" display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-gap: 30px; margin: 50px 0; margin-top: -50px;">
+                    {{#jobsKeyword}}
+                        <!--공고-->
+                        <div class="card">
+                            <a href="/jobs/jobs-detail/{{id}}">
+                                <div class="card-body">
+                                    <div>
+                                        <div class="comp-img-wrapper">
+                                            <img class="card-img-top" src="/upload/{{user.imgFileName}}" alt="" srcset="" style="height: 5em; width: 180px; padding:5px; text-align: center;">
+                                        </div>
+                                        <div class="mb-2 ft-16">{{user.compName}}</div>
+                                        <div class="point-ft ft-22 fw-600 mb-10 jobs-title">{{title}}</div>
+                                        <!--기술스킬-->
+                                        <div class="skill-wrap">
+                                            {{#skills}}
+                                                <span class="{{color}}">{{name}}</span>
+                                            {{/skills}}
+                                        </div>
+
+                                        <!--career, address info-->
+                                        <div class="d-flex">
+                                            <div class="career">{{career}}</div>
+                                            <div class="mr-5 ml-5">|</div>
+                                            <div class="address">{{area}}</div>
+                                        </div>
+                                        <!--career, address info-->
+
+                                        <div class="d-flex justify-content-end">
+                                            <!--공고 마감일-->
+                                            <div class="d-day mr-10">{{deadline}}까지</div>
+                                            <!--공고 마감일-->
+
+                                            <!--공고 스크랩-->
+                                            <button type="button" aria-label="북마크" class="btn-scrap">
+                                                <div class="scrap">
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                              d="M4.75 2.5a.25.25 0 0 0-.25.25v9.91l3.023-2.489a.75.75 0 0 1 .954 0l3.023 2.49V2.75a.25.25 0 0 0-.25-.25h-6.5zM3 2.75C3 1.784 3.784 1 4.75 1h6.5c.966 0 1.75.784 1.75 1.75v11.5a.75.75 0 0 1-1.227.579L8 11.722l-3.773 3.107A.75.75 0 0 1 3 14.25V2.75z"
+                                                              fill="#eaecee"></path>
+                                                    </svg>
+                                                </div>
+                                            </button>
+                                            <!--공고 스크랩-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    {{/jobsKeyword}}
+            </div>
+
+
                 <script>
                     // 옵션 선택 시 URL 변경
                     document.getElementById("area").addEventListener("change", function () {
@@ -254,6 +309,7 @@
             </ul>
         </div>
     </div>
+
 </div>
 
 <!--고객센터-->

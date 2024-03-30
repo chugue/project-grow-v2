@@ -32,6 +32,21 @@ public class JobsService {
     private final SkillJPARepository skillRepo;
     private final HttpSession session;
 
+    public List<Jobs> searchKeyword(String keyword) {
+
+        List<Jobs> jobsList;
+
+        if (keyword.isBlank()) {
+            jobsList = jobsRepo.findAll();
+
+        } else {
+            jobsList = jobsRepo.findAllKeyword(keyword);
+        }
+
+        return jobsList;
+
+    }
+
     public JobsResponse.DetailDTO DetailDTO (Integer jobsId){
         Jobs jobs = jobsRepo.findById(jobsId)
                 .orElseThrow(() -> new Exception404("해당 공고를 찾을 수 없습니다."));
