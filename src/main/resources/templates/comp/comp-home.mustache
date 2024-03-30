@@ -9,9 +9,7 @@
             <div id="content" class="my-4 layer2-right-container" style="flex: 0 0 auto; width: calc(100% - 270px);">
                 <div class="components">
                     <div class="components-div p-tb-10 d-flex justify-content-between">
-
                         <div class="font mb-3">전체</div>
-
                         <div>
                             <button type="button" class="btn btn-mint offer-table-btn mb-3"><a
                                     href="/jobs/write-jobs-form">공고작성</a></button>
@@ -35,7 +33,7 @@
                                 <tr class="offer-table">
                                     <td>{{id}}</td>
                                     <td>
-                                        <div style="    text-align: left; font-size: 20px;font-weight: 700;margin-bottom: 5px;">{{title}}</div>
+                                        <div style="text-align: left; font-size: 20px;font-weight: 700;margin-bottom: 5px;">{{title}}</div>
                                     <!--타이틀, 보유스킬-->
                                     <td class="col-3" style="text-align: center">
                                         <div class="new-skill-box">
@@ -87,15 +85,15 @@
                                 <th class="center-align col">이력서 제목</th>
                                 <th class="center-align col-2">경력</th>
                                 <th class="center-align col">주요 기술</th>
-                                <th class="center-align col"></th>
+                                <th class="center-align col">지원관련</th>
                             </tr>
                             </thead>
                             <tbody>
                             {{#resumeList}}
                                 <tr class="offer-table">
                                     <th scope="row">{{id}}</th>
-                                    <td>{{myName}}</td>
-                                    <td>{{title}}</td>
+                                    <td style="text-align: center; font-size: 20px;font-weight: 700;">{{myName}}</td>
+                                    <td style="text-align: left; font-size: 17px;font-weight: 700;">{{title}}</td>
                                     <td>{{career}}</td>
                                     <td>
                                         <div class="new-skill-box">
@@ -105,27 +103,26 @@
                                         </div>
                                     </td>
 
-                                    <td style="text-align: right;">
-                                        <div class="d-flex justify-content-end">
+                                    <td class="col-3" style="text-align: center">
+                                        <div>
                                             <div class="new-create-button">
-                                                <form action="/resume/resume-detail/{{id}}">
+                                                <form action="/resume/resume-detail/{{id}}" style="width: 100%">
                                                     <input type="hidden" name="jobsId" value="{{jobsId}}">
                                                     <button type="submit" class="btn btn-mint offer-table-btn">상세보기</button>
                                                 </form>
                                             </div>
                                             <div class="new-create-button">
-                                                <form action="/apply/pass/update/{{id}}" method="post">
+                                                <form action="/apply/pass/update/{{id}}" method="post" style="width: 100%">
                                                     <input type="hidden" name="jobsId" value="{{jobsId}}">
                                                     <button type="submit" class="btn btn-mint offer-table-btn">합격</button>
                                                 </form>
                                             </div>
                                             <div class="new-create-button">
-                                                <form action="/apply/fail/update/{{id}}" method="post">
+                                                <form action="/apply/fail/update/{{id}}" method="post" style="width: 100%">
                                                     <input type="hidden" name="jobsId" value="{{jobsId}}">
                                                     <button type="submit" class="btn btn-mint offer-table-btn">불합격</button>
                                                 </form>
                                             </div>
-
                                         </div>
                                     </td>
                                 </tr>
