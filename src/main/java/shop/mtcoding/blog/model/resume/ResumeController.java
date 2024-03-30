@@ -34,11 +34,21 @@ public class ResumeController {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User newSessionUser = userService.findById(sessionUser.getId());
 
-
         ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(id, newSessionUser);
         request.setAttribute("resume", resume);
 
         return "resume/resume-detail2";
+    }
+
+    @GetMapping("/comp/comp-resume-detail/{id}")
+    public String compResumeDetail(@PathVariable Integer id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = userService.findById(sessionUser.getId());
+
+        ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(id, newSessionUser);
+        request.setAttribute("resume", resume);
+
+        return "/comp/comp-resume-detail";
     }
 
     @GetMapping("/resume/{id}/manage-resume")

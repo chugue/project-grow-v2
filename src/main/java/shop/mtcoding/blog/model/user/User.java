@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import shop.mtcoding.blog.model.comp.CompRequest;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 
 import java.sql.Date;
@@ -79,10 +80,13 @@ public class User {
     }
 
     //회원정보용 업데이트 의미있는 메서드
-    public void update(UserRequest.UpdateDTO requestDTO) {
+    public void update(CompRequest.UpdateDTO requestDTO) {
+        this.myName = requestDTO.getMyName();
         this.password = requestDTO.getPassword();
-        this.birth = requestDTO.getBirth();
+        this.compName = requestDTO.getCompName();
         this.phone = requestDTO.getPhone();
+        this.homepage = requestDTO.getHomepage();
+        this.birth = requestDTO.getBirth();
         this.address = requestDTO.getAddress();
     }
 

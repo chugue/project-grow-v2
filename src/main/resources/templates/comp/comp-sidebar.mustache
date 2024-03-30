@@ -1,41 +1,41 @@
-
-
-
-    <aside class="px-5" style="text-align: center; flex: 0 0 auto; padding: 0 !important; width: 220px; margin-right:50px; ">
-        <div class="mb-3">
-            <div class="fs-4" style="font-weight: 700;">기업 홈</div>
-        </div>
-        <div class="card" style="border-radius: 10px">
-            <div style="width: 100%;">
-                <div class="relative mb-3">
+<aside class="px-5"
+       style="text-align: center; flex: 0 0 auto; padding: 0 !important; width: 220px; margin-right:50px; ">
+    <div class="mb-3">
+        <div class="fs-4" style="font-weight: 700;">기업 홈</div>
+    </div>
+    <div class="card" style="border-radius: 10px">
+        <div style="width: 100%;">
+            <div class="relative mb-3">
+                <div>
                     <div>
-                        <div>
                         <a href="/comp/profile-update-form"
                            onclick="window.open(this.href, '_blank', 'width=1200,height=900,toolbars=no,scrollbars=no, resizable=no'); return false;">
                             <div class="user-img">
                                 <img src="/upload/{{sessionComp.imgFileName}}" class="rounded" alt="Cinque Terre"
-                                     style="max-width: 80px;">
+                                     style="max-width: 80px; margin-bottom: 5px">
                             </div>
                         </a>
                     </div>
                 </div>
                 <div>
-                    <h6 class="card-subtitle text-muted">{{sessionComp.myName}}</h6>
+                    <h6 class="card-subtitle text-muted">{{sessionComp.compName}}</h6>
                     <hr>
                     <ul class="nav flex-column nav-pills">
                         <li class="nav-item">
-                            <a id="compHome" class="nav-link sub-menu a p-1 mb-1" href="/comp/{{sessionComp.id}}/comp-home">공고 관리</a>
+                            <a id="compHome" class="nav-link sub-menu a p-1 mb-1"
+                               href="/comp/{{sessionComp.id}}/comp-home">공고 관리</a>
                         </li>
 
                         <li class="nav-item">
 
-                            <a id="apply" class="nav-link sub-menu a p-1 mb-1" href="/comp/{{sessionComp.id}}/apply">지원</a>
+                            <a id="apply" class="nav-link sub-menu a p-1 mb-1"
+                               href="/comp/{{sessionComp.id}}/apply">지원</a>
 
                         </li>
 
-<!--                        <li class="nav-item">-->
-<!--                            <a id="scrap" class="nav-link sub-menu a p-1" href="/comp/{{id}}/scrap">스크랩</a>-->
-<!--                        </li>-->
+                        <!--                        <li class="nav-item">-->
+                        <!--                            <a id="scrap" class="nav-link sub-menu a p-1" href="/comp/{{id}}/scrap">스크랩</a>-->
+                        <!--                        </li>-->
                         <!--                    <li class="nav-item">-->
                         <!--                        <a class="nav-link sub-menu a p-1" href="/comp/talent">매칭리스트</a>-->
                         <!--                    </li>-->
@@ -51,7 +51,8 @@
                 </div>
             </div>
         </div>
-    </aside>
+    </div>
+</aside>
 
 <script>
 
