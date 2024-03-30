@@ -18,6 +18,7 @@ import shop.mtcoding.blog.model.user.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -49,22 +50,39 @@ public class ResumeService {
         return resume;
     }
 
-    public List<ResumeResponse.ResumeApplyDTO> findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {
+    public ResumeResponse.ResumeStateDTO findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {
         List<Resume> resumeList = resumeJPARepo.findAllByUserId(userId);
 
-        List<ResumeResponse.ResumeApplyDTO> resumeApplyDTOList = new ArrayList<>();
 
-        for (int i = 0; i < resumeList.size(); i++) {
-            Apply apply = applyJPARepo.findByResumeIdAndJobsId(resumeList.get(i).getId(), jobsId)
-                    .orElse(Apply.builder().isPass("1").build());
+        // 내가 지원안한 이력서만 나오도록 출력
+        List<ResumeResponse.ResumeApplyDTO> resumeApplyDTOList = resumeList.stream()
+                .map(resume -> {
+                    Apply apply = applyJPARepo.findByResumeIdAndJobsId(resume.getId(), jobsId)
+                            .orElse(Apply.builder().isPass("1").build());
 
-            resumeApplyDTOList.add(ResumeResponse.ResumeApplyDTO.builder()
-                    .apply(apply)
-                    .resume(resumeList.get(i)).build());
-            System.out.println(resumeApplyDTOList.get(i).getIsPass());
-            System.out.println(resumeApplyDTOList.get(i).getIsApply());
+                    if ("1".equals(apply.getIsPass())) {
+                        return ResumeResponse.ResumeApplyDTO.builder()
+                                .apply(apply)
+                                .resume(resume)
+                                .build();
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull) // 필터링하여 null이 아닌 요소만 남깁니다.
+                .collect(Collectors.toList());
+        // 지원할 이력서가 없으면 isApply true
+        Boolean isApply = false;
+
+        if (resumeApplyDTOList.size() < 1){
+            isApply = true;
         }
-        return resumeApplyDTOList;
+
+        ResumeResponse.ResumeStateDTO resumeStateDTO = new ResumeResponse.ResumeStateDTO();
+
+        resumeStateDTO.setIsApply(isApply);
+        resumeStateDTO.setApplys(resumeApplyDTOList);
+
+        return resumeStateDTO;
     }
 
     //이력서 뿌리기

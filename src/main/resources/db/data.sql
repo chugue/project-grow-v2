@@ -49,9 +49,10 @@ INSERT INTO skill_tb(jobs_id, name, role) VALUES(3, 'JSP', 2);
 
 --- 지원내역 테이블
 INSERT INTO apply_tb(resume_id, jobs_id, is_pass, created_at)
-VALUES (1,1,'4',NOW()),
+VALUES (1,1,'2',NOW()),
        (2,1,'3',NOW()),
        (1,2,'2',NOW()),
        (2,2,'2',NOW()),
        (3,2,'2',NOW());
+
 
