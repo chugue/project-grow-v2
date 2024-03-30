@@ -1,4 +1,10 @@
-{{> layout/compheader}}
+{{#sessionUser}}
+    {{> layout/header}}
+{{/sessionUser}}
+
+{{#sessionComp}}
+    {{> layout/compheader}}
+{{/sessionComp}}
 <style>
     #photo {
 
