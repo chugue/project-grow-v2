@@ -1,6 +1,6 @@
 -- 사용자 테이블
 insert into user_tb(email, my_name, password, phone, address, birth, role, img_file_name,created_at)
-values ('bluepig4b@naver.com','심유주','1234','010-9011-5822','부산광역시 부산진구 범향빌딩 405호','1999-09-30',1,'517f9d79-8671-40d0-bb5e-6d272e767a9d_user09.png',now());
+values ('bluepig4b@naver.com','김지훈','1234','010-9011-5822','부산광역시 부산진구 범향빌딩 405호','1999-09-30',1,'517f9d79-8671-40d0-bb5e-6d272e767a9d_user09.png',now());
 insert into user_tb(email, my_name, password, phone, address, birth, role, img_file_name,created_at)
 values ('blueocean@naver.com','이서현','1234','010-1555-5842','부산광역시 사상구 괘법동 234번지 괘법아파트','2000-10-06',1,'702385bb-c937-4204-a142-7583f908bfaf_user02.png',now());
 insert into user_tb(email, my_name, password, phone, address, birth, role, img_file_name,created_at)
@@ -55,4 +55,16 @@ VALUES (1,1,'2',NOW()),
        (2,2,'2',NOW()),
        (3,2,'2',NOW());
 
+-- 커뮤니티 테이블
+ insert into board_tb(title, content, user_id, created_at)
+ values ('아이디를 찾고 싶어요', '가입된 아이디를 찾고 싶어요', 1, now()),
+        ('이력서 복원 가능여부', '삭제한 이력서 복원이 가능한가요?', 1, now()),
+        ('패스워드를 찾고 싶어요', '가입된 패스워드를 찾고 싶어요', 2, now()),
+        ('패스워드를 찾고 싶어요', '가입된 패스워드를 찾고 싶어요', 3, now());
 
+-- 댓글 테이블
+insert into reply_tb(comment, board_id, user_id, created_at)
+values('저두 궁금해요', 4, 1, now()),
+      ('어떻게 하셨나요? ', 4, 1, now()),
+      ('저두 궁금해요', 4, 2, now()),
+      ('저두 궁금해요', 3, 2, now());
