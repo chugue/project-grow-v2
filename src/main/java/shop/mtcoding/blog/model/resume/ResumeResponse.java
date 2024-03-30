@@ -61,20 +61,25 @@ public class ResumeResponse {
         private String area;
         private String career;
         private String portLink;
+        private String isApply;
         private Integer userId;
         private Integer role;
         private Boolean isComp;
         private Boolean isUser;
+        private Boolean isPass;
+        private Boolean isFail;
+        private Boolean isWaiting;
         private List<SkillDTO2> skills;
 
         @Builder
-        public DetailDTO(Resume resume, User user, Integer role, List<Skill> skills) {
+        public DetailDTO(Resume resume, String isApply, User user, Integer role, List<Skill> skills) {
             this.id = resume.getId();
             this.title = resume.getTitle();
             this.edu = resume.getEdu();
             this.introduce = resume.getIntroduce();
             this.imgFileName = user.getImgFileName();
             this.myName = user.getMyName();
+            this.isApply = isApply;
             this.birth = user.getBirth();
             this.phone = user.getPhone();
             this.email = user.getEmail();
@@ -86,6 +91,9 @@ public class ResumeResponse {
             this.role = role;
             this.isComp = false;
             this.isUser = false;
+            this.isPass = false;
+            this.isFail = false;
+            this.isWaiting = false;
             this.skills = skills.stream()
                     .map(skill -> new SkillDTO2(skill))
                     .collect(Collectors.toList());
@@ -94,6 +102,14 @@ public class ResumeResponse {
                 this.isUser = true;
             } else if (this.role == 2) {
                 this.isComp = true;
+            }
+
+            if (this.isApply.equals("3")) {
+                this.isPass = true;
+            } else if (this.isApply.equals("4")) {
+                this.isFail = true;
+            } else if (this.isApply.equals("2")) {
+                this.isWaiting = true;
             }
         }
     }

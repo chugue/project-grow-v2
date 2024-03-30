@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import shop.mtcoding.blog._core.errors.exception.Exception400;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception403;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
@@ -31,30 +32,26 @@ public class ResumeService {
 
 
     //이력서 상세보기
-    public ResumeResponse.DetailDTO resumeDetail(Integer resumeId, User sessionUser, User sessionComp) {
+    public ResumeResponse.DetailDTO resumeDetail(Integer resumeId, Integer jobsId, User sessionUser, User sessionComp) {
         Resume resume = resumeJPARepo.findByIdJoinUser(resumeId);
 
         boolean isOwner = resume.getUser().equals(sessionUser);
         resume.setOwner(isOwner);
 
         List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
+        Apply apply = applyJPARepo.findByResumeIdAndJobsId(resumeId, jobsId)
+                .orElseThrow(() -> new Exception400("잘못된 요청입니다."));
         if (sessionUser != null) {
-            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume, resume.getUser(), sessionUser.getRole(), skills);
+            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume , apply.getIsPass(), resume.getUser(), sessionUser.getRole(), skills);
 
             return resumeDetailDTO;
         } else if (sessionComp != null) {
-            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume, resume.getUser(), sessionComp.getRole(), skills);
-
-            return resumeDetailDTO;
-        } else {
-            ResumeResponse.DetailDTO resumeDetailDTO = ResumeResponse.DetailDTO.builder()
-                    .resume(resume)
-                    .user(resume.getUser())
-                    .role(0)
-                    .skills(skills).build();
+            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume, apply.getIsPass(), resume.getUser(), sessionComp.getRole(), skills);
 
             return resumeDetailDTO;
         }
+
+        return null;
     }
 
     public List<ResumeResponse.ResumeApplyDTO> findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {

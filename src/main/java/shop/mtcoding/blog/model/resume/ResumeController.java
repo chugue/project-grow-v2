@@ -18,14 +18,14 @@ public class ResumeController {
     private final UserService userService;
 
     @GetMapping("/resume/resume-detail/{id}")
-    public String resumeDetail(@PathVariable Integer id, HttpServletRequest request) {
+    public String resumeDetail(@PathVariable Integer id, HttpServletRequest request, @RequestParam(required = false, defaultValue = "0") Integer jobsId) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User sessionComp = (User) session.getAttribute("sessionComp");
         User newSessionUser = userService.findById(sessionUser.getId());
 
-        ResumeResponse.DetailDTO resume = resumeService.resumeDetail(id, newSessionUser, sessionComp);
+        ResumeResponse.DetailDTO resume = resumeService.resumeDetail(id, jobsId, newSessionUser, sessionComp);
         request.setAttribute("resume", resume);
-        System.out.println(resume.getIsComp());
+
 
         return "resume/resume-detail";
     }

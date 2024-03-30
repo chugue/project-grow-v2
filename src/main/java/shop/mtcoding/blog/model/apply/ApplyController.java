@@ -28,14 +28,18 @@ public class ApplyController {
         return "redirect:/user/" + sessionUser.getId() + "/user-home";
     }
 
-    @PostMapping("/apply/pass/{resumeId}")
+    @PostMapping("/apply/pass/update/{resumeId}")
     public String applyPassUpDate(@PathVariable Integer resumeId, @RequestParam("jobsId")Integer jobsId) {
-        return "redirect:/";
+        applyService.pass(resumeId, jobsId);
+
+        return "redirect:/resume/resume-detail/" + resumeId + "?jobsId=" + jobsId;
     }
 
-    @PostMapping("/apply/fail/{resumeId}")
+    @PostMapping("/apply/fail/update/{resumeId}")
     public String applyFailUpDate(@PathVariable Integer resumeId, @RequestParam("jobsId")Integer jobsId) {
-        return "redirect:/";
+        applyService.fail(resumeId, jobsId);
+
+        return "redirect:/resume/resume-detail/" + resumeId + "?jobsId=" + jobsId;
     }
 
     @PostMapping("/apply/pass2/{id}")
