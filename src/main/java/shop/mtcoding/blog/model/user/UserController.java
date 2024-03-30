@@ -63,6 +63,8 @@ public class UserController {
             request.setAttribute("jobsKeyword", jobsKeyword);
         }
 
+        request.setAttribute("keyword", keyword);
+
         return "index";
     }
 
