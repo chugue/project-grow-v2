@@ -1,5 +1,10 @@
-{{> layout/header}}
+{{#sessionUser}}
+    {{> layout/header}}
+{{/sessionUser}}
 
+{{#sessionComp}}
+    {{> layout/compheader}}
+{{/sessionComp}}
 <style>
     .card {
         padding: 20px;

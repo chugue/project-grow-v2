@@ -28,23 +28,29 @@ public class ApplyController {
         return "redirect:/user/" + sessionUser.getId() + "/user-home";
     }
 
-    @PutMapping("/apply/pass/{id}")
-    public String applyPassUpDate(@PathVariable Integer id) {
-        return "redirect:/";
+    @PostMapping("/apply/pass/update/{resumeId}")
+    public String applyPassUpDate(@PathVariable Integer resumeId, @RequestParam("jobsId")Integer jobsId) {
+        User user = (User) session.getAttribute("sessionComp");
+        applyService.pass(resumeId, jobsId);
+
+        return "redirect:/comp/" + user.getId() + "/comp-home?jobsId=" + jobsId;
     }
 
-    @PutMapping("/apply/fail/{id}")
-    public String applyFailUpDate(@PathVariable Integer id) {
-        return "redirect:/";
+    @PostMapping("/apply/fail/update/{resumeId}")
+    public String applyFailUpDate(@PathVariable Integer resumeId, @RequestParam("jobsId")Integer jobsId) {
+        User user = (User) session.getAttribute("sessionComp");
+        applyService.fail(resumeId, jobsId);
+
+        return "redirect:/comp/" + user.getId() + "/comp-home?jobsId=" + jobsId;
     }
 
-    @PutMapping("/apply/pass2/{id}")
+    @PostMapping("/apply/pass2/{id}")
     public String applyPassUpDate2(@PathVariable Integer id) {
 
         return "redirect:/";
     }
 
-    @PutMapping("/apply/fail2/{id}")
+    @PostMapping("/apply/fail2/{id}")
     public String applyFailUpDate2(@PathVariable Integer id) {
 
         return "redirect:/";

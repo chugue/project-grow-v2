@@ -92,27 +92,6 @@ public class JobsResponse {
         }
     }
 
-    @Data
-    public static class ApplyJobsListDTO {
-        private Integer id;
-        private String title;
-        private String task;
-        private String career;
-        private Integer userId;
-        private List<SkillDTO> skills;
-
-        @Builder
-        public ApplyJobsListDTO(Integer userId, Jobs jobs, User user, List<Skill> skills) {
-            this.id = jobs.getId();
-            this.title = jobs.getTitle();
-            this.task = jobs.getTask();
-            this.career = jobs.getCareer();
-            this.userId = userId;
-            this.skills = skills.stream()
-                    .map(skill -> new SkillDTO(skill))
-                    .collect(Collectors.toList());
-        }
-    }
 
     @Data
     public static class ApplyResumeListDTO {
@@ -120,19 +99,30 @@ public class JobsResponse {
         private Integer jobsId;
         private String myName;
         private String title;
+        private String isPass;
+        private String state;
         private String career;
         private List<SkillDTO> skills;
 
         @Builder
-        public ApplyResumeListDTO(Resume resume, Jobs jobs, String myName, List<Skill> skills, User user) {
+        public ApplyResumeListDTO(Resume resume, Jobs jobs, String myName, String isPass, List<Skill> skills) {
             this.id = resume.getId();
             this.jobsId = jobs.getId();
             this.title = resume.getTitle();
+            this.isPass = isPass;
             this.career = resume.getCareer();
             this.myName = myName;
             this.skills = skills.stream()
                     .map(skill -> new SkillDTO(skill))
                     .collect(Collectors.toList());
+
+            if (this.isPass.equals("2")) {
+                this.state = "지원중";
+            } else if (this.isPass.equals("3")) {
+                this.state = "합격";
+            } else if (this.isPass.equals("4")) {
+                this.state = "불합격";
+            }
         }
     }
 
@@ -242,6 +232,8 @@ public class JobsResponse {
         private String task;
         private List<String> skill;
     }
+
+
 }
 
 

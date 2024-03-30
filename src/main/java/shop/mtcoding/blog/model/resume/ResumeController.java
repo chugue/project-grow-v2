@@ -18,14 +18,37 @@ public class ResumeController {
     private final UserService userService;
 
     @GetMapping("/resume/resume-detail/{id}")
-    public String resumeDetail(@PathVariable Integer id, HttpServletRequest request) {
+    public String resumeDetail(@PathVariable Integer id, HttpServletRequest request, @RequestParam(required = false, defaultValue = "0") Integer jobsId) {
         User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionComp = (User) session.getAttribute("sessionComp");
         User newSessionUser = userService.findById(sessionUser.getId());
 
-        Resume resume = resumeService.resumeDetail(id, newSessionUser);
+        ResumeResponse.DetailDTO resume = resumeService.resumeDetail(id, jobsId, newSessionUser, sessionComp);
         request.setAttribute("resume", resume);
 
         return "resume/resume-detail";
+    }
+
+    @GetMapping("/resume/resume-detail2/{id}")
+    public String resumeDetail2(@PathVariable Integer id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = userService.findById(sessionUser.getId());
+
+        ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(id, newSessionUser);
+        request.setAttribute("resume", resume);
+
+        return "resume/resume-detail2";
+    }
+
+    @GetMapping("/comp/comp-resume-detail/{id}")
+    public String compResumeDetail(@PathVariable Integer id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = userService.findById(sessionUser.getId());
+
+        ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(id, newSessionUser);
+        request.setAttribute("resume", resume);
+
+        return "/comp/comp-resume-detail";
     }
 
     @GetMapping("/resume/{id}/manage-resume")
