@@ -150,7 +150,7 @@ public class UserController {
         List<ResumeRequest.UserViewDTO> resumeList = userService.userHome(sessionUser.getId());
         ApplyResponse.stateViewDTO applies = applyService.findAll(id);
 
-        System.out.println("결과값=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n"+applies);
+        
         request.setAttribute("resumeList", resumeList);
         System.out.println("resumeList:n " + resumeList);
         request.setAttribute("sessionUserId", sessionUser.getId());

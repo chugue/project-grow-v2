@@ -40,7 +40,6 @@ public class FileService {
             User sessionUser = (User) session.getAttribute("sessionUser");
             User newSessionUser = userJPARepo.findById(sessionUser.getId())
                     .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
-
             newSessionUser.setImgFileName(imgFilename);
 
             session.setAttribute("sessionUser",newSessionUser);
