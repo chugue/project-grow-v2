@@ -41,16 +41,16 @@ public class CompService {
         List<CompResponse.RusaDTO> rusaDTOList = new ArrayList<>();
 
         /*
-        * 원래 for문으로 조회해서 주입하였으나 그 방식은 서버에 부담이 크다.
-        * 쿼리를 for문으로 날린다는게...
-        */
+         * 원래 for문으로 조회해서 주입하였으나 그 방식은 서버에 부담이 크다.
+         * 쿼리를 for문으로 날린다는게...
+         */
         applyList.stream().map(apply -> {
             // apply에 Resume가 매핑되어있어서 가져옴
             Resume resume = apply.getResume();
             /*
-            * 근데 apply안에 resume안에 user는 잘 가져올수있을까??
-            * 그래서 sout찍어보기 테스트
-            */
+             * 근데 apply안에 resume안에 user는 잘 가져올수있을까??
+             * 그래서 sout찍어보기 테스트
+             */
             User user = apply.getResume().getUser();
             System.out.println(resume.getUser().toString());
 
@@ -59,7 +59,7 @@ public class CompService {
         }).collect(Collectors.toList());
 
         for (int i = 0; i < rusaDTOList.size(); i++) {
-            rusaDTOList.get(i).setId(i+1);
+            rusaDTOList.get(i).setId(i + 1);
         }
         return rusaDTOList;
     }
@@ -75,123 +75,118 @@ public class CompService {
         return comp;
     }
 
-
-//    List<Jobs> jobsList = jobsJPARepo.findAllByJobsId(id);
-//    List<JobsResponse.JobsListDTO> jobsListDTOS = new ArrayList<>();
+//    public void jobsUserSkillDTO(Integer id) {
+//        List<Jobs> jobsList = jobsJPARepo.findAllByJobsId(id);
+//        List<JobsResponse.JobsListDTO> jobsListDTOS = new ArrayList<>();
 //
 //        jobsList.stream().map(jobs -> {
-//        User user = userJPARepo.findById(jobs.getUser().getId())
-//                .orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
-//        List<Skill> skillList = skillJPARepo.findAllByJobsId(jobs.getId());
-//        return jobsListDTOS.add(JobsResponse.JobsListDTO.builder()
-//                .jobs(jobs)
-//                .user(user)
-//                .skills(skillList).build());
-//    }).collect(Collectors.toList());
+//            User user = userJPARepo.findById(jobs.getUser().getId())
+//                    .orElseThrow(() -> new Exception404("회원정보를 찾을 수 없습니다."));
+//            List<Skill> skillList = skillJPARepo.findAllByJobsId(jobs.getId());
+//            return jobsListDTOS.add(JobsResponse.JobsListDTO.builder()
+//                    .jobs(jobs)
+//                    .user(user)
+//                    .skills(skillList).build());
+//        }).collect(Collectors.toList());
 //
-//    // 조회된 DTO에 목록 번호 붙이기
-//        for (int i = 0; i < listDTOS.size(); i++){
-//        listDTOS.get(i).setId(i + 1);
+//        // 조회된 DTO에 목록 번호 붙이기
+//        for (int i = 0; i < jobsListDTOS.size(); i++) {
+//            jobsListDTOS.get(i).setId(i + 1);
+//        }
 //    }
 
 
-    public List<JobsResponse.ApplyResumeListDTO> findAllByJobsId(Integer jobsId) {
-        List<Apply> applyList = applyJPARepo.findAllByJobsId(jobsId);
-        List<JobsResponse.ApplyResumeListDTO> listDTOS = new ArrayList<>();
+        public List<JobsResponse.ApplyResumeListDTO> findAllByJobsId (Integer jobsId){
+            List<Apply> applyList = applyJPARepo.findAllByJobsId(jobsId);
+            List<JobsResponse.ApplyResumeListDTO> listDTOS = new ArrayList<>();
 
 
-        for (int i = 0; i < applyList.size(); i++) {
-            List<Skill> skillList = skillJPARepo.findAllByJoinResumeId(applyList.get(i).getResume().getId());
-            listDTOS.add(JobsResponse.ApplyResumeListDTO.builder()
-                    .resume(applyList.get(i).getResume())
-                    .myName(applyList.get(i).getResume().getUser().getMyName())
-                    .jobs(applyList.get(i).getJobs())
-                    .isPass(applyList.get(i).getIsPass())
-                    .skills(skillList)
-                    .build());
-        }
-        return listDTOS;
-    }
-
-    public List<JobsResponse.ApplyJobsListDTO> findAllByUserId(User sessionComp) {
-        List<Jobs> jobsList = jobsJPARepo.findAllByUserId(sessionComp.getId());
-        List<JobsResponse.ApplyJobsListDTO> listDTOS = new ArrayList<>();
-
-        for (int i = 0; i < jobsList.size(); i++) {
-            List<Skill> skillList = skillJPARepo.findAllByJoinJobsId(jobsList.get(i).getId());
-            listDTOS.add(JobsResponse.ApplyJobsListDTO.builder()
-                    .jobs(jobsList.get(i))
-                    .userId(sessionComp.getId())
-                    .skills(skillList)
-                    .build());
+            for (int i = 0; i < applyList.size(); i++) {
+                List<Skill> skillList = skillJPARepo.findAllByJoinResumeId(applyList.get(i).getResume().getId());
+                listDTOS.add(JobsResponse.ApplyResumeListDTO.builder()
+                        .resume(applyList.get(i).getResume())
+                        .myName(applyList.get(i).getResume().getUser().getMyName())
+                        .jobs(applyList.get(i).getJobs())
+                        .isPass(applyList.get(i).getIsPass())
+                        .skills(skillList)
+                        .build());
+            }
+            return listDTOS;
         }
 
-        return listDTOS;
-    }
+        public List<CompResponse.ComphomeDTO> findAllByUserId (Integer sessionUserId){
+            List<Jobs> jobsList = jobsJPARepo.findAllByUserId(sessionUserId);
+            List<CompResponse.ComphomeDTO> listDTOS = new ArrayList<>();
 
-    //기업 로그인하면 보여줄 채용 공고
-    public List<CompResponse.JobsSkillDTO> jobsList() {
-        List<Jobs> jobsList = jobsJPARepo.findAll();
-        List<CompResponse.JobsSkillDTO> jobsSkillList = new ArrayList<>();
+            jobsList.stream().map(jobs -> {
+                return listDTOS.add(CompResponse.ComphomeDTO.builder()
+                        .jobs(jobs)
+                        .skillList(jobs.getSkillList()).build());
+            }).collect(Collectors.toList());
+            for (int i = 0; i < listDTOS.size(); i++) {
+                listDTOS.get(i).setId(i+1);
+            }
 
-        for (int i = 0; i < jobsList.size(); i++) {
-            User user = userJPARepo.findById(jobsList.get(i).getUser().getId())
-                    .orElseThrow(() -> new Exception404("정보를 찾을 수 없습니다."));
-
-            List<Skill> skillList = skillJPARepo.findAllByJobsId(jobsList.get(i).getId());
-            jobsSkillList.add(CompResponse.JobsSkillDTO.builder()
-                    .jobs(jobsList.get(i))
-                    .user(user)
-                    .skillList(skillList)
-                    .build());
-        }
-        return jobsSkillList;
-
-    }
-
-
-    // 기업 로그인하면 보여줄 이력서 목록들
-    public List<CompResponse.ResumeUserSkillDTO> findAllRusList() {
-        List<Resume> resumeList = resumeJPARepo.findAll();
-        List<CompResponse.ResumeUserSkillDTO> rusList = new ArrayList<>();
-
-        for (int i = 0; i < resumeList.size(); i++) {
-            User user = userJPARepo.findById(resumeList.get(i).getUser().getId())
-                    .orElseThrow(() -> new Exception404("정보를 찾을 수 없습니다."));
-
-            List<Skill> skillList = skillJPARepo.findAllByResumeId(resumeList.get(i).getId());
-
-            rusList.add(CompResponse.ResumeUserSkillDTO.builder()
-                    .resume(resumeList.get(i))
-                    .user(user)
-                    .skillList(skillList)
-                    .build());
+            return listDTOS;
         }
 
-        return rusList;
-    }
+        //기업 로그인하면 보여줄 채용 공고
+        public List<CompResponse.JobsSkillDTO> jobsList () {
+            List<Jobs> jobsList = jobsJPARepo.findAll();
+            List<CompResponse.JobsSkillDTO> jobsSkillList = new ArrayList<>();
 
-    @Transactional
-    public User updateById(User sessionUser, UserRequest.UpdateDTO requestDTO) {
-        System.out.println(requestDTO);
-        User user = compJPARepo.findById(sessionUser.getId())
-                .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
+            for (int i = 0; i < jobsList.size(); i++) {
+                User user = userJPARepo.findById(jobsList.get(i).getUser().getId())
+                        .orElseThrow(() -> new Exception404("정보를 찾을 수 없습니다."));
 
-        user.update(requestDTO);
+                List<Skill> skillList = skillJPARepo.findAllByJobsId(jobsList.get(i).getId());
+                jobsSkillList.add(CompResponse.JobsSkillDTO.builder()
+                        .jobs(jobsList.get(i))
+                        .user(user)
+                        .skillList(skillList)
+                        .build());
+            }
+            return jobsSkillList;
+
+        }
+
+
+        // 기업 로그인하면 보여줄 이력서 목록들
+        public List<CompResponse.ResumeUserSkillDTO> findAllRusList () {
+            List<Resume> resumeList = resumeJPARepo.findAll();
+            List<CompResponse.ResumeUserSkillDTO> rusList = new ArrayList<>();
+
+            resumeList.stream().map(resume -> {
+                return rusList.add(CompResponse.ResumeUserSkillDTO.builder()
+                        .resume(resume)
+                        .user(resume.getUser())
+                        .skillList(resume.getSkillList()).build());
+            }).collect(Collectors.toList());
+
+            return rusList;
+        }
+
+        @Transactional
+        public User updateById (User sessionUser, UserRequest.UpdateDTO requestDTO){
+            System.out.println(requestDTO);
+            User user = compJPARepo.findById(sessionUser.getId())
+                    .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
+
+            user.update(requestDTO);
 //        user.setPassword(requestDTO.getPassword());
 //        user.setMyName(requestDTO.getMyName());
 //        user.setBirth(requestDTO.getBirth());
 //        user.setPhone(requestDTO.getPhone());
 //        user.setAddress(requestDTO.getAddress());
 
-        return user;
-    }
+            return user;
+        }
 
-    //유저 회원 정보 업데이트용 조회
-    public User findById(Integer sessionUserId) {
-        User user = compJPARepo.findById(sessionUserId)
-                .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
-        return user;
+        //유저 회원 정보 업데이트용 조회
+        public User findById (Integer sessionUserId){
+            User user = compJPARepo.findById(sessionUserId)
+                    .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
+            return user;
 
+        }
     }
-}

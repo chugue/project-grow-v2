@@ -55,11 +55,8 @@ public class CompController {
     @GetMapping("/comp/{id}/comp-home")
     public String compHome(@PathVariable Integer id, @RequestParam(required = false, defaultValue = "0") Integer jobsId, HttpServletRequest request) {
         User sessionComp = (User) session.getAttribute("sessionComp");
-        List<JobsResponse.ApplyJobsListDTO> jobsList = compService.findAllByUserId(sessionComp);
-        request.setAttribute("jobsList", jobsList);
-
-        List<JobsResponse.ApplyResumeListDTO> resumeList = compService.findAllByJobsId(jobsId);
-        request.setAttribute("resumeList", resumeList);
+        List<CompResponse.ComphomeDTO> comphomeDTOList = compService.findAllByUserId(sessionComp.getId());
+        request.setAttribute("jobsList", comphomeDTOList);
 
         return "/comp/comp-home";
     }
