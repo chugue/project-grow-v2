@@ -3,6 +3,7 @@ package shop.mtcoding.blog.model.comp;
 import lombok.Data;
 import shop.mtcoding.blog.model.skill.SkillRequest;
 import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.user.UserRequest;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -72,9 +73,10 @@ public class CompRequest {
         private String photo;
         private String compName;
         private String homepage;
-        private Timestamp createdAt;
+        private String imgFileName;
+        private LocalDate createdAt;
 
-        public User toEntity(Integer role) {
+        public User toEntity(Integer role, String imgFileName) {
             return User.builder()
                     .id(id)
                     .email(email)
@@ -85,10 +87,11 @@ public class CompRequest {
                     .birth(birth)
                     .businessNumber(businessNumber)
                     .photo(photo)
+                    .imgFileName(imgFileName)
                     .compName(compName)
                     .homepage(homepage)
                     .role(role)
-                    .createdAt(this.createdAt.toLocalDateTime().toLocalDate())
+                    .createdAt(createdAt)
                     .build();
         }
     }

@@ -63,21 +63,22 @@ public class ResumeResponse {
         private List<SkillDTO2> skills;
 
         @Builder
-        public DetailDTO2(Resume resume, User user, List<Skill> skills) {
-            this.id = resume.getId();
-            this.title = resume.getTitle();
-            this.edu = resume.getEdu();
-            this.introduce = resume.getIntroduce();
-            this.imgFileName = user.getImgFileName();
-            this.myName = user.getMyName();
-            this.birth = user.getBirth();
-            this.phone = user.getPhone();
-            this.email = user.getEmail();
-            this.address = user.getAddress();
-            this.area = resume.getArea();
-            this.career = resume.getCareer();
-            this.portLink = resume.getPortLink();
-            this.userId = user.getId();
+
+        public DetailDTO2(Integer id, String title, String edu, String introduce, String imgFileName, String myName, LocalDate birth, String phone, String email, String address, String area, String career, String portLink, Integer userId, List<Skill> skills) {
+            this.id = id;
+            this.title = title;
+            this.edu = edu;
+            this.introduce = introduce;
+            this.imgFileName = imgFileName;
+            this.myName = myName;
+            this.birth = birth;
+            this.phone = phone;
+            this.email = email;
+            this.address = address;
+            this.area = area;
+            this.career = career;
+            this.portLink = portLink;
+            this.userId = userId;
             this.skills = skills.stream()
                     .map(skill -> new SkillDTO2(skill))
                     .collect(Collectors.toList());

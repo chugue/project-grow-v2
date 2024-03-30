@@ -9,6 +9,7 @@ import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.apply.ApplyJPARepository;
+import shop.mtcoding.blog.model.comp.CompRequest;
 import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.jobs.JobsJPARepository;
 import shop.mtcoding.blog.model.resume.Resume;
@@ -84,7 +85,7 @@ public class UserService {
 
     @Transactional
     public User join(UserRequest.JoinDTO reqDTO, Integer role) {
-        return userRepo.save(reqDTO.toEntity(role));
+        return userRepo.save(reqDTO.toEntity(role, "3cadb59f-04cd-4e65-8f7c-281be30c0fe6_iu.jpg"));
     }
 
 
@@ -118,7 +119,7 @@ public class UserService {
 
     //유저 회원정보 폼 업데이트 메소드
     @Transactional
-    public User updateById(User sessionUser, UserRequest.UpdateDTO requestDTO) {
+    public User updateById(User sessionUser, CompRequest.UpdateDTO requestDTO) {
         System.out.println(requestDTO);
         User user = userRepo.findById(sessionUser.getId())
                 .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));

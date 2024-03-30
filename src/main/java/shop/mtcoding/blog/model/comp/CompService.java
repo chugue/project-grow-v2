@@ -23,6 +23,7 @@ import shop.mtcoding.blog.model.user.User;
 import shop.mtcoding.blog.model.user.UserJPARepository;
 import shop.mtcoding.blog.model.user.UserRequest;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,11 +40,15 @@ public class CompService {
 
     // 기업 회원가입
     @Transactional
-    public User join(CompRequest.CompJoinDTO reqDTO) {
-        compJPARepo.save(reqDTO.toEntity(2));
+    public User join(Integer role, CompRequest.CompJoinDTO reqDTO) {
+
+        // 회원가입 할 때마다 이미지 못가져와서 터지니까 디폴트 이미지 하나 추가함
+        compJPARepo.save(reqDTO.toEntity(role, "54040a46-d1b0-4ea5-9938-d461cd656fc1_naver.jpg"));
 
         // 전에거에 있던 이메일 찾아서 그걸로 세션저장해서 회원가입 직후 바로 로그인 되는거 구현하려고 만듬
         User comp = compJPARepo.findByEmail(reqDTO.getEmail());
+
+        System.out.println(comp.getRole());
         return comp;
     }
 
@@ -105,17 +110,19 @@ public class CompService {
     }
 
     @Transactional
-    public User updateById(User sessionUser, UserRequest.UpdateDTO requestDTO) {
-        System.out.println(requestDTO);
+    public User updateById(User sessionUser, CompRequest.UpdateDTO requestDTO) {
         User user = compJPARepo.findById(sessionUser.getId())
                 .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
 
-        user.update(requestDTO);
-//        user.setPassword(requestDTO.getPassword());
-//        user.setMyName(requestDTO.getMyName());
-//        user.setBirth(requestDTO.getBirth());
-//        user.setPhone(requestDTO.getPhone());
-//        user.setAddress(requestDTO.getAddress());
+        user.setMyName(requestDTO.getMyName());
+        user.setPassword(requestDTO.getPassword());
+        user.setCompName(requestDTO.getCompName());
+        user.setPhone(requestDTO.getPhone());
+        user.setHomepage(requestDTO.getHomepage());
+        user.setBirth(requestDTO.getBirth());
+        user.setBusinessNumber(requestDTO.getBusinessNumber());
+        user.setAddress(requestDTO.getAddress());
+
 
         return user;
     }

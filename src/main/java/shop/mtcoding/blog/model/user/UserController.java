@@ -10,6 +10,7 @@ import shop.mtcoding.blog._core.util.ApiUtil;
 import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.apply.ApplyResponse;
 import shop.mtcoding.blog.model.apply.ApplyService;
+import shop.mtcoding.blog.model.comp.CompRequest;
 import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.jobs.JobsService;
 import shop.mtcoding.blog.model.resume.ResumeRequest;
@@ -97,7 +98,6 @@ public class UserController {
             } else if (role == 2) {
                 session.setAttribute("sessionComp", user);
                 return  "redirect:/comp/comp-index";
-
             }
         }
 
@@ -127,11 +127,11 @@ public class UserController {
     }
 
     @PostMapping("/user/{id}/update")
-    public String updateForm(@PathVariable Integer id, UserRequest.UpdateDTO requestDTO) {
+    public String update(@PathVariable Integer id, CompRequest.UpdateDTO requestDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         userService.updateById(sessionUser, requestDTO);
         User user = userService.findById(sessionUser.getId());
-        System.out.println(user.getPhone());
+        session.setAttribute("sessionUser", user);
 
         return "redirect:/";
     }
