@@ -567,7 +567,15 @@ aside{
     position: sticky;
     height: 100%;
 }
+.comp-img-wrapper{
+    display: flex;
+    min-height: 100px;
+    align-items: center;
 
+}
+.badge.bg-purple{
+    background: darkorchid;
+}
 .badge.bg-brown{
     background: #795458;
 }
