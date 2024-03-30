@@ -67,6 +67,9 @@ public class Jobs {
     @CreationTimestamp
     private Timestamp createdAt;
 
+    @Transient
+    private Boolean isOwner;
+
     @Builder
     public Jobs(Integer id, User user, String area, String title, String edu, String career, String content, LocalDate deadline, String task, Timestamp createdAt) {
         this.id = id;

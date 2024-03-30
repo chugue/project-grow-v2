@@ -179,6 +179,7 @@
             </div>
         </div>
     </div>
+    {{#jobsList.isOwner}}
     <div class="side-item">
         <div class="side-item-1">
             <form action="/jobs/apply" method="post" enctype="application/x-www-form-urlencoded">
@@ -208,7 +209,7 @@
                             </div>
                         </div>
                     {{/resumeApplyDTOList.isApply}}
-
+                {{/jobsList.isOwner}}
                 </div>
             </form>
         </div>
