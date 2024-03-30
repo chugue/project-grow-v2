@@ -102,7 +102,7 @@ public class JobsResponse {
         private List<SkillDTO> skills;
 
         @Builder
-        public ApplyJobsListDTO(Integer userId, Jobs jobs, User user, List<Skill> skills) {
+        public ApplyJobsListDTO(Integer userId, Jobs jobs, List<Skill> skills) {
             this.id = jobs.getId();
             this.title = jobs.getTitle();
             this.task = jobs.getTask();

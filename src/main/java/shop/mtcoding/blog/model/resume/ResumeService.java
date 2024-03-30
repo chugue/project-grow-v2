@@ -43,16 +43,28 @@ public class ResumeService {
         Apply apply = applyJPARepo.findByResumeIdAndJobsId(resumeId, jobsId)
                 .orElseThrow(() -> new Exception400("잘못된 요청입니다."));
         if (sessionUser != null) {
-            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume , apply.getIsPass(), resume.getUser(), sessionUser.getRole(), skills);
+            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume, jobsId, apply.getIsPass(), resume.getUser(), sessionUser.getRole(), skills);
 
             return resumeDetailDTO;
         } else if (sessionComp != null) {
-            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume, apply.getIsPass(), resume.getUser(), sessionComp.getRole(), skills);
+            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume, jobsId, apply.getIsPass(), resume.getUser(), sessionComp.getRole(), skills);
 
             return resumeDetailDTO;
         }
 
         return null;
+    }
+
+    public ResumeResponse.DetailDTO2 resumeDetail2(Integer resumeId, User sessionUser) {
+        Resume resume = resumeJPARepo.findByIdJoinUser(resumeId);
+        boolean isOwner = resume.getUser().equals(sessionUser);
+        resume.setOwner(isOwner);
+
+        List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
+
+        ResumeResponse.DetailDTO2 resumeDetailDTO = new ResumeResponse.DetailDTO2(resume, sessionUser, skills);
+
+        return  resumeDetailDTO;
     }
 
     public ResumeResponse.ResumeStateDTO findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {

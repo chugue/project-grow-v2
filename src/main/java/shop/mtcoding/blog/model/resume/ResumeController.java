@@ -26,8 +26,19 @@ public class ResumeController {
         ResumeResponse.DetailDTO resume = resumeService.resumeDetail(id, jobsId, newSessionUser, sessionComp);
         request.setAttribute("resume", resume);
 
-
         return "resume/resume-detail";
+    }
+
+    @GetMapping("/resume/resume-detail2/{id}")
+    public String resumeDetail2(@PathVariable Integer id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = userService.findById(sessionUser.getId());
+
+
+        ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(id, newSessionUser);
+        request.setAttribute("resume", resume);
+
+        return "resume/resume-detail2";
     }
 
     @GetMapping("/resume/{id}/manage-resume")

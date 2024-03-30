@@ -42,6 +42,7 @@ public class UserController {
             ursList.get(i).setId(i + 1);
         }
         request.setAttribute("ursList", ursList);
+
         return "/user/resume-home";
     }
 

@@ -49,22 +49,25 @@ public class CompResponse {
         private String area; //resume
         private String myName;//user
         private Integer userId;//user
+        private Integer jobsId;//user
         private String imgFileName; //user
         private List<SkillDTO> skillList = new ArrayList<>();
 
         @Builder
-        public ResumeUserSkillDTO(Resume resume, User user, List<Skill> skillList) {
+        public ResumeUserSkillDTO(Resume resume, Integer jobsId, User user, List<Skill> skillList) {
             this.id = resume.getId();
             this.title = resume.getTitle();
             this.edu = resume.getEdu();
             this.career = resume.getCareer();
             this.area = resume.getArea();
+            this.jobsId = jobsId;
             this.myName = user.getMyName();
             this.userId = user.getId();
             this.imgFileName = user.getImgFileName();
             this.skillList = skillList.stream()
                     .map(skill -> new SkillDTO(skill))
-                    .collect(Collectors.toList());;
+                    .collect(Collectors.toList());
+            ;
         }
     }
 
