@@ -45,15 +45,19 @@
                 </div>
             </div>
             <div class="info row pt-50 pb-50">
-                {{#jobDTOList}}
+                {{#jobsList}}
                     <!--공고-->
                     <div class="card">
-                        <a href="/jobs/jobs-detail/{{id}}"
-                           onclick="window.open(this.href, '_blank', 'width=1920,height=1080,toolbars=no,scrollbars=no, resizable=no'); return false;">
+                        <a href="/jobs/jobs-detail/{{id}}">
+                        <div class="img-wrapepr" style="display: flex; justify-content: center;">
+                            <img class="card-img-top" src="/upload/{{imgFileName}}" alt="" srcset=""
+                                 style=" width: 200px; height: 6em; border-radius: 10px; padding: 5px; text-align: center; padding: 0;">
+                        </div>
+<!--                           onclick="window.open(this.href, '_blank', 'width=1920,height=1080,toolbars=no,scrollbars=no, resizable=no'); return false;">-->
                             <!-- 이미지 파일 부분 제거 -->
                             <div class="card-body">
 
-                                <div class="mb-2 ft-16">네이버</div>
+                                <div class="mb-2 ft-16">{{compName}}</div>
                                 <div class="point-ft ft-22 fw-600 mb-10">{{title}}</div>
 
                                 <!--기술스킬-->
@@ -73,7 +77,7 @@
 
                                 <div class="d-flex justify-content-end">
                                     <!--공고 마감일-->
-                                    <div class="d-day mr-10">~{{deadLine}}</div>
+                                    <div class="d-day mr-10">~{{deadline}}</div>
                                     <!--공고 마감일-->
 
                                     <!--공고 스크랩-->
@@ -116,7 +120,7 @@
 
                     <!--공고-->
 
-                {{/jobDTOList}}
+                {{/jobsList}}
             </div>
             <!-- 공고들 -->
 
