@@ -9,6 +9,7 @@ import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
 import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.user.UserRequest;
 
 import java.util.List;
 
@@ -19,20 +20,20 @@ public class CompController {
     private final HttpSession session;
     private final ResumeService resumeService;
 
-    @GetMapping("/comp/{id}/comp-resume-detail")
-    public String compResumeDetail(@PathVariable Integer id) {
-        return "/comp/comp-resume-detail";
-    }
+
 
     @PostMapping("/comp/{id}/update")
-    public String updateForm(@PathVariable Integer id) {
-        return "redirect:/comp/" + id + "/comphome";
+    public String update(@PathVariable Integer id, CompRequest.UpdateDTO requestDTO) {
+        User sessionComp = (User) session.getAttribute("sessionComp");
+        User user = compService.updateById(sessionComp, requestDTO);
+        session.setAttribute("sessionComp", user);
+        return "redirect:/comp/" + id + "/comp-home";
     }
 
     @GetMapping("/comp/{id}/update-form")
     public String updateForm(@PathVariable int id, HttpServletRequest request) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        User newSessionUser = compService.findById(sessionUser.getId());
+        User sessionComp = (User) session.getAttribute("sessionComp");
+        User newSessionUser = compService.findById(sessionComp.getId());
         request.setAttribute("user", newSessionUser);
 
         return "/comp/update-form";
@@ -55,10 +56,9 @@ public class CompController {
     @GetMapping("/comp/{id}/comp-home")
     public String compHome(@PathVariable Integer id, @RequestParam(required = false, defaultValue = "0") Integer jobsId, HttpServletRequest request) {
         User sessionComp = (User) session.getAttribute("sessionComp");
-        List<JobsResponse.ApplyJobsListDTO> jobsList = compService.findAllByUserId(sessionComp);
-        request.setAttribute("jobsList", jobsList);
-        List<JobsResponse.ApplyResumeListDTO> resumeList = compService.findAllByJobsId(jobsId);
-        request.setAttribute("resumeList", resumeList);
+        List<CompResponse.ComphomeDTO> comphomeDTOList = compService.findAllByUserId(sessionComp.getId());
+        request.setAttribute("jobsList", comphomeDTOList);
+
         return "/comp/comp-home";
     }
 
@@ -75,8 +75,8 @@ public class CompController {
     }
 
     @PostMapping("/comp/join")
-    public String compJoin(CompRequest.CompJoinDTO reqDTO) {
-        User user = compService.join(reqDTO);
+    public String compJoin(@RequestParam(name = "role") Integer role, CompRequest.CompJoinDTO reqDTO) {
+        User user = compService.join(role, reqDTO);
         session.setAttribute("sessionComp", user);
         return "redirect:/comp/read-resume";
     }
@@ -101,7 +101,9 @@ public class CompController {
     }
 
     @GetMapping("/comp/jobs-info")
-    public String jobsInfo() {
+    public String jobsInfo(HttpServletRequest request) {
+        List<CompResponse.JobsSkillDTO> jobsList = compService.jobsList();
+        request.setAttribute("jobsList", jobsList);
 
         return "/comp/jobs-info";
     }

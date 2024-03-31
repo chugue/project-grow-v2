@@ -10,6 +10,9 @@ import shop.mtcoding.blog._core.util.ApiUtil;
 import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.apply.ApplyResponse;
 import shop.mtcoding.blog.model.apply.ApplyService;
+import shop.mtcoding.blog.model.comp.CompRequest;
+import shop.mtcoding.blog.model.jobs.Jobs;
+import shop.mtcoding.blog.model.jobs.JobsJPARepository;
 import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.jobs.JobsService;
 import shop.mtcoding.blog.model.resume.ResumeRequest;
@@ -40,6 +43,7 @@ public class UserController {
             ursList.get(i).setId(i + 1);
         }
         request.setAttribute("ursList", ursList);
+
         return "/user/resume-home";
     }
 
@@ -50,9 +54,18 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String index(HttpServletRequest request) {
-        List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
-        request.setAttribute("listDTOS", listDTOS);
+    public String index(HttpServletRequest request, @RequestParam (value = "keyword", defaultValue = "") String keyword) {
+
+        if (keyword.isBlank()) {
+            List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
+            request.setAttribute("listDTOS", listDTOS);
+
+        } else {
+            List<Jobs> jobsKeyword = jobsService.searchKeyword(keyword);
+            request.setAttribute("jobsKeyword", jobsKeyword);
+        }
+
+        request.setAttribute("keyword", keyword);
 
         return "index";
     }
@@ -96,7 +109,6 @@ public class UserController {
             } else if (role == 2) {
                 session.setAttribute("sessionComp", user);
                 return  "redirect:/comp/comp-index";
-
             }
         }
 
@@ -126,11 +138,11 @@ public class UserController {
     }
 
     @PostMapping("/user/{id}/update")
-    public String updateForm(@PathVariable Integer id, UserRequest.UpdateDTO requestDTO) {
+    public String update(@PathVariable Integer id, CompRequest.UpdateDTO requestDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         userService.updateById(sessionUser, requestDTO);
         User user = userService.findById(sessionUser.getId());
-        System.out.println(user.getPhone());
+        session.setAttribute("sessionUser", user);
 
         return "redirect:/";
     }

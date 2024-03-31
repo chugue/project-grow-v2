@@ -18,10 +18,8 @@ public interface ApplyJPARepository extends JpaRepository<Apply, Integer> {
     @Query("select a from Apply a where a.resume.id = :resumeId")
     Optional<Apply> findByResumeId(@Param("resumeId") Integer resumeId);
 
-
     @Query("select a from Apply a where a.resume.id = :resumeId and a.jobs.id = :jobsId")
     Optional<Apply> findByResumeIdAndJobsId(@Param("resumeId") Integer resumeId, @Param("jobsId") Integer jobsId);
-
 
     //현재 이력서로 공고에 지원 중인 이력서를 모두 조회
     @Query("select a from Apply a where a.isPass not in ('1') and a.resume.id = :resumeId")
@@ -32,4 +30,8 @@ public interface ApplyJPARepository extends JpaRepository<Apply, Integer> {
 
     @Query("select a from Apply a where a.jobs.id = :jobsId and a.resume.id = :resumeId")
     Optional<Apply> findByJidRid(@Param("jobsId") Integer jobsId, @Param("resumeId") Integer resumeId);
+
+    @Query("select a from Apply a where a.isPass not in ('1') and a.jobs.id = :jobsId")
+    List<Apply> findAllByJidAn1(@Param("jobsId") Integer jobsId);
 }
+

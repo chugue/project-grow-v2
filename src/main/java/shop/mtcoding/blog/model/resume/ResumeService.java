@@ -44,16 +44,46 @@ public class ResumeService {
         Apply apply = applyJPARepo.findByResumeIdAndJobsId(resumeId, jobsId)
                 .orElseThrow(() -> new Exception400("잘못된 요청입니다."));
         if (sessionUser != null) {
-            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume , apply.getIsPass(), resume.getUser(), sessionUser.getRole(), skills);
+            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume, jobsId, apply.getIsPass(), resume.getUser(), sessionUser.getRole(), skills);
 
             return resumeDetailDTO;
         } else if (sessionComp != null) {
-            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume, apply.getIsPass(), resume.getUser(), sessionComp.getRole(), skills);
+            ResumeResponse.DetailDTO resumeDetailDTO = new ResumeResponse.DetailDTO(resume, jobsId, apply.getIsPass(), resume.getUser(), sessionComp.getRole(), skills);
 
             return resumeDetailDTO;
         }
 
         return null;
+    }
+
+    public ResumeResponse.DetailDTO2 resumeDetail2(Integer resumeId, User sessionUser) {
+        Resume resume = resumeJPARepo.findByIdJoinUser(resumeId);
+        boolean isOwner = resume.getUser().equals(sessionUser);
+        resume.setOwner(isOwner);
+
+        List<Skill> skills = skillJPARepo.findAllByResumeId(resume.getId());
+
+
+        ResumeResponse.DetailDTO2 resumeDetailDTO = ResumeResponse.DetailDTO2.builder()
+                .id(resume.getId())
+                .title(resume.getTitle())
+                .edu(resume.getEdu())
+                .introduce(resume.getIntroduce())
+                .imgFileName(resume.getUser().getImgFileName())
+                .myName(resume.getUser().getMyName())
+                .birth(resume.getUser().getBirth())
+                .phone(resume.getUser().getPhone())
+                .email(resume.getUser().getEmail())
+                .address(resume.getUser().getAddress())
+                .area(resume.getArea())
+                .career(resume.getCareer())
+                .portLink(resume.getPortLink())
+                .userId(resume.getUser().getId())
+                .skills(skills)
+                .build();
+
+
+        return  resumeDetailDTO;
     }
 
     public ResumeResponse.ResumeStateDTO findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {
@@ -102,6 +132,8 @@ public class ResumeService {
 
         resumeStateDTO.setIsApply(isApply);
         resumeStateDTO.setApplys(resumeApplyDTOList);
+
+
 
         return resumeStateDTO;
     }
