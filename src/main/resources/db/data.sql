@@ -11,7 +11,7 @@ values ('96hoho@gmail.com','양승호','1234','010-3535-9985','대전광역시 �
        ('universe07@daum.net','최주호','1234','010-6452-2311','경기도 용인시 수지구 동천로 567번지 수지그린아파트 102동 1203호','1981-05-06','1','dc3d8891-d3d8-45ae-beb4-fda2bbebbb52_user06.png',now()),
        ('jaesung00@gmail.com','류재성','1234','010-4456-6343','광주광역시 서구 상무대로 111번길 23 우동 1502호','1992-02-15','1', '30b8a3ab-c54f-42be-b417-c6ef2660eea6_user07.png',now()),
        ('sungkim_87@naver.com','김성훈','1234','010-6255-2435','서울특별시 강남구 역삼동 123번지 아이파크','1987-07-20','1', 'a542d45d-5420-4284-b903-f527f20a7c5c_user08.png',now()),
-       ('snowhoon@naver.com','설동훈','1234','010-1125-0988','부산광역시 동래구 명장동 678번지 명장타워 703호','1996-12-01','1','517f9d79-8671-40d0-bb5e-6d272e767a9d_user09.png',now()),
+       ('snowhoon@naver.com','설동훈','1234','010-1125-0988','부산광역시 동래구 명장동 678번지 명장타워 703호','1996-12-01','1','f6ae38c5-a212-4436-b08e-e483fdda324c_user14.png',now()),
        ('babie@gmail.com','서지민','1234','010-0253-7898','부산광역시 남구 대연동 345번지 대연센트럴빌라 506호','2003-06-22','1','fb14a8c5-d17d-4324-b742-0d84e5923900_user10.png',now()),
        ('minjung@naver.com','이민정','1234','010-2214-3354','서울특별시 송파구 잠실동 789번지 롯데 캐슬 1107동 303호','2000-03-25','1','5c2ad87d-6b7d-4670-a766-2a3d586c6f0b_user11.png',now()),
        ('woo1988@gmail.com','최혁우','1234','010-9985-3114','서울특별시 강남구 역삼동 123번지 아이파크','1988-09-18','1','d0f6a6b4-5769-49c1-ab31-c8abc43305b0_user12.png' ,now()),
@@ -68,13 +68,13 @@ VALUES (16, '부산', '백엔드 개발자 - Spring (경력무관)', '대졸', '
 INSERT INTO jobs_tb(user_id, area, title, edu, career, content, deadline, task, created_at)
 VALUES (15, '서울', '프런트 엔드/백엔드 개발자 채용', '학력무관', '시니어(10년 이상)', '프론트엔드(React)+백엔드(Spring) 풀스택 경력 2년 이상 또는 모바일(Android, iOS, Flutter)+백엔드(Spring) 경력 2년 이상의 경험이 있으신 분', '2024-04-09', '풀스택', NOW());
 INSERT INTO jobs_tb(user_id, area, title, edu, career, content, deadline, task, created_at)
-VALUES (18, '경기도', '게임 개발자 채용 공고', '학력무관', '미들(4~8년)', '게임 개발 프로젝트에 주도적으로 참여한 경험 (엔지니어로서 기획을 조율하고 게임 모딩에 적합한 기능구성 필요)', '2024-03-15', '게임개발', NOW());
+VALUES (18, '경기도', '게임 개발자 채용 공고', '학력무관', '미들(4~8년)', '게임 개발 프로젝트에 주도적으로 참여한 경험 (엔지니어로서 기획을 조율하고 게임 모딩에 적합한 기능구성 필요)', '2024-04-15', '게임개발', NOW());
 INSERT INTO jobs_tb(user_id, area, title, edu, career, content, deadline, task, created_at)
 VALUES (19, '서울', '백엔드 개발자 (Java/Kotlin)', '대졸', '신입', 'Java/Kotlin 중 1개 이상의 프로그래밍 언어에 익숙하신 분, Spring 등 웹 프레임워크 활용 경험이 있으신 분', '2024-05-22', '백엔드', NOW());
 INSERT INTO jobs_tb(user_id, area, title, edu, career, content, deadline, task, created_at)
 VALUES (20, '경기도', '프론트엔드 개발자 (React, TypeScript)', '학력무관', '경력무관', '- JavaScript, HTML, CSS 등 마크업, TypeScript에 대한 이해가 있으신 분', '2024-04-09', '프론트', NOW());
 INSERT INTO jobs_tb(user_id, area, title, edu, career, content, deadline, task, created_at)
-VALUES (21, '부산', '24년도 풀스택 Web 개발자 채용 공고', '학력무관', '신입', 'HTML, CSS, JavaScript, MySQL 등 웹 기본 전반, 열정과 근성이 있는 분', '2024-03-29', '풀스택', NOW());
+VALUES (21, '부산', '24년도 풀스택 Web 개발자 채용 공고', '학력무관', '신입', 'HTML, CSS, JavaScript, MySQL 등 웹 기본 전반, 열정과 근성이 있는 분', '2024-04-29', '풀스택', NOW());
 INSERT INTO jobs_tb(user_id, area, title, edu, career, content, deadline, task, created_at)
 VALUES (22, '서울', '[경력] Frontend Engineer', '학력무관', '미들(4~8년)', '5년 이상 Frontend 개발 경력 혹은 그에 준하는 실력이 있는 분', '2024-04-10', '프론트', NOW());
 INSERT INTO jobs_tb(user_id, area, title, edu, career, content, deadline, task, created_at)
@@ -119,10 +119,29 @@ insert into skill_tb (resume_id, name, role) values
                                                  (13, 'Jquery', 1);
 
 -- 스킬 테이블 (기업)
-INSERT INTO skill_tb(jobs_id, name, role) VALUES(1, 'Jquery', 2);
-INSERT INTO skill_tb(jobs_id, name, role) VALUES(1, 'JavaScript', 2);
+INSERT INTO skill_tb(jobs_id, name, role) VALUES(1, 'Java', 2);
+INSERT INTO skill_tb(jobs_id, name, role) VALUES(1, 'Oracle', 2);
 INSERT INTO skill_tb(jobs_id, name, role) VALUES(2, 'Spring', 2);
-INSERT INTO skill_tb(jobs_id, name, role) VALUES(3, 'JSP', 2);
+INSERT INTO skill_tb(jobs_id, name, role) VALUES(3, 'HTML/CSS', 2),
+                                                (3, 'Spring', 2),
+                                                (3, 'MySql', 2),
+                                                (3, 'React', 2),
+                                                (4, 'Java', 2),
+                                                (4, 'Spring', 2),
+                                                (4, 'JSP', 2),
+                                                (5, 'Jquery', 2),
+                                                (5, 'JSP', 2),
+                                                (5, 'Oracle', 2),
+                                                (6, 'JavaScript', 2),
+                                                (6, 'HTML/CSS', 2),
+                                                (7, 'Java', 2),
+                                                (7, 'Spring', 2),
+                                                (7, 'React', 2),
+                                                (8, 'Spring', 2),
+                                                (8, 'Vue.js', 2),
+                                                (8, 'React', 2),
+                                                (9, 'Java', 2),
+                                                (9, 'Spring', 2);
 
 --- 지원내역 테이블
 INSERT INTO apply_tb(resume_id, jobs_id, is_pass, created_at)
