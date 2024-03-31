@@ -21,12 +21,16 @@
                                 <div class="apply-present row " style="font-weight: 900; font-size: 16px;">
                                     {{#mainCount}}
                                         <div class="col-4 text-center">
-                                            <div class="apply">공고 등록 수</div>
-                                            <div class="count">{{jobsCount}}개</div>
+                                            <a href="/comp/find-all-jobs/{{sessionComp.id}}">
+                                                <div class="apply">공고 등록 수</div>
+                                                <div class="count">{{jobsCount}}개</div>
+                                            </a>
                                         </div>
                                         <div class="col-4 text-center">
-                                            <div class="waiting">총 지원이력서 현황</div>
-                                            <div class="count">{{applicantCount}}개</div>
+                                            <a onclick="findAllAppli({{sessionComp.id}})">
+                                                <div class="waiting">총 지원이력서 현황</div>
+                                                <div class="count">{{applicantCount}}개</div>
+                                            </a>
                                         </div>
                                         <div class="col-4 text-center">
                                             <a onclick="findNoResp({{sessionComp.id}})">
@@ -70,11 +74,11 @@
                             <div class="d-flex">
                                 <div class="new-skill-box">
                                 `;
-            resp.skillList.forEach(s => {
-                temp += `<span class="${s.color}">${s.name}</span>`;
-            });
+        resp.skillList.forEach(s => {
+            temp += `<span class="${s.color}">${s.name}</span>`;
+        });
 
-            temp += `
+        temp += `
                     </div>
 
                             </div>
@@ -107,21 +111,40 @@
                                     </button>
                                 </a>
                                 </div>
-                                <div class="mb-2" style="">
+`;
+        if (resp.isPass === '2'){
+            temp += `         <div class="mb-2" style="">
                                     <form action="/jobs/${resp.resumeId}/delete" method="post">
                                         <button type="submit" class="btn btn-outline-mint mb-2">
                                             응답 대기중
                                         </button>
                                     </form>
-
-                                </div>
+                                </div>`;
+        }
+        if (resp.isPass === '3'){
+            temp += `<div class="mb-2" style="">
+                                        <button type="submit" class="btn btn-outline-mint mb-2">
+                                            합격
+                                        </button>
+                                </div>`;
+        }
+        if (resp.isPass === '4' ){
+            temp += `<div class="mb-2" style="">
+                                    <form action="/jobs/${resp.resumeId}/delete" method="post">
+                                        <button type="submit" class="btn btn-outline-mint mb-2">
+                                            불합격
+                                        </button>
+                                    </form>
+                                </div>`;
+        }
+        temp += `
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             `;
-            return temp;
+        return temp;
     }
 
     function findNoResp(userId) {
@@ -130,8 +153,22 @@
             type: "post",
             data: {userId: userId},
         }).done((resp) => {
+            $("#noRespList").empty();
             resp.forEach(s => {
-                $('#noRespList').empty();
+                let htmlContent = render(s);
+                $('#noRespList').append(htmlContent);
+            })
+        });
+    }
+
+    function findAllAppli(userId) {
+        $.ajax({
+            url: "/api/find-all-applicants",
+            type: "post",
+            data: {userId: userId},
+        }).done((resp) => {
+            $("#noRespList").empty();
+            resp.forEach(s => {
                 let htmlContent = render(s);
                 $('#noRespList').append(htmlContent);
             })

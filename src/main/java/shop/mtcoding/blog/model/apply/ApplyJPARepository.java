@@ -36,11 +36,11 @@ public interface ApplyJPARepository extends JpaRepository<Apply, Integer> {
     List<Apply> findAllByJidAn1(@Param("jobsId") Integer jobsId);
 
     // 기업사용자의 모든 공고 지원한 모든 지원자 - 총 지원자 현황 구하기 - 중복도 제거
-    @Query("select a.resume from Apply a where a.isPass not in ('1') and a.jobs.user.id= :userId")
-    List<Resume> findAllByUidN1(@Param("userId") Integer userId);
+    @Query("select a from Apply a where a.isPass not in ('1') and a.jobs.user.id= :userId")
+    List<Apply> findAllByUidN1(@Param("userId") Integer userId);
 
     // 기업사용자의 모든 공고 지원한 모든 지원자 - 미응답 현황 구하기
-    @Query("select a.resume from Apply a where a.isPass in ('2') and a.jobs.user.id= :userId")
-    List<Resume> findAllByUidI2(@Param("userId") Integer userId);
+    @Query("select a from Apply a where a.isPass in ('2') and a.jobs.user.id= :userId")
+    List<Apply> findAllByUidI2(@Param("userId") Integer userId);
 }
 
