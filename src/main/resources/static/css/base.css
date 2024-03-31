@@ -91,7 +91,9 @@ input[type='text'] {
     width: 1600px;
 }
 
-
+.w-150{
+    width:150px;
+}
 
 /* margin */
 .mt-5 {
