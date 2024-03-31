@@ -15,6 +15,11 @@ import java.util.List;
 public class CompApiController {
     private final CompService compService;
 
+    @PostMapping("/api/find-all-jobs")
+    public List<CompResponse.CompManageDTO> compManageDTO (@RequestParam("userId") Integer userId){
+        return compService.compManage(userId);
+    }
+
     @PostMapping("/api/find-all-applicants")
     public List<ResumeResponse.CmrDTO> findAllApplicants (@RequestParam("userId") Integer userId){
         return compService.findAllAppli(userId);
