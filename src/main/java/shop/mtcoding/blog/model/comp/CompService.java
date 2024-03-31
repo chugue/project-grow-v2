@@ -17,9 +17,7 @@ import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
 import shop.mtcoding.blog.model.user.User;
 import shop.mtcoding.blog.model.user.UserJPARepository;
-import shop.mtcoding.blog.model.user.UserRequest;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +31,30 @@ public class CompService {
     private final SkillJPARepository skillJPARepo;
     private final JobsJPARepository jobsJPARepo;
     private final ApplyJPARepository applyJPARepo;
+
+    public List<CompResponse.CompManageDTO> compManage (Integer userId) {
+        List<Jobs> jobsList = compJPARepo.findAllByUserId(userId);
+        List<CompResponse.CompManageDTO> compManageDTOList = new ArrayList<>();
+        jobsList.stream().map(jobs ->{
+            return compManageDTOList.add(CompResponse.CompManageDTO.builder()
+                    .jobs(jobs)
+                    .skillList(jobs.getSkillList())
+                    .build());
+        }).collect(Collectors.toList());
+        return compManageDTOList;
+    }
+
+
+    public CompResponse.MainCountDTO mainCountByUid(Integer userId) {
+        // 총 공고등록수
+        Integer jobsCount = jobsJPARepo.countByUserId(userId);
+        // 총 지원자 현황 (not 1) - 사용자 수가 아닌 이력서 수
+        Integer applicantCount= applyJPARepo.findAllByUidN1(userId);
+        // 총 미응답 현황 (isPass = 2) - 사용자 수가 아니라 이력서 수를 구해햐 함
+        Integer noRespCount = applyJPARepo.findAllByUidI2(userId);
+
+        return new CompResponse.MainCountDTO(jobsCount, applicantCount, noRespCount);
+    }
 
 
     public List<CompResponse.RusaDTO> findApplicants(Integer jobsId) {
@@ -196,4 +218,6 @@ public class CompService {
             return user;
 
         }
-    }
+
+
+}

@@ -20,7 +20,15 @@ public class CompController {
     private final HttpSession session;
     private final ResumeService resumeService;
 
-
+    @GetMapping("/comp/{id}/comp-manage")
+    public String compManage (@PathVariable Integer id, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        CompResponse.MainCountDTO mainCountDTO = compService.mainCountByUid(sessionUser.getId());
+        List<CompResponse.CompManageDTO> compManageDTOList = compService.compManage(sessionUser.getId());
+        request.setAttribute("mainCount", mainCountDTO);
+        request.setAttribute("compManageList",compManageDTOList );
+        return "/comp/comp-manage";
+    }
 
     @PostMapping("/comp/{id}/update")
     public String update(@PathVariable Integer id, CompRequest.UpdateDTO requestDTO) {

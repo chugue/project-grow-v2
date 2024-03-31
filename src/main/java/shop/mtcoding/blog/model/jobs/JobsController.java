@@ -89,8 +89,8 @@ public class JobsController {
     }
 
     @GetMapping("/jobs/{id}/update-jobs-form")
-    public String updateForm (@PathVariable Integer id, HttpServletRequest request) {
-        JobsResponse.JobUpdateDTO job = jobsService.updateForm(id);
+    public String updateForm (@PathVariable Integer jobsId, HttpServletRequest request) {
+        JobsResponse.JobUpdateDTO job = jobsService.updateForm(jobsId);
         request.setAttribute("job", job);
 
         return "/jobs/update-jobs-form";
