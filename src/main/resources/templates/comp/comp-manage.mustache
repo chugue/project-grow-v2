@@ -21,20 +21,20 @@
                                 <div class="apply-present row " style="font-weight: 900; font-size: 16px;">
                                     {{#mainCount}}
                                         <div class="col-4 text-center">
-                                            <a href="/comp/find-all-jobs/{{sessionComp.id}}Z">
+                                            <a onclick="findAllJobs({{sessionComp.id}})">
                                                 <div class="apply">공고 등록 수</div>
                                                 <div class="count">{{jobsCount}}개</div>
                                             </a>
                                         </div>
                                         <div class="col-4 text-center">
                                             <a onclick="findAllAppli({{sessionComp.id}})">
-                                                <div class="waiting">총 지원이력서 현황</div>
+                                                <div class="waiting">지원 이력서 현황</div>
                                                 <div class="count">{{applicantCount}}개</div>
                                             </a>
                                         </div>
                                         <div class="col-4 text-center">
                                             <a onclick="findNoResp({{sessionComp.id}})">
-                                                <div class="">총 미응답 현황</div>
+                                                <div class="">미응답 현황</div>
                                                 <div class="count">{{noRespCount}}개</div>
                                             </a>
                                         </div>
@@ -53,6 +53,8 @@
                         </div>
                     </div>
                     <div class="components" id="noRespList"></div>
+                    <div class="components" id="findAllAppli"></div>
+                    <div class="components" id="findAllJobs"></div>
 
                 </div>
             </div>
@@ -109,8 +111,7 @@
                                         상세 보기
                                     </button>
                                 </a>
-                                </div>
-`;
+                                </div>`;
         if (resp.isPass === '2'){
             temp += `         <div class="mb-2" style="">
                                     <form action="/jobs/${resp.resumeId}/delete" method="post">
@@ -129,11 +130,9 @@
         }
         if (resp.isPass === '4' ){
             temp += `<div class="mb-2" style="">
-                                    <form action="/jobs/${resp.resumeId}/delete" method="post">
                                         <button type="submit" class="btn btn-outline-mint mb-2">
                                             불합격
                                         </button>
-                                    </form>
                                 </div>`;
         }
         temp += `
@@ -146,7 +145,75 @@
         return temp;
     }
 
+    function renderJob(resp) {
+        let temp = `
+            <div class="card mb-4 mt-3">
+                <div class="card-body" style=" padding: 0 !important;">
+                    <div class="row">
+                        <div class="col-7 mt-2">
+                            <h5 class="card-title" style="text-align: left;">
+                            ${resp.title}
+                            </h5>
+                            <!-- 기술 스킬 -->
+                            <div class="d-flex">
+                                <div class="new-skill-box">
+                                `;
+        resp.skillList.forEach(s => {
+            temp += `<span class="${s.color}">${s.name}</span>`;
+        });
+
+        temp += `
+                    </div>
+                            </div>
+                            <div class="m-2" style="float: left;" xmlns="http://www.w3.org/1999/html">
+                                <h6 class="card-subtitle text-muted">
+                                     ${resp.edu}
+                                </h6>
+                            </div>
+                            <div class="m-2" style="float: left;">
+                                <h6 class="card-subtitle text-muted">
+                                    ${resp.career}
+                                </h6>
+                            </div>
+                            <div class="m-2" style="float: left;">
+                                <h6 class="card-subtitle text-muted">
+                                    ${resp.area}
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="d-flex" style="justify-content: flex-end;">
+                                <input type="hidden" value="" name="" id="">
+                                <div class="mb-2 mr-10" style="">
+                                    <!--                                                    상세보기 였던 자리 -->
+                                </div>
+                                <div class="mb-2 mr-10" style="">
+                                <a href="/jobs/${resp.jobsId}/update-jobs-form/">
+                                    <button type="button" class="btn btn-mint">
+                                        공고 수정
+                                    </button>
+                                </a>
+                                </div>
+                                <div class="mb-2" style="">
+                                    <form action="/jobs/${resp.jobsId}/delete" method="post">
+                                        <button type="submit" class="btn btn-outline-mint mb-2">
+                                            공고 삭제
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+        return temp;
+    }
+
     function findNoResp(userId) {
+        $("#findAllAppli").empty();
+        $("#findAllJobs").empty();
+
         $.ajax({
             url: "/api/find-no-resp",
             type: "post",
@@ -161,35 +228,38 @@
     }
 
     function findAllAppli(userId) {
+        $("#noRespList").empty();
+        $("#findAllJobs").empty();
+
         $.ajax({
             url: "/api/find-all-applicants",
             type: "post",
             data: {userId: userId},
         }).done((resp) => {
-            $("#noRespList").empty();
+            $("#findAllAppli").empty();
             resp.forEach(s => {
                 let htmlContent = render(s);
-                $('#noRespList').append(htmlContent);
+                $('#findAllAppli').append(htmlContent);
             })
         });
     }
 
-    function findAllAppli(userId) {
+    function findAllJobs(userId) {
+        $("#noRespList").empty();
+        $("#findAllAppli").empty();
+
         $.ajax({
             url: "/api/find-all-jobs",
             type: "post",
             data: {userId: userId},
         }).done((resp) => {
-            $("#applicantCountList").empty();
+            $("#findAllJobs").empty();
             resp.forEach(s => {
-                let htmlContent = render(s);
-                $('#applicantCountList').append(htmlContent);
+                let htmlContent = renderJob(s);
+                $('#findAllJobs').append(htmlContent);
             })
         });
     }
-
-
-
 </script>
 
 {{> layout/footer}}

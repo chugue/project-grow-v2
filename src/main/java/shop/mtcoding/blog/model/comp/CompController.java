@@ -20,15 +20,6 @@ public class CompController {
     private final HttpSession session;
     private final ResumeService resumeService;
 
-    @GetMapping("/comp/find-all-jobs/{userId}")
-    public String findAllJobs (@PathVariable Integer userId, HttpServletRequest request){
-        CompResponse.MainCountDTO mainCountDTO = compService.mainCountByUid(userId);
-        List<CompResponse.CompManageDTO> compManageDTOList = compService.compManage(userId);
-        request.setAttribute("mainCount", mainCountDTO);
-        request.setAttribute("compManageList",compManageDTOList );
-        return "/comp/comp-manage";
-    }
-
     @GetMapping("/comp/{id}/comp-manage")
     public String compManage (@PathVariable Integer id, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -36,7 +27,7 @@ public class CompController {
         List<CompResponse.CompManageDTO> compManageDTOList = compService.compManage(sessionUser.getId());
         request.setAttribute("mainCount", mainCountDTO);
         request.setAttribute("compManageList",compManageDTOList );
-        return "/comp/comp-manage-async";
+        return "/comp/comp-manage";
     }
 
     @PostMapping("/comp/{id}/update")
