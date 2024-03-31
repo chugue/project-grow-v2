@@ -91,7 +91,32 @@ insert into skill_tb (resume_id, name, role) values(1, 'HTML/CSS', 1);
 insert into skill_tb (resume_id, name, role) values(2, 'JavaScript', 1);
 insert into skill_tb (resume_id, name, role) values(3, 'Java', 1);
 insert into skill_tb (resume_id, name, role) values(3, 'HTML/CSS', 1);
-insert into skill_tb (resume_id, name, role) values(3, 'Spring', 1);
+insert into skill_tb (resume_id, name, role) values
+                                                 (4, 'Java', 1),
+                                                 (4, 'JavaScript', 1),
+                                                 (4, 'HTML/CSS', 1),
+                                                 (4, 'MySql', 1),
+                                                 (5, 'React', 1),
+                                                 (5, 'Spring', 1),
+                                                 (6, 'Java', 1),
+                                                 (6, 'MySql', 1),
+                                                 (6, 'JSP', 1),
+                                                 (7, 'Java', 1),
+                                                 (7, 'JSP', 1),
+                                                 (7, 'Jquery', 1),
+                                                 (7, 'Vue.js', 1),
+                                                 (7, 'React', 1),
+                                                 (8, 'Spring', 1),
+                                                 (8, 'HTML/CSS', 1),
+                                                 (9, 'Spring', 1),
+                                                 (10, 'JavaScript', 1),
+                                                 (10, 'React', 1),
+                                                 (10, 'JSP', 1),
+                                                 (11, 'JavaScript', 1),
+                                                 (11, 'JSP', 1),
+                                                 (12, 'Java', 1),
+                                                 (13, 'Spring', 1),
+                                                 (13, 'Jquery', 1);
 
 -- 스킬 테이블 (기업)
 INSERT INTO skill_tb(jobs_id, name, role) VALUES(1, 'Jquery', 2);
