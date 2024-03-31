@@ -26,7 +26,6 @@ public class ResumeController {
         ResumeResponse.DetailDTO resume = resumeService.resumeDetail(id, jobsId, newSessionUser, sessionComp);
         request.setAttribute("resume", resume);
 
-
         return "resume/resume-detail";
     }
 

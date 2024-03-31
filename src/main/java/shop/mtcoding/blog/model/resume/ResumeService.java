@@ -10,6 +10,7 @@ import shop.mtcoding.blog._core.errors.exception.Exception403;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.apply.ApplyJPARepository;
+import shop.mtcoding.blog.model.apply.ApplyResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
 import shop.mtcoding.blog.model.skill.SkillResponse;
@@ -57,6 +58,19 @@ public class ResumeService {
 
     public ResumeResponse.ResumeStateDTO findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {
         List<Resume> resumeList = resumeJPARepo.findAllByUserId(userId);
+        List<Apply> applies =  applyJPARepo.findAll();
+
+        //sessionUser 의 지원한 공고 리스트
+        List<ApplyResponse.ApplyUserViewDTO> listDTO = applies.stream()
+                .filter(apply -> apply.getResume().getUser().getId() == userId)
+                .map(apply -> ApplyResponse.ApplyUserViewDTO.builder()
+                        .id(apply.getId())
+                        .user(apply.getResume().getUser())
+                        .isPass(apply.getIsPass())
+                        .resume(apply.getResume())
+                        .jobs(apply.getJobs())
+                        .build())
+                .collect(Collectors.toList());
 
 
         // 내가 지원안한 이력서만 나오도록 출력
@@ -75,13 +89,15 @@ public class ResumeService {
                 })
                 .filter(Objects::nonNull) // 필터링하여 null이 아닌 요소만 남깁니다.
                 .collect(Collectors.toList());
-        // 지원할 이력서가 없으면 isApply true
+
+        // 지원할 이력서가 있으면 isApply false
         Boolean isApply = false;
 
-        if (resumeApplyDTOList.size() < 1){
+        //지원한 이력서가 있고 작성한이력서 리스트가 비었으면 isApply true
+        if (resumeApplyDTOList.size() < 1 && listDTO.size() > 1){
             isApply = true;
         }
-
+        
         ResumeResponse.ResumeStateDTO resumeStateDTO = new ResumeResponse.ResumeStateDTO();
 
         resumeStateDTO.setIsApply(isApply);

@@ -197,6 +197,12 @@
                                         </label>
                                     </div>
                                 {{/resumeApplyDTOList.applys}}
+                                {{^resumeApplyDTOList.applys}}
+                                    <div>
+                                        <button type="button" class="btn btn-mint offer-table-btn" style="margin: 0;"><a
+                                                href="/resume/write-resume-form">이력서 작성</a></button>
+                                    </div>
+                                {{/resumeApplyDTOList.applys}}
                             </div>
                         </div>
                     {{/resumeApplyDTOList.isApply}}

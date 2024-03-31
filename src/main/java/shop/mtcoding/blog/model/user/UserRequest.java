@@ -25,7 +25,6 @@ public class UserRequest {
         private String myName;
         private String password;
         private String phone;
-
         public User toEntity (Integer role){
             return User.builder()
                     .email(email)

@@ -94,11 +94,11 @@ public class ResumeRequest {
             } else if (this.name.equals("React")) {
                 this.color = "badge badge-pill bg-dark";
             } else if (this.name.equals("Oracle")) {
-                this.color = "badge badge-pill bg-info";
+                this.color = "badge badge-pill bg-brown";
             } else if (this.name.equals("Vue.js")) {
-                this.color = "badge badge-pill bg-dark";
+                this.color = "badge badge-pill bg-indigo";
             } else if (this.name.equals("MySql")) {
-                this.color = "badge badge-pill bg-dark";
+                this.color = "badge badge-pill bg-purple";
             }
 
         }
