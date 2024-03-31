@@ -13,6 +13,33 @@ import java.util.stream.Collectors;
 
 public class ResumeResponse {
 
+    @Data // comp-manage페이지에 뿌려지는 resume용 DTO
+    public static class CmrDTO {
+        private Integer id;
+        //resume
+        private String title;
+        private String edu;
+        private String career;
+        private String area;
+        private Integer resumeId;
+        //apply
+        private String isPass;
+        //skillList
+        private List<SkillDTO2> skillList;
+
+        @Builder
+        public CmrDTO(Resume resume, Apply apply, List<Skill> skillList) {
+            this.title = resume.getTitle();
+            this.edu = resume.getEdu();
+            this.career = resume.getCareer();
+            this.area = resume.getArea();
+            this.resumeId = resume.getId();
+            this.isPass = apply.getIsPass();
+            this.skillList = skillList.stream().map(SkillDTO2::new)
+                    .collect(Collectors.toList());
+        }
+    }
+
     // 이력서 수정
     @Data
     public static class UpdateDTO {

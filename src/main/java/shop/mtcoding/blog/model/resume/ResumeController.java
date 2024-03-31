@@ -41,6 +41,7 @@ public class ResumeController {
 
     @GetMapping("/comp/comp-resume-detail/{id}")
     public String compResumeDetail(@PathVariable Integer id, HttpServletRequest request) {
+        System.out.println(11111);
         User sessionUser = (User) session.getAttribute("sessionUser");
         User newSessionUser = userService.findById(sessionUser.getId());
 
