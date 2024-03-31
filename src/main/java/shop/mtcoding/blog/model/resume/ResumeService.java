@@ -14,11 +14,8 @@ import shop.mtcoding.blog.model.apply.ApplyResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
 import shop.mtcoding.blog.model.skill.SkillResponse;
-import shop.mtcoding.blog.model.user.User;
-import shop.mtcoding.blog.model.user.UserJPARepository;
-import shop.mtcoding.blog.model.user.UserService;
+import shop.mtcoding.blog.model.resume.user.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

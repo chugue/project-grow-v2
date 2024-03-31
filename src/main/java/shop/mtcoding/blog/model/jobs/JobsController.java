@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
-import shop.mtcoding.blog.model.skill.Skill;
-import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.resume.user.User;
 
 import java.util.List;
 

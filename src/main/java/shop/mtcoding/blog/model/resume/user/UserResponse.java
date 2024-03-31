@@ -1,10 +1,9 @@
-package shop.mtcoding.blog.model.user;
+package shop.mtcoding.blog.model.resume.user;
 
 import lombok.Builder;
 import lombok.Data;
 import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.jobs.Jobs;
-import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.skill.Skill;
 

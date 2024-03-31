@@ -2,20 +2,13 @@ package shop.mtcoding.blog.model.resume;
 
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.model.apply.Apply;
-import shop.mtcoding.blog.model.comp.CompResponse;
-import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillResponse;
-import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.resume.user.User;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ResumeResponse {

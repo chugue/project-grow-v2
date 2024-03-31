@@ -15,8 +15,8 @@ import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeJPARepository;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
-import shop.mtcoding.blog.model.user.User;
-import shop.mtcoding.blog.model.user.UserJPARepository;
+import shop.mtcoding.blog.model.resume.user.User;
+import shop.mtcoding.blog.model.resume.user.UserJPARepository;
 
 import java.util.ArrayList;
 import java.util.List;

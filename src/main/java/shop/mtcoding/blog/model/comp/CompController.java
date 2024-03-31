@@ -5,11 +5,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import shop.mtcoding.blog.model.jobs.JobsResponse;
-import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
-import shop.mtcoding.blog.model.user.User;
-import shop.mtcoding.blog.model.user.UserRequest;
+import shop.mtcoding.blog.model.resume.user.User;
 
 import java.util.List;
 

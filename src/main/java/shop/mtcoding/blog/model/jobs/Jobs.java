@@ -8,12 +8,10 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.offer.Offer;
-import shop.mtcoding.blog.model.resume.ResumeRequest;
 import shop.mtcoding.blog.model.scrap.Scrap;
 import shop.mtcoding.blog.model.skill.Skill;
-import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.resume.user.User;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;

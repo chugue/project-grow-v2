@@ -3,7 +3,6 @@ package shop.mtcoding.blog.model.file;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import shop.mtcoding.blog.model.user.UserService;
 
 @RequiredArgsConstructor
 @Controller
