@@ -85,7 +85,7 @@ public class JobsController {
         return "redirect:/comp/" + sessionComp.getId() + "/comp-home";
     }
 
-    @GetMapping("/jobs/{id}/update-jobs-form")
+    @GetMapping("/jobs/{jobsId}/update-jobs-form")
     public String updateForm (@PathVariable Integer jobsId, HttpServletRequest request) {
         JobsResponse.JobUpdateDTO job = jobsService.updateForm(jobsId);
         request.setAttribute("job", job);
