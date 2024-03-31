@@ -47,14 +47,24 @@ public class JobsService {
 
     }
 
-    public JobsResponse.DetailDTO DetailDTO (Integer jobsId){
+    public JobsResponse.DetailDTO DetailDTO (Integer jobsId,User sessionUser){
+
         Jobs jobs = jobsRepo.findById(jobsId)
                 .orElseThrow(() -> new Exception404("해당 공고를 찾을 수 없습니다."));
         User user = userRepo.findById(jobs.getUser().getId())
                 .orElseThrow(() -> new Exception404("해당 사용자를 찾을 수 없습니다."));
         List<Skill> skillList = skillRepo.findAllById(jobs.getId());
 
+
         JobsResponse.DetailDTO detailDTO = new JobsResponse.DetailDTO(jobs, user, skillList);
+        Boolean isOwner = false;
+
+        if (sessionUser.getRole() == 2){
+            isOwner = true;
+        }
+
+        detailDTO.setIsOwner(isOwner);
+
         return detailDTO;
     }
 
