@@ -20,6 +20,30 @@ import java.util.stream.Collectors;
 
 public class ResumeResponse {
 
+    @Data
+    public static class NoRespDTO {
+        private Integer id;
+        //resume
+        private String title;
+        private String edu;
+        private String career;
+        private String area;
+        private Integer resumeId;
+        //skillList
+        private List<SkillDTO2> skillList;
+
+        @Builder
+        public NoRespDTO(Resume resume, List<Skill> skillList) {
+            this.title = resume.getTitle();
+            this.edu = resume.getEdu();
+            this.career = resume.getCareer();
+            this.area = resume.getArea();
+            this.resumeId = resume.getId();
+            this.skillList = skillList.stream().map(SkillDTO2::new)
+                    .collect(Collectors.toList());
+        }
+    }
+
     // 이력서 수정
     @Data
     public static class UpdateDTO {

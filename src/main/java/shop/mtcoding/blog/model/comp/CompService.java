@@ -13,6 +13,7 @@ import shop.mtcoding.blog.model.jobs.JobsJPARepository;
 import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeJPARepository;
+import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
 import shop.mtcoding.blog.model.user.User;
@@ -32,6 +33,26 @@ public class CompService {
     private final JobsJPARepository jobsJPARepo;
     private final ApplyJPARepository applyJPARepo;
 
+
+
+    public List<ResumeResponse.NoRespDTO>  findNoResp(Integer userId) {
+        List<Resume> resumeList = applyJPARepo.findAllByUidI2(userId);
+
+        List<ResumeResponse.NoRespDTO> noRespDTOList = new ArrayList<>();
+
+        resumeList.stream().map(resume -> {
+            return noRespDTOList.add(ResumeResponse.NoRespDTO.builder()
+                    .resume(resume)
+                    .skillList(resume.getSkillList()).build());
+        }).collect(Collectors.toList());
+        for (int i = 0; i < noRespDTOList.size(); i++) {
+            noRespDTOList.get(i).setId(i+1);
+        }
+
+        return noRespDTOList;
+
+    }
+
     public List<CompResponse.CompManageDTO> compManage (Integer userId) {
         List<Jobs> jobsList = compJPARepo.findAllByUserId(userId);
         List<CompResponse.CompManageDTO> compManageDTOList = new ArrayList<>();
@@ -49,11 +70,11 @@ public class CompService {
         // 총 공고등록수
         Integer jobsCount = jobsJPARepo.countByUserId(userId);
         // 총 지원자 현황 (not 1) - 사용자 수가 아닌 이력서 수
-        Integer applicantCount= applyJPARepo.findAllByUidN1(userId);
+        List<Resume> applicantList= applyJPARepo.findAllByUidN1(userId);
         // 총 미응답 현황 (isPass = 2) - 사용자 수가 아니라 이력서 수를 구해햐 함
-        Integer noRespCount = applyJPARepo.findAllByUidI2(userId);
+        List<Resume> noRespList = applyJPARepo.findAllByUidI2(userId);
 
-        return new CompResponse.MainCountDTO(jobsCount, applicantCount, noRespCount);
+        return new CompResponse.MainCountDTO(jobsCount, applicantList.size(), noRespList.size());
     }
 
 
