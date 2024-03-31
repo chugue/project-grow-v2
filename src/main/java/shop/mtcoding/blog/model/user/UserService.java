@@ -85,7 +85,7 @@ public class UserService {
 
     @Transactional
     public User join(UserRequest.JoinDTO reqDTO, Integer role) {
-        return userRepo.save(reqDTO.toEntity(role, "3cadb59f-04cd-4e65-8f7c-281be30c0fe6_iu.jpg"));
+        return userRepo.save(reqDTO.toEntity(role));
     }
 
 

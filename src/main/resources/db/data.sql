@@ -107,6 +107,8 @@ VALUES (1,1,'2',NOW()),
        (2,2,'2',NOW()),
        (3,2,'2',NOW());
 
+
+
 -- 커뮤니티 테이블
  insert into board_tb(title, content, user_id, created_at)
  values ('아이디를 찾고 싶어요', '가입된 아이디를 찾고 싶어요', 1, now()),
@@ -120,3 +122,4 @@ values('저두 궁금해요', 4, 1, now()),
       ('어떻게 하셨나요? ', 4, 1, now()),
       ('저두 궁금해요', 4, 2, now()),
       ('저두 궁금해요', 3, 2, now());
+

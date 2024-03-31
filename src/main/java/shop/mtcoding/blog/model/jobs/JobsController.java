@@ -33,14 +33,16 @@ public class JobsController {
         }
 
         //공고정보와 사용자정보를 가져오는 detailDTO
-        JobsResponse.DetailDTO detailDTO = jobsService.DetailDTO(jobsId);
+        JobsResponse.DetailDTO detailDTO = jobsService.DetailDTO(jobsId,sessionUser);
         System.out.println("detailDTO :"+detailDTO);
 
         //사용자 이력서 보유내역과 지원상태를 가져오는 ResumeApplyDTO
         ResumeResponse.ResumeStateDTO resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionUser.getId(), jobsId);
         System.out.println("resumeApplyDTOList: " + resumeApplyDTOList.getApplys());
+        System.out.println(resumeApplyDTOList.getIsApply());
         request.setAttribute("resumeApplyDTOList", resumeApplyDTOList);
         request.setAttribute("detailDTO", detailDTO);
+        System.out.println(detailDTO.getUser().getRole());
         return "jobs/jobs-detail";
     }
 

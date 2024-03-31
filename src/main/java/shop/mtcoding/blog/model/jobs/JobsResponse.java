@@ -29,6 +29,7 @@ public class JobsResponse {
         private String content;
         private UserDetailDTO user;
         private List<SkillDTO> skillList;
+        private Boolean isOwner;
 
         @Builder
         public DetailDTO(Jobs jobs, User user, List<Skill> skillList) {
@@ -53,7 +54,7 @@ public class JobsResponse {
         private String address;
         private String homepage;
         private String imgFileName;
-
+        private Integer role;
         @Builder
         public UserDetailDTO(User user) {
             this.id = user.getId();
@@ -62,6 +63,7 @@ public class JobsResponse {
             this.address = user.getAddress();
             this.homepage = user.getHomepage();
             this.imgFileName = user.getImgFileName();
+            this.role = user.getRole();
         }
     }
 

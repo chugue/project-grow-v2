@@ -45,11 +45,11 @@ public class User {
     private LocalDate createdAt;
 
     @Column
-    @ColumnDefault("'2cfe3a66-74cb-4688-9f41-f417b1db694e_naver.jpg'")
+    @ColumnDefault(value = "'2cfe3a66-74cb-4688-9f41-f417b1db694e_naver.jpg'")
     private String imgFileName;
 
     @Builder
-    public User(Integer id, String email, String myName, String password, String phone, String address, LocalDate birth, String businessNumber, String photo, String compName, String homepage, Integer role, LocalDate createdAt, String imgFileName) {
+    public User(Integer id, String email, String myName, String password, String phone, String address, LocalDate birth, String businessNumber, String photo, String compName, String homepage, Integer role, LocalDate createdAt) {
         this.id = id;
         this.email = email;
         this.myName = myName;
@@ -62,7 +62,7 @@ public class User {
         this.homepage = homepage;
         this.role = role;
         this.createdAt = createdAt;
-        this.imgFileName = imgFileName;
+        this.imgFileName = "2cfe3a66-74cb-4688-9f41-f417b1db694e_naver.jpg";
     }
 
     public ResumeResponse.UserDTO toDTO() {
