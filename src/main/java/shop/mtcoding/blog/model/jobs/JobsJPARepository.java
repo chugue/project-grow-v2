@@ -4,9 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.swing.*;
 import java.util.List;
-import java.util.Optional;
 
 public interface JobsJPARepository extends JpaRepository <Jobs, Integer> {
 
@@ -16,4 +14,7 @@ public interface JobsJPARepository extends JpaRepository <Jobs, Integer> {
     @Query("select j from Jobs j join fetch j.user u where j.title like %:keyword% or u.compName like %:keyword%")
     List<Jobs> findAllKeyword(@Param("keyword") String keyword);
 
+
+    @Query("SELECT COUNT(j) FROM Jobs j WHERE j.user.id = :userId")
+    Integer countByUserId(@Param("userId") Integer userId);
 }

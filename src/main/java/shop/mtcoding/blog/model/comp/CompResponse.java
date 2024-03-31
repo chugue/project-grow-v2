@@ -16,6 +16,44 @@ import java.util.stream.Collectors;
 public class CompResponse {
 
     @Data
+    public static class CompManageDTO{
+        private Integer id;
+        //jobs
+        private String title;
+        private String career;
+        private String edu;
+        private String area;
+        private Integer jobsId;
+        //skillList
+        private List<SkillDTO> skillList;
+
+        @Builder
+        public CompManageDTO(Jobs jobs, List<Skill> skillList) {
+            this.title = jobs.getTitle();
+            this.career = jobs.getCareer();
+            this.edu = jobs.getEdu();
+            this.area = jobs.getArea();
+            this.jobsId = jobs.getId();
+            this.skillList = skillList.stream().map(SkillDTO::new)
+                    .collect(Collectors.toList());
+        }
+    }
+
+    @Data
+    public static class MainCountDTO {
+        private Integer jobsCount;
+        private Integer applicantCount;
+        private Integer noRespCount;
+
+        public MainCountDTO(Integer jobsCount, Integer applicantCount, Integer noRespCount) {
+            this.jobsCount = jobsCount;
+            this.applicantCount = applicantCount;
+            this.noRespCount = noRespCount;
+        }
+    }
+
+
+    @Data
     public static class ComphomeDTO {
         private Integer id;
         private String title;
