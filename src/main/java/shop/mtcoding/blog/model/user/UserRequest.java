@@ -26,6 +26,7 @@ public class UserRequest {
         private String password;
         private String phone;
         private LocalDate birth;
+        private String address;
         private String imgFileName;
 
 
@@ -36,7 +37,7 @@ public class UserRequest {
                     .password(password)
                     .phone(phone)
                     .birth(birth)
-
+                    .address(address)
                     .role(role)
                     .build();
         }
