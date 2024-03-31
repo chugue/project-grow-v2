@@ -162,15 +162,18 @@
     document.getElementById('eventForm').addEventListener('submit', function (event) {
         var address = document.getElementById('address').value;
         var password = document.getElementById('password').value;
+        var passwordCheck = document.getElementById('passwordCheck').value;
 
         if (password.trim() === '') {
             alert('패스워드를 입력해주세요');
+            event.preventDefault();
+        } else if (password != passwordCheck) {
+            alert('패스워드가 일치하지 않습니다');
             event.preventDefault();
         } else if (address.trim() === '') {
             alert('주소를 입력해주세요');
             event.preventDefault(); //폼 제출 막기
         }
-
     });
 
 </script>
