@@ -162,7 +162,6 @@
             data: {resumeId: resumeId}
         }).done((resp) => { // resp는 List의 한 요소, 객체
             $("#jobList").empty();
-            console.log(resp);  //이걸 먼저 찍어서 테스트
             resp.forEach(item => { // forEach 쓰는 이유는 List이기 때문
                 let htmlContent = render(item);
                 $('#jobList').append(htmlContent); //.html은 그자리를 계속 대체함, append가 되어야 추가됨

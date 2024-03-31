@@ -13,6 +13,7 @@ import shop.mtcoding.blog.model.jobs.JobsJPARepository;
 import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeJPARepository;
+import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
 import shop.mtcoding.blog.model.user.User;
@@ -32,10 +33,46 @@ public class CompService {
     private final JobsJPARepository jobsJPARepo;
     private final ApplyJPARepository applyJPARepo;
 
-    public List<CompResponse.CompManageDTO> compManage (Integer userId) {
+
+    public List<ResumeResponse.CmrDTO> findAllAppli(Integer userId) {
+        List<Apply> applyList = applyJPARepo.findAllByUidN1(userId);
+
+        List<ResumeResponse.CmrDTO> cmrDTOList = new ArrayList<>();
+        applyList.stream().map(apply -> {
+            return cmrDTOList.add(ResumeResponse.CmrDTO.builder()
+                    .resume(apply.getResume())
+                    .apply(apply)
+                    .skillList(apply.getResume().getSkillList()).build());
+        }).collect(Collectors.toList());
+        for (int i = 0; i < cmrDTOList.size(); i++) {
+            cmrDTOList.get(i).setId(i + 1);
+        }
+        return cmrDTOList;
+    }
+
+    public List<ResumeResponse.CmrDTO> findNoResp(Integer userId) {
+        List<Apply> applyList = applyJPARepo.findAllByUidI2(userId);
+
+        List<ResumeResponse.CmrDTO> cmrDTOList = new ArrayList<>();
+
+        applyList.stream().map(apply -> {
+            return cmrDTOList.add(ResumeResponse.CmrDTO.builder()
+                    .resume(apply.getResume())
+                    .apply(apply)
+                    .skillList(apply.getResume().getSkillList()).build());
+        }).collect(Collectors.toList());
+        for (int i = 0; i < cmrDTOList.size(); i++) {
+            cmrDTOList.get(i).setId(i + 1);
+        }
+
+        return cmrDTOList;
+
+    }
+
+    public List<CompResponse.CompManageDTO> compManage(Integer userId) {
         List<Jobs> jobsList = compJPARepo.findAllByUserId(userId);
         List<CompResponse.CompManageDTO> compManageDTOList = new ArrayList<>();
-        jobsList.stream().map(jobs ->{
+        jobsList.stream().map(jobs -> {
             return compManageDTOList.add(CompResponse.CompManageDTO.builder()
                     .jobs(jobs)
                     .skillList(jobs.getSkillList())
@@ -49,11 +86,11 @@ public class CompService {
         // 총 공고등록수
         Integer jobsCount = jobsJPARepo.countByUserId(userId);
         // 총 지원자 현황 (not 1) - 사용자 수가 아닌 이력서 수
-        Integer applicantCount= applyJPARepo.findAllByUidN1(userId);
+        List<Apply> applicantList = applyJPARepo.findAllByUidN1(userId);
         // 총 미응답 현황 (isPass = 2) - 사용자 수가 아니라 이력서 수를 구해햐 함
-        Integer noRespCount = applyJPARepo.findAllByUidI2(userId);
+        List<Apply> noRespList = applyJPARepo.findAllByUidI2(userId);
 
-        return new CompResponse.MainCountDTO(jobsCount, applicantCount, noRespCount);
+        return new CompResponse.MainCountDTO(jobsCount, applicantList.size(), noRespList.size());
     }
 
 
@@ -123,74 +160,74 @@ public class CompService {
 //    }
 
 
-        public List<JobsResponse.ApplyResumeListDTO> findAllByJobsId (Integer jobsId){
-            List<Apply> applyList = applyJPARepo.findAllByJobsId(jobsId);
-            List<JobsResponse.ApplyResumeListDTO> listDTOS = new ArrayList<>();
+    public List<JobsResponse.ApplyResumeListDTO> findAllByJobsId(Integer jobsId) {
+        List<Apply> applyList = applyJPARepo.findAllByJobsId(jobsId);
+        List<JobsResponse.ApplyResumeListDTO> listDTOS = new ArrayList<>();
 
 
-            for (int i = 0; i < applyList.size(); i++) {
-                List<Skill> skillList = skillJPARepo.findAllByJoinResumeId(applyList.get(i).getResume().getId());
-                listDTOS.add(JobsResponse.ApplyResumeListDTO.builder()
-                        .resume(applyList.get(i).getResume())
-                        .myName(applyList.get(i).getResume().getUser().getMyName())
-                        .jobs(applyList.get(i).getJobs())
-                        .isPass(applyList.get(i).getIsPass())
-                        .skills(skillList)
-                        .build());
-            }
-            return listDTOS;
+        for (int i = 0; i < applyList.size(); i++) {
+            List<Skill> skillList = skillJPARepo.findAllByJoinResumeId(applyList.get(i).getResume().getId());
+            listDTOS.add(JobsResponse.ApplyResumeListDTO.builder()
+                    .resume(applyList.get(i).getResume())
+                    .myName(applyList.get(i).getResume().getUser().getMyName())
+                    .jobs(applyList.get(i).getJobs())
+                    .isPass(applyList.get(i).getIsPass())
+                    .skills(skillList)
+                    .build());
+        }
+        return listDTOS;
+    }
+
+    public List<CompResponse.ComphomeDTO> findAllByUserId(Integer sessionUserId) {
+        List<Jobs> jobsList = jobsJPARepo.findAllByUserId(sessionUserId);
+        List<CompResponse.ComphomeDTO> listDTOS = new ArrayList<>();
+
+        jobsList.stream().map(jobs -> {
+            return listDTOS.add(CompResponse.ComphomeDTO.builder()
+                    .jobs(jobs)
+                    .skillList(jobs.getSkillList()).build());
+        }).collect(Collectors.toList());
+        for (int i = 0; i < listDTOS.size(); i++) {
+            listDTOS.get(i).setId(i + 1);
         }
 
-        public List<CompResponse.ComphomeDTO> findAllByUserId (Integer sessionUserId){
-            List<Jobs> jobsList = jobsJPARepo.findAllByUserId(sessionUserId);
-            List<CompResponse.ComphomeDTO> listDTOS = new ArrayList<>();
+        return listDTOS;
+    }
 
-            jobsList.stream().map(jobs -> {
-                return listDTOS.add(CompResponse.ComphomeDTO.builder()
-                        .jobs(jobs)
-                        .skillList(jobs.getSkillList()).build());
-            }).collect(Collectors.toList());
-            for (int i = 0; i < listDTOS.size(); i++) {
-                listDTOS.get(i).setId(i+1);
-            }
+    //기업 로그인하면 보여줄 채용 공고
+    public List<CompResponse.JobsSkillDTO> jobsList() {
+        List<Jobs> jobsList = jobsJPARepo.findAll();
+        List<CompResponse.JobsSkillDTO> jobsSkillList = new ArrayList<>();
 
-            return listDTOS;
+        for (int i = 0; i < jobsList.size(); i++) {
+            User user = userJPARepo.findById(jobsList.get(i).getUser().getId())
+                    .orElseThrow(() -> new Exception404("정보를 찾을 수 없습니다."));
+
+            List<Skill> skillList = skillJPARepo.findAllByJobsId(jobsList.get(i).getId());
+            jobsSkillList.add(CompResponse.JobsSkillDTO.builder()
+                    .jobs(jobsList.get(i))
+                    .user(user)
+                    .skillList(skillList)
+                    .build());
         }
+        return jobsSkillList;
 
-        //기업 로그인하면 보여줄 채용 공고
-        public List<CompResponse.JobsSkillDTO> jobsList () {
-            List<Jobs> jobsList = jobsJPARepo.findAll();
-            List<CompResponse.JobsSkillDTO> jobsSkillList = new ArrayList<>();
+    }
 
-            for (int i = 0; i < jobsList.size(); i++) {
-                User user = userJPARepo.findById(jobsList.get(i).getUser().getId())
-                        .orElseThrow(() -> new Exception404("정보를 찾을 수 없습니다."));
+    // 기업 로그인하면 보여줄 이력서 목록들
+    public List<CompResponse.ResumeUserSkillDTO> findAllRusList() {
+        List<Resume> resumeList = resumeJPARepo.findAll();
+        List<CompResponse.ResumeUserSkillDTO> rusList = new ArrayList<>();
 
-                List<Skill> skillList = skillJPARepo.findAllByJobsId(jobsList.get(i).getId());
-                jobsSkillList.add(CompResponse.JobsSkillDTO.builder()
-                        .jobs(jobsList.get(i))
-                        .user(user)
-                        .skillList(skillList)
-                        .build());
-            }
-            return jobsSkillList;
+        resumeList.stream().map(resume -> {
+            return rusList.add(CompResponse.ResumeUserSkillDTO.builder()
+                    .resume(resume)
+                    .user(resume.getUser())
+                    .skillList(resume.getSkillList()).build());
+        }).collect(Collectors.toList());
 
-        }
-
-        // 기업 로그인하면 보여줄 이력서 목록들
-        public List<CompResponse.ResumeUserSkillDTO> findAllRusList () {
-            List<Resume> resumeList = resumeJPARepo.findAll();
-            List<CompResponse.ResumeUserSkillDTO> rusList = new ArrayList<>();
-
-            resumeList.stream().map(resume -> {
-                return rusList.add(CompResponse.ResumeUserSkillDTO.builder()
-                        .resume(resume)
-                        .user(resume.getUser())
-                        .skillList(resume.getSkillList()).build());
-            }).collect(Collectors.toList());
-
-            return rusList;
-        }
+        return rusList;
+    }
 
     @Transactional
     public User updateById(User sessionUser, CompRequest.UpdateDTO requestDTO) {
@@ -207,17 +244,16 @@ public class CompService {
         user.setAddress(requestDTO.getAddress());
 
 
+        return user;
+    }
 
-            return user;
-        }
+    //유저 회원 정보 업데이트용 조회
+    public User findById(Integer sessionUserId) {
+        User user = compJPARepo.findById(sessionUserId)
+                .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
+        return user;
 
-        //유저 회원 정보 업데이트용 조회
-        public User findById (Integer sessionUserId){
-            User user = compJPARepo.findById(sessionUserId)
-                    .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
-            return user;
-
-        }
+    }
 
 
 }
