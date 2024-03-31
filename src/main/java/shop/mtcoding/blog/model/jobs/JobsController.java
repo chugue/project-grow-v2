@@ -8,12 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
 import shop.mtcoding.blog.model.resume.user.User;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RequiredArgsConstructor
@@ -46,9 +49,18 @@ public class JobsController {
     }
 
     @GetMapping("/jobs/info")
-    public String jobsInfo (HttpServletRequest request) {
+    public String jobsInfo (HttpServletRequest request,
+                            @RequestParam(required = false, defaultValue = "") String area,
+                            @RequestParam(required = false, defaultValue = "") String skill,
+                            @RequestParam(required = false, defaultValue = "") String career) {
         List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
         request.setAttribute("listDTOS", listDTOS);
+
+        request.setAttribute("selected", JobsResponse.searchDTO.builder()
+                                                        .area(area)
+                                                        .skill(skill)
+                                                        .career(career)
+                                                        .build());
         return "/jobs/info";
     }
 

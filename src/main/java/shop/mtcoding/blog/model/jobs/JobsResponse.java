@@ -230,6 +230,14 @@ public class JobsResponse {
         private List<String> skill;
     }
 
+    @Data
+    @Builder
+    public static class searchDTO {
+        private String area;
+        private String skill;
+        private String career;
+    }
+
 
 }
 
