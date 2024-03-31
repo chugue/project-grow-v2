@@ -163,7 +163,10 @@
         var address = document.getElementById('address').value;
         var password = document.getElementById('password').value;
 
-        if (address.trim() === '') {
+        if (password.trim() === '') {
+            alert('패스워드를 입력해주세요');
+            event.preventDefault();
+        } else if (address.trim() === '') {
             alert('주소를 입력해주세요');
             event.preventDefault(); //폼 제출 막기
         }
