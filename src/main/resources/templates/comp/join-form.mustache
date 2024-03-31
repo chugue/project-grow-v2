@@ -7,7 +7,7 @@
                 <div class="point-color fw-600 fs-4">기업 회원가입</div>
             </div>
 
-            <form style="width: 350px; align-items: normal" action="/comp/join" method="post" onsubmit="return valid()">
+            <form style="width: 350px; align-items: normal" action="/comp/join" method="post" id="eventForm" onsubmit="return valid()">
                 <div class="d-flex form-group mt-2 mb-2">
                     <input type="email" name="email" class="form-control" placeholder="Enter email" id="email" value="ssar1234@naver.com">
                     <button type="button" class="badge bg-secondary ms-2" onclick="emailSameCheck()">중복확인</button>
@@ -48,7 +48,7 @@
                 <div id="list"></div>
                 <div id="callBackDiv">
                     <div class="form-group mb-4">
-                        <input class="form-control" type="text" id="address" readonly name="address" placeholder="주소 검색으로 입력" value="서울 성동구 서울숲길 17"/>
+                        <input class="form-control" type="text" id="address" readonly name="address" placeholder="주소 검색으로 입력" value=""/>
                         <input type="hidden" id="siNm" name="siNm"/>
                     </div>
                 </div>
@@ -131,6 +131,24 @@
             top: top
         });
     }
+
+    document.getElementById('eventForm').addEventListener('submit', function (event) {
+        var address = document.getElementById('address').value;
+        var password = document.getElementById('password').value;
+        var passwordCheck = document.getElementById('passwordCheck').value;
+
+        if (password.trim() === '') {
+            alert('패스워드를 입력해주세요');
+            event.preventDefault();
+        } else if (password != passwordCheck) {
+            alert('패스워드가 일치하지 않습니다');
+            event.preventDefault();
+        } else if (address.trim() === '') {
+            alert('주소를 입력해주세요');
+            event.preventDefault(); //폼 제출 막기
+        }
+    });
+
 
 </script>
 
