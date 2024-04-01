@@ -35,7 +35,7 @@
                                 <tr class="offer-table">
                                     <th scope="row">{{id}}</th>
                                     <td>{{myName}}</td>
-                                    <td>{{resumeTitle}}</td>
+                                    <td class="title">{{resumeTitle}}</td>
                                     <td>{{career}}</td>
                                     <td>
                                         <div class="new-skill-box">
@@ -105,7 +105,7 @@
                 <div style="text-align: left; font-size: 15px;font-weight: 700;margin-bottom: 5px;">
                     ${ursDTO.compName}
                 </div>
-            <td>${ursDTO.jobsTitle}</td>
+            <td class="title">${ursDTO.jobsTitle}</td>
             <td>${ursDTO.jobsCareer}</td>
             <!--타이틀, 보유스킬-->
             <td class="col-3" style="text-align: center">
@@ -117,12 +117,22 @@
             temp += `<span class="${s.color}">${s.name}</span>`;
         });
 
+        let isPass = "";
+        if(ursDTO.isPass === "1") {
+            isPass = "지원안합";
+        }else if(ursDTO.isPass === "2"){
+            isPass = "지원중";
+        }else if(ursDTO.isPass === "3"){
+            isPass = "합격";
+        }else if(ursDTO.isPass === "4"){
+            isPass = "불합격";
+        }
 
         temp += `
                 </div>
             </td>
 
-            <td>${ursDTO.jobsCareer}</td>
+            <td>${isPass}</td>
 
             <!--공고 관련 버튼-->
             <!--여기 UI부분 눈을 헤쳐서 고쳤어요-->

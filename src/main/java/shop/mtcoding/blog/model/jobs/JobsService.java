@@ -9,20 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception403;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
-import shop.mtcoding.blog.model.resume.Resume;
-import shop.mtcoding.blog.model.resume.ResumeRequest;
-import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
 import shop.mtcoding.blog.model.skill.SkillResponse;
-import shop.mtcoding.blog.model.skill.SkillService;
-import shop.mtcoding.blog.model.user.User;
-import shop.mtcoding.blog.model.user.UserJPARepository;
+import shop.mtcoding.blog.model.resume.user.User;
+import shop.mtcoding.blog.model.resume.user.UserJPARepository;
 
 import java.util.ArrayList;
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
