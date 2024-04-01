@@ -1,8 +1,7 @@
-package shop.mtcoding.blog.model.user;
+package shop.mtcoding.blog.model.resume.user;
 
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

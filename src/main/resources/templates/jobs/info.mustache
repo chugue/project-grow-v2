@@ -11,8 +11,8 @@
     <div class="" style=" display: grid; grid-gap: 10px; grid-template-columns: 1fr 1fr 1fr; grid-gap: 20px;">
         <div class="">
             <!--<button type="button" class="btn btn-mint w-100 ">지역별</button>-->
-            <select class="form-select tab btn-outline-mint" name="area" id="area">
-                <option selected disabled>지역별</option>
+            <select class="form-select tab btn-outline-mint" name="area" id="areaList">
+                <option value="">지역별</option>
                 <option value="seoul">서울특별시</option>
                 <option value="busan">부산광역시</option>
                 <option value="incheon">인천광역시</option>
@@ -24,7 +24,7 @@
         <div class="">
             <!--<button type="button" class="btn btn-outline-mint w-100">기술별</button>-->
             <select class="form-select tab btn-outline-mint" name="skillList" id="skillList">
-                <option selected disabled>기술별</option>
+                <option value="">기술별</option>
                 <option value="java">Java</option>
                 <option value="javascript">JavaScrip</option>
                 <option value="spring">Spring</option>
@@ -39,8 +39,8 @@
         </div>
         <div class="">
             <!--<button type="button" class="btn btn-outline-mint w-100">직무별</button>-->
-            <select class="form-select tab btn-outline-mint" name="" id="">
-                <option selected disabled>직무별</option>
+            <select class="form-select tab btn-outline-mint" name="" id="careerList">
+                <option value="">직무별</option>
                 <option value="서버 개발자">서버 개발자</option>
                 <option value="백엔드 개발자">백엔드 개발자</option>
                 <option value="프론트엔드 개발자">프론트엔드 개발자</option>
@@ -107,25 +107,7 @@
                 </a>
             </div>
 
-            <script>
-                // 옵션 선택 시 URL 변경
-                document.getElementById("area").addEventListener("change", function () {
-                    var selectedArea = this.options[this.selectedIndex].value;
-                    window.location.href = "http://localhost:8080/?area=" + selectedArea;
-                });
 
-                document.getElementById("skillList").addEventListener("change", function () {
-                    var selectedSkill = this.options[this.selectedIndex].value;
-                    window.location.href = "http://localhost:8080/?skill=" + selectedSkill;
-                });
-
-                // 옵션 선택 시 URL 변경
-                document.getElementById("career").addEventListener("change", function () {
-                    var selectedCareer = this.options[this.selectedIndex].value;
-                    window.location.href = "http://localhost:8080/?career=" + selectedCareer;
-                });
-
-            </script>
 
 
             <!--공고-->
@@ -146,6 +128,45 @@
             </li>
         </ul>
     </div>
+
+    <script>
+        $(function (){
+            {{#selected}}
+                $("#areaList").find('option[value="{{area}}"]').attr("selected", true);
+                $("#skillList").find('option[value="{{skill}}"]').attr("selected", true);
+                $("#careerList").find('option[value="{{career}}"]').attr("selected", true);
+            {{/selected}}
+        });
+
+        function getUrlWithSearchOption(){
+            const area = $('#areaList').val();
+            const skill = $('#skillList').val();
+            const career = $('#careerList').val();
+
+            return `http://localhost:8080/jobs/info?area=${area}&skill=${skill}&career=${career}`;
+        }
+
+        // 옵션 선택 시 URL 변경
+        document.getElementById("areaList").addEventListener("change", function () {
+            var selectedArea = this.options[this.selectedIndex].value;
+            // window.location.href = "http://localhost:8080/jobs/info?area=" + selectedArea;
+            window.location.href = getUrlWithSearchOption();
+        });
+
+        document.getElementById("skillList").addEventListener("change", function () {
+            var selectedSkill = this.options[this.selectedIndex].value;
+            // window.location.href = "http://localhost:8080/jobs/info?skill=" + selectedSkill;
+            window.location.href = getUrlWithSearchOption();
+        });
+
+        // 옵션 선택 시 URL 변경
+        document.getElementById("careerList").addEventListener("change", function () {
+            var selectedCareer = this.options[this.selectedIndex].value;
+            // window.location.href = "http://localhost:8080/jobs/info?career=" + selectedCareer;
+            window.location.href = getUrlWithSearchOption();
+        });
+
+    </script>
 
 </div>
 

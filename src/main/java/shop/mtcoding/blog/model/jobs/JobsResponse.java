@@ -2,15 +2,10 @@ package shop.mtcoding.blog.model.jobs;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
-import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.resume.Resume;
-import shop.mtcoding.blog.model.resume.ResumeRequest;
 import shop.mtcoding.blog.model.skill.Skill;
-import shop.mtcoding.blog.model.skill.SkillRequest;
 import shop.mtcoding.blog.model.skill.SkillResponse;
-import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.resume.user.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -233,6 +228,14 @@ public class JobsResponse {
         private LocalDate deadLine;
         private String task;
         private List<String> skill;
+    }
+
+    @Data
+    @Builder
+    public static class searchDTO {
+        private String area;
+        private String skill;
+        private String career;
     }
 
 

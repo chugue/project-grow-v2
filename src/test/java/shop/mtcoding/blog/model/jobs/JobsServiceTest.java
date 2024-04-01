@@ -1,19 +1,16 @@
 package shop.mtcoding.blog.model.jobs;
 
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Sort;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
-import shop.mtcoding.blog.model.skill.SkillService;
-import shop.mtcoding.blog.model.user.User;
-import shop.mtcoding.blog.model.user.UserJPARepository;
+import shop.mtcoding.blog.model.resume.user.User;
+import shop.mtcoding.blog.model.resume.user.UserJPARepository;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,11 +1,7 @@
-package shop.mtcoding.blog.model.user;
+package shop.mtcoding.blog.model.resume.user;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import shop.mtcoding.blog.model.skill.SkillRequest;
 
-import java.sql.Date;
-import java.util.List;
 import java.time.LocalDate;
 
 public class UserRequest {
