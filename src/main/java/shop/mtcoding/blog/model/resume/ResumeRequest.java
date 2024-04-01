@@ -4,7 +4,7 @@ package shop.mtcoding.blog.model.resume;
 import lombok.Builder;
 import lombok.Data;
 import shop.mtcoding.blog.model.skill.Skill;
-import shop.mtcoding.blog.model.resume.user.User;
+import shop.mtcoding.blog.model.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public class ResumeRequest {
         private String area;
         private String career;
 
-        private List<SkillDTO> skills = new ArrayList<>();
+        private List<SkillDTO> skills;
 
         @Builder
         public UserViewDTO(Resume resume, List<Skill> skills) {

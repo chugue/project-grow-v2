@@ -1,4 +1,4 @@
-package shop.mtcoding.blog.model.resume.user;
+package shop.mtcoding.blog.model.user;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -85,7 +85,7 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{id}")
-    public String delete (){
+    public String delete (@PathVariable Integer id){
         return "redirect:/";
     }
 
@@ -162,7 +162,6 @@ public class UserController {
         
         request.setAttribute("resumeList", resumeList);
         System.out.println("resumeList:n " + resumeList);
-        request.setAttribute("sessionUserId", sessionUser.getId());
         request.setAttribute("applyState",applies);
         System.out.println("applies :"+applies);
         return "/user/user-home";
