@@ -27,6 +27,14 @@ public class CompController {
         return "/comp/comp-manage";
     }
 
+//    @PostMapping("/comp/{id}/update")
+//    public String update(@PathVariable Integer id, CompRequest.UpdateDTO requestDTO) {
+//        User sessionComp = (User) session.getAttribute("sessionComp");
+//        User user = compService.updateById(sessionComp, requestDTO);
+//        session.setAttribute("sessionComp", user);
+//        return "redirect:/comp/" + id + "/comp-home";
+//    }
+
     @PostMapping("/comp/{id}/update")
     public String update(@PathVariable Integer id, CompRequest.UpdateDTO requestDTO) {
         User sessionComp = (User) session.getAttribute("sessionComp");
