@@ -16,22 +16,22 @@ public class CompApiController {
     private final CompService compService;
 
     @PostMapping("/api/find-all-jobs")
-    public List<CompResponse.CompManageDTO> compManageDTO (@RequestParam("userId") Integer userId){
+    public List<CompResponse.CompManageDTO> compManageDTO (@RequestParam(name = "userId") Integer userId){
         return compService.compManage(userId);
     }
 
     @PostMapping("/api/find-all-applicants")
-    public List<ResumeResponse.CmrDTO> findAllApplicants (@RequestParam("userId") Integer userId){
+    public List<ResumeResponse.CmrDTO> findAllApplicants (@RequestParam(name = "userId") Integer userId){
         return compService.findAllAppli(userId);
     }
 
     @PostMapping("/api/find-applicants")
-    public List<CompResponse.RusaDTO> findApplicants (@RequestParam("jobsId") Integer jId){
+    public List<CompResponse.RusaDTO> findApplicants (@RequestParam(name = "jobsId") Integer jId){
         return compService.findApplicants(jId);
     }
 
     @PostMapping("/api/find-no-resp")
-    public List<ResumeResponse.CmrDTO> findNoResp(@RequestParam("userId") Integer uId){
+    public List<ResumeResponse.CmrDTO> findNoResp(@RequestParam(name = "userId") Integer uId){
         return compService.findNoResp(uId);
     }
 

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class CompResponse {
 
     @Data
-    public static class CompManageDTO{
+    public static class CompManageDTO {
         private Integer id;
         //jobs
         private String title;
@@ -61,6 +61,7 @@ public class CompResponse {
         private String career;
         private Integer jobsId;
         private List<SkillDTO> skillList;
+
         @Builder
         public ComphomeDTO(Jobs jobs, List<Skill> skillList) {
             this.title = jobs.getTitle();

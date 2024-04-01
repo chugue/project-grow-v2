@@ -21,7 +21,7 @@ public class ResumeController {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User sessionComp = (User) session.getAttribute("sessionComp");
         User newSessionUser = userService.findById(sessionUser.getId());
-
+        System.out.println(111111);
         ResumeResponse.DetailDTO resume = resumeService.resumeDetail(id, jobsId, newSessionUser, sessionComp);
         request.setAttribute("resume", resume);
 
