@@ -114,25 +114,23 @@
                                 </div>`;
         if (resp.isPass === '2'){
             temp += `         <div class="mb-2" style="">
-                                    <form action="/jobs/${resp.resumeId}/delete" method="post">
-                                        <button type="submit" class="btn btn-outline-mint mb-2">
+                                        <DIV type="submit" class="btn btn-outline-mint mb-2">
                                             응답 대기중
-                                        </button>
-                                    </form>
+                                        </DIV>
                                 </div>`;
         }
         if (resp.isPass === '3'){
             temp += `<div class="mb-2" style="">
-                                        <button type="submit" class="btn btn-outline-mint mb-2">
+                                        <div type="submit" class="btn btn-outline-mint mb-2">
                                             합격
-                                        </button>
+                                        </div>
                                 </div>`;
         }
         if (resp.isPass === '4' ){
             temp += `<div class="mb-2" style="">
-                                        <button type="submit" class="btn btn-outline-mint mb-2">
+                                        <div type="submit" class="btn btn-outline-mint mb-2">
                                             불합격
-                                        </button>
+                                        </div>
                                 </div>`;
         }
         temp += `

@@ -18,7 +18,7 @@ public class ResumeController {
     private final UserService userService;
 
     @GetMapping("/resume/resume-detail/{id}")
-    public String resumeDetail(@PathVariable Integer id, HttpServletRequest request, @RequestParam(required = false, defaultValue = "0") Integer jobsId) {
+    public String resumeDetail(@PathVariable Integer id, @RequestParam(name = "jobsId") Integer jobsId, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User sessionComp = (User) session.getAttribute("sessionComp");
         User newSessionUser = userService.findById(sessionUser.getId());

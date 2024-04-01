@@ -85,6 +85,7 @@ public class CompResponse {
         private String career;
         private List<SkillDTO> skillList;
         // apply
+        private Integer jobsId;
         private Boolean isPass;
         private Boolean isApply;
 
@@ -95,6 +96,7 @@ public class CompResponse {
             this.resumeId = resume.getId();
             this.title = resume.getTitle();
             this.career = resume.getCareer();
+            this.jobsId = apply.getJobs().getId();
             this.skillList = resume.getSkillList().stream()
                     .map(SkillDTO::new)
                     .collect(Collectors.toList());

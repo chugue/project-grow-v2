@@ -103,7 +103,6 @@
 
 <script>
     function render(ursaDTO) {
-        console.log(ursaDTO)
         let temp = `
                 <tr class="offer-table">
                     <th scope="row">${ursaDTO.id}</th>
@@ -123,31 +122,38 @@
                     </td>
 
                     <td style="text-align: right;">
-                        <div class="d-flex justify-content-end">
-                            <div class="new-create-button">
-                                <form action="/resume/resume-detail/${ursaDTO.resumeId}}">
-                                    <input type="hidden" name="jobsId" value="${ursaDTO.jobsId}">
-                                    <button type="submit" class="btn btn-mint offer-table-btn">상세보기</button>
-                                </form>
-                            </div>
-                            <div class="new-create-button">
-                                <!--무슨아이디로 검색하는 건지 명시할 필요있음--이력서 아이디로 검색 로직-->
-                                <form action="/apply/pass/update/${ursaDTO.resumeId}}" method="post">
-                                    <input type="hidden" name="jobsId" value="${ursaDTO.jobsId}">
-                                    <button type="submit" class="btn btn-mint offer-table-btn">합격</button>
-                                </form>
-                            </div>
-                            <div class="new-create-button">
-                                <!--무슨아이디로 검색하는 건지 명시할 필요있음--이력서 아이디로 검색 로직-->
-                                <form action="/apply/fail/update/${ursaDTO.resumeId}}" method="post">
-                                    <input type="hidden" name="jobsId" value="${ursaDTO.jobsId}">
-                                    <button type="submit" class="btn btn-mint offer-table-btn">불합격</button>
-                                </form>
-                            </div>
+                        <div class="d-flex justify-content-end">`;
+        if (ursaDTO.isPass === '2'){
+            temp += `<div class="mb-2" style="">
+                                        <DIV type="button" class="btn btn-outline-mint mb-2">
+                                            응답 대기중
+                                        </DIV>
+                                    </form>
+                                </div>`;
+        }
+        if (ursaDTO.isPass === '3'){
+            temp += `<div class="mb-2" style="">
+                                        <DIV type="button" class="btn btn-outline-mint mb-2">
+                                            합격
+                                        </DIV>
+                                    </form>
+                                </div>`;
+        }
+        if (ursaDTO.isPass === '4'){
+            temp += `<div class="mb-2" style="">
+                                        <DIV type="button" class="btn btn-outline-mint mb-2">
+                                            불합격
+                                        </DIV>
+                                    </form>
+                                </div>`;
+        }
+        temp += `
+                                    </div>
                         </div>
                     </td>
                 </tr>
         `;
+
         return temp;
     }
 
