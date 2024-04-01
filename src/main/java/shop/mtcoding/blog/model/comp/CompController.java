@@ -5,11 +5,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import shop.mtcoding.blog.model.jobs.JobsResponse;
-import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
-import shop.mtcoding.blog.model.user.User;
-import shop.mtcoding.blog.model.user.UserRequest;
+import shop.mtcoding.blog.model.resume.user.User;
 
 import java.util.List;
 
@@ -29,6 +26,14 @@ public class CompController {
         request.setAttribute("compManageList",compManageDTOList );
         return "/comp/comp-manage";
     }
+
+//    @PostMapping("/comp/{id}/update")
+//    public String update(@PathVariable Integer id, CompRequest.UpdateDTO requestDTO) {
+//        User sessionComp = (User) session.getAttribute("sessionComp");
+//        User user = compService.updateById(sessionComp, requestDTO);
+//        session.setAttribute("sessionComp", user);
+//        return "redirect:/comp/" + id + "/comp-home";
+//    }
 
     @PostMapping("/comp/{id}/update")
     public String update(@PathVariable Integer id, CompRequest.UpdateDTO requestDTO) {

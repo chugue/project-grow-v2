@@ -16,8 +16,8 @@ import shop.mtcoding.blog.model.resume.ResumeJPARepository;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
-import shop.mtcoding.blog.model.user.User;
-import shop.mtcoding.blog.model.user.UserJPARepository;
+import shop.mtcoding.blog.model.resume.user.User;
+import shop.mtcoding.blog.model.resume.user.UserJPARepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +116,7 @@ public class CompService {
 
             return rusaDTOList.add(CompResponse.RusaDTO.builder()
                     .user(user).resume(resume).apply(apply).build());
-        }).collect(Collectors.toList());
+            }).collect(Collectors.toList());
 
         for (int i = 0; i < rusaDTOList.size(); i++) {
             rusaDTOList.get(i).setId(i + 1);

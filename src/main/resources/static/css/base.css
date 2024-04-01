@@ -592,3 +592,26 @@ input[type='text'] {
     width: calc(100% - 240px);
     padding: 0 !important;
 }
+
+
+/*03.31*/
+.offer-table{
+    border-bottom: 1px solid #ddd;
+}
+.table>thead tr{
+    border-bottom: 1px solid #ddd;
+}
+.offer-table td{
+    padding: 0 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: none;
+}
+.offer-table td.title{
+    width: 180px;
+    display: inline-block;
+    height: 100%;
+    margin: 0;
+    line-height: 60px;
+}

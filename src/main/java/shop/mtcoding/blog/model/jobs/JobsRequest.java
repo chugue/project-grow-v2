@@ -1,18 +1,10 @@
 package shop.mtcoding.blog.model.jobs;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import lombok.Builder;
 import lombok.Data;
-import shop.mtcoding.blog.model.resume.Resume;
-import shop.mtcoding.blog.model.resume.ResumeRequest;
-import shop.mtcoding.blog.model.skill.Skill;
-import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.resume.user.User;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class JobsRequest {
 

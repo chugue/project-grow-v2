@@ -1,6 +1,5 @@
 package shop.mtcoding.blog.model.apply;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,11 +8,10 @@ import shop.mtcoding.blog._core.errors.exception.Exception401;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.jobs.JobsJPARepository;
-import shop.mtcoding.blog.model.jobs.JobsService;
 import shop.mtcoding.blog.model.resume.Resume;
 import shop.mtcoding.blog.model.resume.ResumeJPARepository;
-import shop.mtcoding.blog.model.user.User;
-import shop.mtcoding.blog.model.user.UserJPARepository;
+import shop.mtcoding.blog.model.resume.user.User;
+import shop.mtcoding.blog.model.resume.user.UserJPARepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

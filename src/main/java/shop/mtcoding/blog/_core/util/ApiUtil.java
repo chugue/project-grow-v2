@@ -2,6 +2,9 @@ package shop.mtcoding.blog._core.util;
 
 import lombok.Data;
 
+
+
+
 @Data
 public class ApiUtil<T> {
     private Integer status;
