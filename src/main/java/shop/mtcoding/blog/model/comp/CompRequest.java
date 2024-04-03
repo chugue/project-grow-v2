@@ -2,7 +2,7 @@ package shop.mtcoding.blog.model.comp;
 
 import lombok.Data;
 import shop.mtcoding.blog.model.skill.SkillRequest;
-import shop.mtcoding.blog.model.resume.user.User;
+import shop.mtcoding.blog.model.user.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class CompRequest {
                     .birth(birth)
                     .businessNumber(businessNumber)
                     .photo(photo)
-
+                    .imgFileName(imgFileName)
                     .compName(compName)
                     .homepage(homepage)
                     .role(role)

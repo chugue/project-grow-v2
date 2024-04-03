@@ -2,6 +2,7 @@ package shop.mtcoding.blog.model.comp;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
@@ -16,8 +17,8 @@ import shop.mtcoding.blog.model.resume.ResumeJPARepository;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
-import shop.mtcoding.blog.model.resume.user.User;
-import shop.mtcoding.blog.model.resume.user.UserJPARepository;
+import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.user.UserJPARepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -216,7 +217,9 @@ public class CompService {
 
     // 기업 로그인하면 보여줄 이력서 목록들
     public List<CompResponse.ResumeUserSkillDTO> findAllRusList() {
-        List<Resume> resumeList = resumeJPARepo.findAll();
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+
+        List<Resume> resumeList = resumeJPARepo.findAll(sort);
         List<CompResponse.ResumeUserSkillDTO> rusList = new ArrayList<>();
 
         resumeList.stream().map(resume -> {
