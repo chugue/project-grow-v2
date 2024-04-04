@@ -14,7 +14,7 @@ import shop.mtcoding.blog.model.apply.ApplyResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
 import shop.mtcoding.blog.model.skill.SkillResponse;
-import shop.mtcoding.blog.model.resume.user.User;
+import shop.mtcoding.blog.model.user.User;
 
 import java.util.List;
 import java.util.Objects;
@@ -80,12 +80,12 @@ public class ResumeService {
                 .build();
 
 
-        return  resumeDetailDTO;
+        return resumeDetailDTO;
     }
 
     public ResumeResponse.ResumeStateDTO findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {
         List<Resume> resumeList = resumeJPARepo.findAllByUserId(userId);
-        List<Apply> applies =  applyJPARepo.findAll();
+        List<Apply> applies = applyJPARepo.findAll();
 
         //sessionUser 의 지원한 공고 리스트
         List<ApplyResponse.ApplyUserViewDTO> listDTO = applies.stream()
@@ -121,15 +121,14 @@ public class ResumeService {
         Boolean isApply = false;
 
         //지원한 이력서가 있고 작성한이력서 리스트가 비었으면 isApply true
-        if (resumeApplyDTOList.size() < 1 && listDTO.size() > 1){
+        if (resumeApplyDTOList.size() < 1 && listDTO.size() > 1) {
             isApply = true;
         }
-        
+
         ResumeResponse.ResumeStateDTO resumeStateDTO = new ResumeResponse.ResumeStateDTO();
 
         resumeStateDTO.setIsApply(isApply);
         resumeStateDTO.setApplys(resumeApplyDTOList);
-
 
 
         return resumeStateDTO;
@@ -203,7 +202,9 @@ public class ResumeService {
 
         //2. 이력서 작성
         Resume resume = saveDTO.toEntity(sessionUser);
-        resumeJPARepo.save(resume);
+        Resume savedResume = resumeJPARepo.save(resume);
+        // 지원 테이블에도 이력서 연동 상태값 1로 초기화
+        applyJPARepo.save(Apply.builder().resume(savedResume).isPass("1").build());
         System.out.println("------------------" + resume.getId());
 
         // 3. 스킬 작성
@@ -214,14 +215,13 @@ public class ResumeService {
                             .role(sessionUser.getRole())
                             .resume(resume)
                             .build();
-                })
-
-                .forEach((skill) -> {
+                }).forEach((skill) -> {
                     skillJPARepo.save(skill);
 
                 });
 
     }
+
 
     //이력서 삭제
     @Transactional
