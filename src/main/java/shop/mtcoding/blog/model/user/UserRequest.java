@@ -1,4 +1,4 @@
-package shop.mtcoding.blog.model.resume.user;
+package shop.mtcoding.blog.model.user;
 
 import lombok.Data;
 
@@ -26,7 +26,7 @@ public class UserRequest {
         private String imgFileName;
 
 
-        public User toEntity (Integer role){
+        public User toEntity (Integer role, String imgFileName){
             return User.builder()
                     .email(email)
                     .myName(myName)
@@ -34,6 +34,7 @@ public class UserRequest {
                     .phone(phone)
                     .birth(birth)
                     .address(address)
+                    .imgFileName(imgFileName)
                     .role(role)
                     .build();
         }

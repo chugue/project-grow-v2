@@ -5,8 +5,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import shop.mtcoding.blog.model.resume.user.User;
-import shop.mtcoding.blog.model.resume.user.UserService;
+import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.user.UserService;
 
 
 @RequiredArgsConstructor
@@ -42,8 +42,8 @@ public class ResumeController {
     @GetMapping("/comp/comp-resume-detail/{id}")
     public String compResumeDetail(@PathVariable Integer id, HttpServletRequest request) {
         System.out.println(11111);
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        User newSessionUser = userService.findById(sessionUser.getId());
+        User sessionComp = (User) session.getAttribute("sessionComp");
+        User newSessionUser = userService.findById(sessionComp.getId());
 
         ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(id, newSessionUser);
         request.setAttribute("resume", resume);
