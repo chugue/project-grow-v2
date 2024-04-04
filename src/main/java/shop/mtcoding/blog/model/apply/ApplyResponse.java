@@ -50,7 +50,7 @@ public class ApplyResponse {
         private Integer applyCount;
         private Integer waitCount;
         private Integer resultCount;
-        private List<ApplyUserViewDTO> applys;
+
     }
 
     @Data
