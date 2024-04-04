@@ -2,6 +2,7 @@ package shop.mtcoding.blog.model.comp;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog._core.errors.exception.Exception401;
@@ -216,7 +217,9 @@ public class CompService {
 
     // 기업 로그인하면 보여줄 이력서 목록들
     public List<CompResponse.ResumeUserSkillDTO> findAllRusList() {
-        List<Resume> resumeList = resumeJPARepo.findAll();
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+
+        List<Resume> resumeList = resumeJPARepo.findAll(sort);
         List<CompResponse.ResumeUserSkillDTO> rusList = new ArrayList<>();
 
         resumeList.stream().map(resume -> {

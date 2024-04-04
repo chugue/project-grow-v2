@@ -84,7 +84,7 @@ public class CompRequest {
                     .birth(birth)
                     .businessNumber(businessNumber)
                     .photo(photo)
-
+                    .imgFileName(imgFileName)
                     .compName(compName)
                     .homepage(homepage)
                     .role(role)
