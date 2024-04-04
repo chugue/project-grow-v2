@@ -76,7 +76,7 @@ public class ResumeController {
     }
 
     @PostMapping("/resume/{id}/update")
-    public String update(@PathVariable Integer id, ResumeRequest.UpdateDTO reqDTO, HttpServletRequest request) {
+    public String update(@PathVariable Integer id, ResumeRequest.UpdateDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         //해당 부분 redirect 해보고 틀렸으면 본인이 수정
         resumeService.update(id, sessionUser.getId(), reqDTO);

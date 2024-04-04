@@ -98,11 +98,13 @@ public class UserService {
 
 
     //유저 홈 리스트
-
+    @Transactional
     public List<ResumeRequest.UserViewDTO> userHome(Integer sessionUserId) {
         List<Resume> resumeList = resumeRepo.findAll();
+
         User sessionUser = userRepo.findById(sessionUserId)
                 .orElseThrow(() -> new Exception404("사용자 정보를 찾을 수 없습니다."));
+
         List<ResumeRequest.UserViewDTO> listDTO = resumeList.stream()
                 .filter(resume -> resume.getUser().getId() == sessionUser.getId()) // Filter resumes by ID = 1
                 .map(resume -> ResumeRequest.UserViewDTO.builder()

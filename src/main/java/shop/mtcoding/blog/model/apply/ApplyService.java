@@ -71,25 +71,11 @@ public class ApplyService {
                 .filter(apply -> apply.getResume().getUser().getId().equals(sessionUser.getId()))
                 .filter(apply -> "3".equals(apply.getIsPass()) || "4".equals(apply.getIsPass()))
                 .count());
-
-        //sessionUser 의 지원한 공고 리스트
-        List<ApplyResponse.ApplyUserViewDTO> listDTO = applies.stream()
-                .filter(apply -> apply.getResume().getUser().getId() == sessionUser.getId())
-                .map(apply -> ApplyResponse.ApplyUserViewDTO.builder()
-                        .id(apply.getId())
-                        .user(apply.getResume().getUser())
-                        .isPass(apply.getIsPass())
-                        .resume(apply.getResume())
-                        .jobs(apply.getJobs())
-                        .build())
-                .collect(Collectors.toList());
-
-        System.out.println(listDTO);
-
+        
         stateDTO.setApplyCount(applyCount);
         stateDTO.setWaitCount(waitCount);
         stateDTO.setResultCount(resultCount);
-        stateDTO.setApplys(listDTO);
+
 
 
         return stateDTO;
