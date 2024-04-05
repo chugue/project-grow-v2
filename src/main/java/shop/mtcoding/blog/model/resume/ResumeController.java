@@ -16,7 +16,7 @@ public class ResumeController {
     private final HttpSession session;
     private final UserService userService;
 
-    @GetMapping("/resume/resume-detail/{id}")
+    @GetMapping("/comp/comp-resume-detail/{id}")  // 기업이 이력서를 조회했을때 필요한 로직
     public String resumeDetail(@PathVariable Integer id, @RequestParam(name = "jobsId") Integer jobsId, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User sessionComp = (User) session.getAttribute("sessionComp");
@@ -25,31 +25,31 @@ public class ResumeController {
         ResumeResponse.DetailDTO resume = resumeService.resumeDetail(id, jobsId, newSessionUser, sessionComp);
         request.setAttribute("resume", resume);
 
-        return "resume/resume-detail";
+        return "/comp/comp-resume-detail2";
     }
 
-    @GetMapping("/resume/resume-detail2/{id}")
-    public String resumeDetail2(@PathVariable Integer id, HttpServletRequest request) {
+    @GetMapping("/resume/resume-detail/{resumeId}") // 개인이 이력서를 조회했을 때 필요한 로직
+    public String resumeDetail2(@PathVariable Integer resumeId, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User newSessionUser = userService.findById(sessionUser.getId());
 
-        ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(id, newSessionUser);
+        ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(resumeId, newSessionUser);
         request.setAttribute("resume", resume);
 
-        return "resume/resume-detail2";
+        return "resume/resume-detail";
     }
 
-    @GetMapping("/comp/comp-resume-detail/{id}")
-    public String compResumeDetail(@PathVariable Integer id, HttpServletRequest request) {
-        System.out.println(11111);
-        User sessionComp = (User) session.getAttribute("sessionComp");
-        User newSessionUser = userService.findById(sessionComp.getId());
-
-        ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(id, newSessionUser);
-        request.setAttribute("resume", resume);
-
-        return "/comp/comp-resume-detail";
-    }
+//    @GetMapping("/comp/comp-resume-detail/{id}")
+//    public String compResumeDetail(@PathVariable Integer id, HttpServletRequest request) {
+//        System.out.println(11111);
+//        User sessionComp = (User) session.getAttribute("sessionComp");
+//        User newSessionUser = userService.findById(sessionComp.getId());
+//
+//        ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(id, newSessionUser);
+//        request.setAttribute("resume", resume);
+//
+//        return "/comp/comp-resume-detail";
+//    }
 
     @GetMapping("/resume/{id}/manage-resume")
     public String manageResume(@PathVariable Integer id) {

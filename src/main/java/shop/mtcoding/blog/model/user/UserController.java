@@ -39,7 +39,7 @@ public class UserController {
         for (int i = 0; i < ursList.size(); i++) {
             ursList.get(i).setId(i + 1);
         }
-        request.setAttribute("ursList", ursList);
+        request.setAttribute("ursList", ursList); /// jobsId 넣어야함
 
         return "/user/resume-home";
     }
