@@ -3,6 +3,7 @@ package shop.mtcoding.blog.model.resume;
 import lombok.Builder;
 import lombok.Data;
 import shop.mtcoding.blog.model.apply.Apply;
+import shop.mtcoding.blog.model.jobs.Jobs;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillResponse;
 import shop.mtcoding.blog.model.user.User;
@@ -14,27 +15,26 @@ import java.util.stream.Collectors;
 public class ResumeResponse {
 
     @Data // comp-manage페이지에 뿌려지는 resume용 DTO
-    public static class CmrDTO {
+    public static class CompManageDTO {
         private Integer id;
-        //resume
         private String title;
         private String edu;
         private String career;
         private String area;
         private Integer resumeId;
-        //apply
         private String isPass;
-        //skillList
+        private Integer jobsId;
         private List<SkillDTO2> skillList;
 
         @Builder
-        public CmrDTO(Resume resume, Apply apply, List<Skill> skillList) {
+        public CompManageDTO(Resume resume, Apply apply, Jobs jobs, List<Skill> skillList) {
             this.title = resume.getTitle();
             this.edu = resume.getEdu();
             this.career = resume.getCareer();
             this.area = resume.getArea();
             this.resumeId = resume.getId();
             this.isPass = apply.getIsPass();
+            this.jobsId = jobs.getId();
             this.skillList = skillList.stream().map(SkillDTO2::new)
                     .collect(Collectors.toList());
         }

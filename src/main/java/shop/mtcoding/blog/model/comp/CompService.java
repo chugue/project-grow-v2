@@ -35,38 +35,40 @@ public class CompService {
     private final ApplyJPARepository applyJPARepo;
 
 
-    public List<ResumeResponse.CmrDTO> findAllAppli(Integer userId) {
+    public List<ResumeResponse.CompManageDTO> findAllAppli(Integer userId) {
         List<Apply> applyList = applyJPARepo.findAllByUidN1(userId);
 
-        List<ResumeResponse.CmrDTO> cmrDTOList = new ArrayList<>();
-        applyList.stream().map(apply -> {
-            return cmrDTOList.add(ResumeResponse.CmrDTO.builder()
-                    .resume(apply.getResume())
-                    .apply(apply)
-                    .skillList(apply.getResume().getSkillList()).build());
-        }).collect(Collectors.toList());
-        for (int i = 0; i < cmrDTOList.size(); i++) {
-            cmrDTOList.get(i).setId(i + 1);
+        List<ResumeResponse.CompManageDTO> respList = new ArrayList<>();
+        applyList.stream().map(apply ->
+                respList.add(ResumeResponse.CompManageDTO.builder()
+                        .resume(apply.getResume())
+                        .apply(apply)
+                        .jobs(apply.getJobs())
+                        .skillList(apply.getResume().getSkillList()).build())).toList();
+
+        for (int i = 0; i < respList.size(); i++) {
+            respList.get(i).setId(i + 1);
         }
-        return cmrDTOList;
+        return respList;
     }
 
-    public List<ResumeResponse.CmrDTO> findNoResp(Integer userId) {
+    public List<ResumeResponse.CompManageDTO> findNoResp(Integer userId) {
         List<Apply> applyList = applyJPARepo.findAllByUidI2(userId);
 
-        List<ResumeResponse.CmrDTO> cmrDTOList = new ArrayList<>();
+        List<ResumeResponse.CompManageDTO> respList = new ArrayList<>();
 
         applyList.stream().map(apply -> {
-            return cmrDTOList.add(ResumeResponse.CmrDTO.builder()
+            return respList.add(ResumeResponse.CompManageDTO.builder()
                     .resume(apply.getResume())
                     .apply(apply)
+                    .jobs(apply.getJobs())
                     .skillList(apply.getResume().getSkillList()).build());
         }).collect(Collectors.toList());
-        for (int i = 0; i < cmrDTOList.size(); i++) {
-            cmrDTOList.get(i).setId(i + 1);
+        for (int i = 0; i < respList.size(); i++) {
+            respList.get(i).setId(i + 1);
         }
 
-        return cmrDTOList;
+        return respList;
 
     }
 
@@ -117,7 +119,7 @@ public class CompService {
 
             return rusaDTOList.add(CompResponse.RusaDTO.builder()
                     .user(user).resume(resume).apply(apply).build());
-            }).collect(Collectors.toList());
+        }).collect(Collectors.toList());
 
         for (int i = 0; i < rusaDTOList.size(); i++) {
             rusaDTOList.get(i).setId(i + 1);
