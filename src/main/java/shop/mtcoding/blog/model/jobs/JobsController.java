@@ -55,14 +55,18 @@ public class JobsController {
     public String jobsInfo (HttpServletRequest request,
                             @RequestParam(required = false, defaultValue = "") String area,
                             @RequestParam(required = false, defaultValue = "") String skill,
-                            @RequestParam(required = false, defaultValue = "") String career) {
-        List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
+                            @RequestParam(required = false, defaultValue = "") String task) {
+
+        System.out.println(">>>> area" + area);
+        System.out.println(">>>> skill" + skill);
+        System.out.println(">>>> task" + task);
+        List<JobsResponse.ListDTO> listDTOS = jobsService.getJobsWithOption(area, task, skill);
         request.setAttribute("listDTOS", listDTOS);
 
         request.setAttribute("selected", JobsResponse.searchDTO.builder()
                                                         .area(area)
                                                         .skill(skill)
-                                                        .career(career)
+                                                        .task(task)
                                                         .build());
         return "/jobs/info";
     }

@@ -235,7 +235,7 @@ public class JobsResponse {
     public static class searchDTO {
         private String area;
         private String skill;
-        private String career;
+        private String task;
     }
 
 
