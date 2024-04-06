@@ -572,7 +572,7 @@ aside{
     display: flex;
     min-height: 100px;
     align-items: center;
-
+    justify-content: center;
 }
 .badge.bg-purple{
     background: darkorchid;
