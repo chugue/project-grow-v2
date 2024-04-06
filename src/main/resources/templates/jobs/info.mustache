@@ -13,11 +13,12 @@
             <!--<button type="button" class="btn btn-mint w-100 ">지역별</button>-->
             <select class="form-select tab btn-outline-mint" name="area" id="areaList">
                 <option value="">지역별</option>
-                <option value="seoul">서울특별시</option>
-                <option value="busan">부산광역시</option>
-                <option value="incheon">인천광역시</option>
-                <option value="gwangju">광주광역시</option>
-                <option value="daejeon">대전광역시</option>
+                <option value="서울">서울특별시</option>
+                <option value="부산">부산광역시</option>
+                <option value="인천">인천광역시</option>
+                <option value="광주">광주광역시</option>
+                <option value="대전">대전광역시</option>
+                <option value="경기도">경기도</option>
             </select>
             </td>
         </div>
@@ -25,31 +26,31 @@
             <!--<button type="button" class="btn btn-outline-mint w-100">기술별</button>-->
             <select class="form-select tab btn-outline-mint" name="skillList" id="skillList">
                 <option value="">기술별</option>
-                <option value="java">Java</option>
-                <option value="javascript">JavaScrip</option>
-                <option value="spring">Spring</option>
-                <option value="html">HTML</option>
-                <option value="jquery">jquery</option>
-                <option value="jsp">JSP</option>
-                <option value="vuejs">Vue.js</option>
-                <option value="oracle">Oracle</option>
-                <option value="mysql">MysQL</option>
-                <option value="react">React</option>
+                <option value="Java">Java</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="Spring">Spring</option>
+                <option value="HTML/CSS">HTML/CSS</option>
+                <option value="Jquery">jquery</option>
+                <option value="Jsp">JSP</option>
+                <option value="Vuejs">Vue.js</option>
+                <option value="Oracle">Oracle</option>
+                <option value="MySql">MySQl</option>
+                <option value="React">React</option>
             </select>
         </div>
         <div class="">
             <!--<button type="button" class="btn btn-outline-mint w-100">직무별</button>-->
-            <select class="form-select tab btn-outline-mint" name="" id="careerList">
+            <select class="form-select tab btn-outline-mint" name="" id="taskList">
                 <option value="">직무별</option>
-                <option value="서버 개발자">서버 개발자</option>
-                <option value="백엔드 개발자">백엔드 개발자</option>
-                <option value="프론트엔드 개발자">프론트엔드 개발자</option>
-                <option value="안드로이드 개발자">안드로이드 개발자</option>
-                <option value="IOS 개발자">IOS 개발자</option>
-                <option value="풀스택 개발자">풀스택 개발자</option>
-                <option value="빅데이터 엔지니어">빅데이터 엔지니어</option>
-                <option value="임베디드 개발자">임베디드 개발자</option>
-                <option value="devops 개발자">devops 개발자</option>
+                <option value="게임개발">게임 개발자</option>
+                <option value="백엔드">백엔드 개발자</option>
+                <option value="프론트엔드">프론트엔드 개발자</option>
+                <option value="안드로이드">안드로이드 개발자</option>
+                <option value="IOS">IOS 개발자</option>
+                <option value="풀스택">풀스택 개발자</option>
+                <option value="빅데이터">빅데이터 엔지니어</option>
+                <option value="임베디드">임베디드 개발자</option>
+                <option value="devops">devops 개발자</option>
             </select>
         </div>
     </div>
@@ -134,16 +135,16 @@
             {{#selected}}
                 $("#areaList").find('option[value="{{area}}"]').attr("selected", true);
                 $("#skillList").find('option[value="{{skill}}"]').attr("selected", true);
-                $("#careerList").find('option[value="{{career}}"]').attr("selected", true);
+                $("#taskList").find('option[value="{{task}}"]').attr("selected", true);
             {{/selected}}
         });
 
         function getUrlWithSearchOption(){
             const area = $('#areaList').val();
             const skill = $('#skillList').val();
-            const career = $('#careerList').val();
+            const task = $('#taskList').val();
 
-            return `http://localhost:8080/jobs/info?area=${area}&skill=${skill}&career=${career}`;
+            return `http://localhost:8080/jobs/info?area=${area}&skill=${skill}&task=${task}`;
         }
 
         // 옵션 선택 시 URL 변경
@@ -160,7 +161,7 @@
         });
 
         // 옵션 선택 시 URL 변경
-        document.getElementById("careerList").addEventListener("change", function () {
+        document.getElementById("taskList").addEventListener("change", function () {
             var selectedCareer = this.options[this.selectedIndex].value;
             // window.location.href = "http://localhost:8080/jobs/info?career=" + selectedCareer;
             window.location.href = getUrlWithSearchOption();
