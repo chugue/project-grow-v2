@@ -96,10 +96,10 @@ public class CompService {
         return new CompResponse.MainCountDTO(jobsCount, applicantList.size(), noRespList.size());
     }
 
-
+    @Transactional
     public List<CompResponse.RusaDTO> findApplicants(Integer jobsId) {
         //공고에 지원한 이력서를 전부 찾는데, 그 중 지원안한 상태는 제외해서 조회
-        List<Apply> applyList = applyJPARepo.findAllByJidAn1(jobsId);
+        List<Apply> applyList = applyJPARepo.findAllByJidAn2(jobsId);
         // DTO를 받을 그릇 준비
         List<CompResponse.RusaDTO> rusaDTOList = new ArrayList<>();
 
@@ -115,7 +115,7 @@ public class CompService {
              * 그래서 sout찍어보기 테스트
              */
             User user = apply.getResume().getUser();
-            System.out.println(resume.getUser().toString());
+//            System.out.println(resume.getUser().toString());
 
             return rusaDTOList.add(CompResponse.RusaDTO.builder()
                     .user(user).resume(resume).apply(apply).build());

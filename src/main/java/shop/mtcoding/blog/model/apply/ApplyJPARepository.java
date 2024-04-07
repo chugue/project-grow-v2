@@ -32,6 +32,12 @@ public interface ApplyJPARepository extends JpaRepository<Apply, Integer> {
     @Query("select a from Apply a join fetch Jobs j where a.isPass not in ('1') and j.id = :jobsId")
     List<Apply> findAllByJidAn1(@Param("jobsId") Integer jobsId);
 
+
+    //내 공고에 지원한 구직자 찾는 쿼리
+    @Query("select a from Apply a join fetch Jobs j on a.jobs.id = j.id join fetch Resume  r on a.resume.id = r.id where j.id = :jobsId")
+    List<Apply> findAllByJidAn2(@Param("jobsId") Integer jobsId);
+
+
     // 기업사용자의 모든 공고 지원한 모든 지원자 - 총 지원자 현황 구하기 - 중복도 제거
     @Query("select a from Apply a join fetch a.jobs j where a.isPass not in ('1') and j.user.id= :userId")
     List<Apply> findAllByUidN1(@Param("userId") Integer userId);
@@ -39,5 +45,6 @@ public interface ApplyJPARepository extends JpaRepository<Apply, Integer> {
     // 기업사용자의 모든 공고 지원한 모든 지원자 - 미응답 현황 구하기
     @Query("select a from Apply a join fetch Jobs j on a.jobs.id = j.id where a.isPass in ('2') and j.user.id= :userId")
     List<Apply> findAllByUidI2(@Param("userId") Integer userId);
+
 }
 

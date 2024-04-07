@@ -22,4 +22,18 @@ public class ApplyJPARepositoryTest {
         System.out.println(applyList.size());
 
     }
+
+    @Test
+    public void s_test(){
+        //given
+        Integer id =1;
+        //when
+        List<Apply> dd =  applyJPARepo.findAllByJidAn2(id);
+
+        //then
+        System.out.println(dd);
+        System.out.println(dd.size());
+        System.out.println();
+    }
+
 }
