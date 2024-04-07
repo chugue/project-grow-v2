@@ -28,7 +28,6 @@ public class JobsController {
         User sessionUser = (User)session.getAttribute("sessionUser");
         //공고정보와 사용자정보를 가져오는 detailDTO
         JobsResponse.DetailDTO detailDTO = jobsService.DetailDTO(jobsId,sessionUser);
-        System.out.println("detailDTO :"+detailDTO);
 
         //사용자 이력서 보유내역과 지원상태를 가져오는 ResumeApplyDTO
         ResumeResponse.ResumeStateDTO resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionUser.getId(), jobsId);

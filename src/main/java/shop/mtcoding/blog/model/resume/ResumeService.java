@@ -85,20 +85,17 @@ public class ResumeService {
 
     public ResumeResponse.ResumeStateDTO findAllResumeJoinApplyByUserIdAndJobsId(Integer userId, Integer jobsId) {
         List<Resume> resumeList = resumeJPARepo.findAllByUserId(userId);
-        List<Apply> applies = applyJPARepo.findAll();
+        List<Apply> applies = applyJPARepo.findAllbyUidN1(userId);
 
         //sessionUser 의 지원한 공고 리스트
-        List<ApplyResponse.ApplyUserViewDTO> listDTO = applies.stream()
-                .filter(apply -> apply.getResume().getUser().getId() == userId)
-                .map(apply -> ApplyResponse.ApplyUserViewDTO.builder()
-                        .id(apply.getId())
-                        .user(apply.getResume().getUser())
-                        .isPass(apply.getIsPass())
-                        .resume(apply.getResume())
-                        .jobs(apply.getJobs())
-                        .build())
-                .collect(Collectors.toList());
-
+        List<ApplyResponse.ApplyUserViewDTO> listDTO =
+                applies.stream().map(apply -> ApplyResponse.ApplyUserViewDTO.builder()
+                                .id(apply.getId())
+                                .user(apply.getResume().getUser())
+                                .isPass(apply.getIsPass())
+                                .resume(apply.getResume())
+                                .jobs(apply.getJobs())
+                                .build()).toList();
 
         // 내가 지원안한 이력서만 나오도록 출력
         List<ResumeResponse.ResumeApplyDTO> resumeApplyDTOList = resumeList.stream()

@@ -54,10 +54,11 @@ public class ApplyService {
         ApplyResponse.stateViewDTO stateDTO = new ApplyResponse.stateViewDTO();
 
         List<Apply> applies =  applyJPARepo.findAll();
+        List<Resume> resumes = resumeJPARepo.findAll();
 
         //신청 이력석 카운트
-        Integer applyCount = Math.toIntExact(applies.stream()
-                .filter(apply -> apply.getResume().getUser().getId().equals(sessionUser.getId()))
+        Integer resumeCount = Math.toIntExact(resumes.stream()
+                .filter(resume -> resume.getUser().getId().equals(sessionUser.getId()))
                 .count());
 
         //대기중 카운트
@@ -72,7 +73,7 @@ public class ApplyService {
                 .filter(apply -> "3".equals(apply.getIsPass()) || "4".equals(apply.getIsPass()))
                 .count());
         
-        stateDTO.setApplyCount(applyCount);
+        stateDTO.setResumeCount(resumeCount);
         stateDTO.setWaitCount(waitCount);
         stateDTO.setResultCount(resultCount);
 

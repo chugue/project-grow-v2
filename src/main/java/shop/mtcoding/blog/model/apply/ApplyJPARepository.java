@@ -9,12 +9,6 @@ import java.util.Optional;
 
 public interface ApplyJPARepository extends JpaRepository<Apply, Integer> {
 
-    //select * from apply_tb a join jobs_tb j on a.jobs_id = j.id where a.resume_id = 1;
-    @Query("select j from Apply a join fetch Jobs j on a.jobs.id = j.id where a.resume.id = :resumeId")
-    List<Apply> findAllByJobsIdAndUserId(@Param("resumeId") Integer resumeId);
-
-    @Query("select a from Apply a where a.resume.id = :resumeId")
-    Optional<Apply> findByResumeId(@Param("resumeId") Integer resumeId);
 
     @Query("select a from Apply a where a.resume.id = :resumeId and a.jobs.id = :jobsId")
     Optional<Apply> findByResumeIdAndJobsId(@Param("resumeId") Integer resumeId, @Param("jobsId") Integer jobsId);
@@ -29,10 +23,6 @@ public interface ApplyJPARepository extends JpaRepository<Apply, Integer> {
     @Query("select a from Apply a where a.jobs.id = :jobsId and a.resume.id = :resumeId")
     Optional<Apply> findByJidRid(@Param("jobsId") Integer jobsId, @Param("resumeId") Integer resumeId);
 
-    @Query("select a from Apply a join fetch Jobs j where a.isPass not in ('1') and j.id = :jobsId")
-    List<Apply> findAllByJidAn1(@Param("jobsId") Integer jobsId);
-
-
     //내 공고에 지원한 구직자 찾는 쿼리
     @Query("select a from Apply a join fetch Jobs j on a.jobs.id = j.id join fetch Resume  r on a.resume.id = r.id where j.id = :jobsId")
     List<Apply> findAllByJidAn2(@Param("jobsId") Integer jobsId);
@@ -45,6 +35,14 @@ public interface ApplyJPARepository extends JpaRepository<Apply, Integer> {
     // 기업사용자의 모든 공고 지원한 모든 지원자 - 미응답 현황 구하기
     @Query("select a from Apply a join fetch Jobs j on a.jobs.id = j.id where a.isPass in ('2') and j.user.id= :userId")
     List<Apply> findAllByUidI2(@Param("userId") Integer userId);
+
+    @Query("""
+            select a from Apply a 
+            join fetch a.jobs j
+            join fetch a.resume r 
+            join fetch r.user u
+            where a.isPass not in ('1') and u.id = :userId""")
+    List<Apply> findAllbyUidN1 (@Param("userId") Integer userId);
 
 }
 

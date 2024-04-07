@@ -160,7 +160,7 @@ public class UserController {
 
         
         request.setAttribute("resumeList", resumeList);
-        System.out.println("resumeList:n " + resumeList);
+        System.out.println("resumeList:  " + resumeList);
         request.setAttribute("sessionUserId", sessionUser.getId());
         request.setAttribute("applyState",applies);
         System.out.println("applies :"+applies);
