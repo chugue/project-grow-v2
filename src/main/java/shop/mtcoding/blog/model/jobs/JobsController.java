@@ -107,9 +107,10 @@ public class JobsController {
 
     @GetMapping("/jobs/{jobsId}/update-jobs-form")
     public String updateForm (@PathVariable Integer jobsId, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionComp");
         JobsResponse.JobUpdateDTO job = jobsService.updateForm(jobsId);
         request.setAttribute("job", job);
-
+        request.setAttribute("sessionC", sessionUser);
         return "/jobs/update-jobs-form";
     }
 }
