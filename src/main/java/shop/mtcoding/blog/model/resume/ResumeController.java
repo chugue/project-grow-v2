@@ -39,17 +39,7 @@ public class ResumeController {
         return "resume/resume-detail";
     }
 
-//    @GetMapping("/comp/comp-resume-detail/{id}")
-//    public String compResumeDetail(@PathVariable Integer id, HttpServletRequest request) {
-//        System.out.println(11111);
-//        User sessionComp = (User) session.getAttribute("sessionComp");
-//        User newSessionUser = userService.findById(sessionComp.getId());
-//
-//        ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(id, newSessionUser);
-//        request.setAttribute("resume", resume);
-//
-//        return "/comp/comp-resume-detail";
-//    }
+
 
     @GetMapping("/resume/{id}/manage-resume")
     public String manageResume(@PathVariable Integer id) {
