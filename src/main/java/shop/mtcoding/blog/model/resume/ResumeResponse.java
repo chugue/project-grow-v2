@@ -107,7 +107,7 @@ public class ResumeResponse {
 
     //이력서 상세보기 DTO
     @Data
-    public static class DetailDTO {
+    public static class CompDetailDTO {
         private Integer id;
         private Integer jobsId;
         private String title;
@@ -122,7 +122,6 @@ public class ResumeResponse {
         private String area;
         private String career;
         private String portLink;
-        private String isApply;
         private Integer userId;
         private Integer role;
         private Boolean isComp;
@@ -133,7 +132,7 @@ public class ResumeResponse {
         private List<SkillDTO2> skills;
 
         @Builder
-        public DetailDTO(Resume resume, Integer jobsId, String isApply, User user, Integer role, List<Skill> skills) {
+        public CompDetailDTO(Resume resume, Integer jobsId, Apply apply, User user, List<Skill> skills) {
             this.id = resume.getId();
             this.jobsId = jobsId;
             this.title = resume.getTitle();
@@ -141,7 +140,6 @@ public class ResumeResponse {
             this.introduce = resume.getIntroduce();
             this.imgFileName = user.getImgFileName();
             this.myName = user.getMyName();
-            this.isApply = isApply;
             this.birth = user.getBirth();
             this.phone = user.getPhone();
             this.email = user.getEmail();
@@ -150,8 +148,8 @@ public class ResumeResponse {
             this.career = resume.getCareer();
             this.portLink = resume.getPortLink();
             this.userId = user.getId();
-            this.role = role;
-            this.isComp = false;
+            this.role = user.getRole();
+            this.isComp = true;
             this.isUser = false;
             this.isPass = false;
             this.isFail = false;
@@ -160,17 +158,11 @@ public class ResumeResponse {
                     .map(skill -> new SkillDTO2(skill))
                     .collect(Collectors.toList());
 
-            if (this.role == 1) {
-                this.isUser = true;
-            } else if (this.role == 2) {
-                this.isComp = true;
-            }
-
-            if (this.isApply.equals("3")) {
+            if (apply.getIsPass().equals("3")) {
                 this.isPass = true;
-            } else if (this.isApply.equals("4")) {
+            } else if (apply.getIsPass().equals("4")) {
                 this.isFail = true;
-            } else if (this.isApply.equals("2")) {
+            } else if (apply.getIsPass().equals("2")) {
                 this.isWaiting = true;
             }
         }

@@ -173,55 +173,6 @@
             </div>
         </div>
     </div>
-    {{#detailDTO.isOwner}}
-    {{/detailDTO.isOwner}}
-
-    {{^detailDTO.isOwner}}
-    <div class="side-item">
-        <div class="side-item-1">
-            <form action="/jobs/apply" method="post" enctype="application/x-www-form-urlencoded">
-                <div id="scrap-${rDto.resumeId}-remove">
-                    {{#resumeApplyDTOList.isApply}}
-                        <button type="button" class="btn btn-outline-mint w-100"
-                                disabled>지원완료
-                        </button>
-                    {{/resumeApplyDTOList.isApply}}
-                    {{#resumeApplyDTOList.isResume}}
-                        <button type="button" class="btn btn-outline-mint w-100"
-                                disabled>이력서가 없습니다.
-                        </button>
-                    {{/resumeApplyDTOList.isResume}}
-                    {{^resumeApplyDTOList.isApply}}
-                        <input type="hidden" name="jobsId" value="{{detailDTO.id}}">
-                        <button type="submit" class="btn btn-outline-mint w-100">
-                            지원하기
-                        </button>
-                        <div>
-                            <div class="card mt-3">
-                                <h6 class="card-body text">내 이력서 선택</h6>
-                                <hr class="mb-4">
-                                {{#resumeApplyDTOList.applys}}
-                                    <div class="form-check mb-20">
-                                        <label class="form-check-label" for="radio{{id}}" style="font-weight: 400">
-                                            <input type="radio" class="form-check-input" id="radio{{id}}" name="resumeId" value="{{id}}" checked>
-                                            {{title}}
-                                        </label>
-                                    </div>
-                                {{/resumeApplyDTOList.applys}}
-                                {{^resumeApplyDTOList.applys}}
-                                    <div>
-                                        <button type="button" class="btn btn-mint offer-table-btn" style="margin: 0;"><a
-                                                href="/resume/write-resume-form">이력서 작성</a></button>
-                                    </div>
-                                {{/resumeApplyDTOList.applys}}
-                            </div>
-                        </div>
-                    {{/resumeApplyDTOList.isApply}}
-                {{/detailDTO.isOwner}}
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
 
 

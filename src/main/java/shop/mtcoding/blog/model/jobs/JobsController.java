@@ -33,10 +33,10 @@ public class JobsController {
         ResumeResponse.ResumeStateDTO resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionUser.getId(), jobsId);
         request.setAttribute("resumeApplyDTOList", resumeApplyDTOList);
         request.setAttribute("detailDTO", detailDTO);
-        return "jobs/jobs-detail";
+        return "/jobs/jobs-detail";
     }
 
-    @GetMapping("/jobs/comp-jobs-detail/{jobsId}")
+    @GetMapping("/comp/comp-jobs-detail/{jobsId}")
     public String compJobsDetail(@PathVariable Integer jobsId, HttpServletRequest request){
         User sessionComp = (User)session.getAttribute("sessionComp");
         //공고정보와 사용자정보를 가져오는 detailDTO
@@ -47,7 +47,7 @@ public class JobsController {
         ResumeResponse.ResumeStateDTO resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionComp.getId(), jobsId);
         request.setAttribute("resumeApplyDTOList", resumeApplyDTOList);
         request.setAttribute("detailDTO", detailDTO);
-        return "jobs/jobs-detail";
+        return "/comp/comp-jobs-detail";
     }
 
     @GetMapping("/jobs/info")

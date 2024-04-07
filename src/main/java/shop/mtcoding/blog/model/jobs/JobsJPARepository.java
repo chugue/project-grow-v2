@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface JobsJPARepository extends JpaRepository <Jobs, Integer> {
 
+    @Query("select j from Jobs j join fetch j.user u join fetch j.skillList")
+    List<Jobs> findAllJoinUserWithSkills();
+
     @Query("select j, u FROM Jobs j join fetch User u on j.user.id = u.id WHERE u.id = :userId")
     List<Jobs> findAllByUserId(@Param("userId") Integer userId);
 

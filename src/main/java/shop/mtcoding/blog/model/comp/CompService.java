@@ -199,22 +199,14 @@ public class CompService {
 
     //기업 로그인하면 보여줄 채용 공고
     public List<CompResponse.JobsSkillDTO> jobsList() {
-        List<Jobs> jobsList = jobsJPARepo.findAll();
+        List<Jobs> jobsList = jobsJPARepo.findAllJoinUserWithSkills();
         List<CompResponse.JobsSkillDTO> jobsSkillList = new ArrayList<>();
 
-        for (int i = 0; i < jobsList.size(); i++) {
-            User user = userJPARepo.findById(jobsList.get(i).getUser().getId())
-                    .orElseThrow(() -> new Exception404("정보를 찾을 수 없습니다."));
-
-            List<Skill> skillList = skillJPARepo.findAllByJobsId(jobsList.get(i).getId());
-            jobsSkillList.add(CompResponse.JobsSkillDTO.builder()
-                    .jobs(jobsList.get(i))
-                    .user(user)
-                    .skillList(skillList)
-                    .build());
-        }
-        return jobsSkillList;
-
+        return jobsSkillList = jobsList.stream().map(jobs -> {
+            return CompResponse.JobsSkillDTO.builder()
+                    .jobs(jobs)
+                    .user(jobs.getUser())
+                    .skillList(jobs.getSkillList()).build();}).toList();
     }
 
     // 기업 로그인하면 보여줄 이력서 목록들
