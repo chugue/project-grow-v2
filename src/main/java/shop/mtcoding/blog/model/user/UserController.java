@@ -25,7 +25,6 @@ public class UserController {
     private final JobsService jobsService;
     private final UserService userService;
     private final HttpSession session;
-    private final ResumeService resumeService;
     private final ApplyService applyService;
 
 

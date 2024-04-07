@@ -133,7 +133,7 @@ public class CompService {
     public User join(Integer role, CompRequest.CompJoinDTO reqDTO) {
 
         // 회원가입 할 때마다 이미지 못가져와서 터지니까 디폴트 이미지 하나 추가함
-        compJPARepo.save(reqDTO.toEntity(role, "54040a46-d1b0-4ea5-9938-d461cd656fc1_naver.jpg"));
+        compJPARepo.save(reqDTO.toEntity(role, "default.jpg"));
 
         // 전에거에 있던 이메일 찾아서 그걸로 세션저장해서 회원가입 직후 바로 로그인 되는거 구현하려고 만듬
         User comp = compJPARepo.findByEmail(reqDTO.getEmail());
