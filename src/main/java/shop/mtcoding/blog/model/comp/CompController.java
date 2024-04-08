@@ -27,18 +27,17 @@ public class CompController {
         List<CompResponse.CompManageDTO> compManageDTOList = compService.compManage(sessionUser.getId());
         request.setAttribute("mainCount", mainCountDTO);
         request.setAttribute("compManageList",compManageDTOList );
-        return "/comp/comp-manage";
+        return "comp/comp-manage";
     }
 
     @GetMapping("/comp/resume-detail/{id}")  // 기업이 이력서를 조회했을때 필요한 로직
     public String resumeDetail(@PathVariable Integer id, @RequestParam(name = "jobsId") Integer jobsId, HttpServletRequest request) {
         User sessionComp = (User) session.getAttribute("sessionComp");
         User newSessionUser = userService.findById(sessionComp.getId());
-        System.out.println(111111);
         ResumeResponse.CompDetailDTO resume = resumeService.compResumeDetail(id, jobsId, newSessionUser);
         request.setAttribute("resume", resume);
 
-        return "/comp/resume-detail";
+        return "comp/resume-detail";
     }
 
 //    @PostMapping("/comp/{id}/update")
@@ -63,7 +62,7 @@ public class CompController {
         User newSessionUser = compService.findById(sessionComp.getId());
         request.setAttribute("user", newSessionUser);
 
-        return "/comp/update-form";
+        return "comp/update-form";
     }
 
     @GetMapping("/comp/comp-index")
@@ -77,7 +76,7 @@ public class CompController {
     public String readResume(HttpServletRequest request) {
         List<CompResponse.ResumeUserSkillDTO> rusList = compService.findAllRusList();
         request.setAttribute("rusList", rusList);
-        return "/comp/read-resume";
+        return "comp/read-resume";
     }
 
     @GetMapping("/comp/{id}/comp-home")
@@ -86,19 +85,19 @@ public class CompController {
         List<CompResponse.ComphomeDTO> comphomeDTOList = compService.findAllByUserId(sessionComp.getId());
         request.setAttribute("jobsList", comphomeDTOList);
         request.setAttribute("sessionC", sessionComp);
-        return "/comp/comp-home";
+        return "comp/comp-home";
     }
 
     @GetMapping("/comp/{id}/apply")
     public String offer(@PathVariable Integer id) {
 
-        return "/comp/apply";
+        return "comp/apply";
     }
 
     @GetMapping("/comp/join-form")
     public String compJoinForm() {
 
-        return "/comp/join-form";
+        return "comp/join-form";
     }
 
     @PostMapping("/comp/join")
@@ -119,12 +118,12 @@ public class CompController {
 
     @GetMapping("/comp/{id}/scrap")
     public String scrap(@PathVariable Integer id) {
-        return "/comp/scrap";
+        return "comp/scrap";
     }
 
     @GetMapping("/comp/talent")
     public String talent() {
-        return "/comp/talent";
+        return "comp/talent";
     }
 
     @GetMapping("/comp/jobs-info")

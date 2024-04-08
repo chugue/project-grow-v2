@@ -138,7 +138,6 @@ public class CompService {
         // 전에거에 있던 이메일 찾아서 그걸로 세션저장해서 회원가입 직후 바로 로그인 되는거 구현하려고 만듬
         User comp = compJPARepo.findByEmail(reqDTO.getEmail());
 
-        System.out.println(comp.getRole());
         return comp;
     }
 

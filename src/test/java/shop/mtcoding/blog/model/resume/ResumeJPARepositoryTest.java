@@ -23,7 +23,6 @@ public class ResumeJPARepositoryTest {
     public void findByIdJoinUser_test() {
         int resumeId = 1;
         Resume resume = resumeJPARepository.findByIdJoinUser(resumeId);
-        System.out.println(resume);
     }
 
     @Test
@@ -35,7 +34,6 @@ public class ResumeJPARepositoryTest {
         em.flush();
         //then
         List<Resume> resumes = resumeJPARepository.findAll();
-        System.out.println(resumes.size());
     }
 
 

@@ -39,7 +39,6 @@ public class JobsServiceTest {
 
         JobsResponse.DetailDTO detailDTO = new JobsResponse.DetailDTO(jobs, user, skillList);
         // then
-        System.out.println(detailDTO.toString());
     }
 
     @Test

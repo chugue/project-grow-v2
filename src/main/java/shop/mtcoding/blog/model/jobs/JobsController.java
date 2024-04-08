@@ -33,7 +33,7 @@ public class JobsController {
         ResumeResponse.ResumeStateDTO resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionUser.getId(), jobsId);
         request.setAttribute("resumeApplyDTOList", resumeApplyDTOList);
         request.setAttribute("detailDTO", detailDTO);
-        return "/jobs/jobs-detail";
+        return "jobs/jobs-detail";
     }
 
     @GetMapping("/comp/comp-jobs-detail/{jobsId}")
@@ -41,13 +41,12 @@ public class JobsController {
         User sessionComp = (User)session.getAttribute("sessionComp");
         //공고정보와 사용자정보를 가져오는 detailDTO
         JobsResponse.DetailDTO detailDTO = jobsService.DetailDTO(jobsId,sessionComp);
-        System.out.println("detailDTO :"+detailDTO);
 
         //사용자 이력서 보유내역과 지원상태를 가져오는 ResumeApplyDTO
         ResumeResponse.ResumeStateDTO resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionComp.getId(), jobsId);
         request.setAttribute("resumeApplyDTOList", resumeApplyDTOList);
         request.setAttribute("detailDTO", detailDTO);
-        return "/comp/comp-jobs-detail";
+        return "comp/comp-jobs-detail";
     }
 
     @GetMapping("/jobs/info")
@@ -56,9 +55,6 @@ public class JobsController {
                             @RequestParam(required = false, defaultValue = "") String skill,
                             @RequestParam(required = false, defaultValue = "") String task) {
 
-        System.out.println(">>>> area" + area);
-        System.out.println(">>>> skill" + skill);
-        System.out.println(">>>> task" + task);
         List<JobsResponse.ListDTO> listDTOS = jobsService.getJobsWithOption(area, task, skill);
         request.setAttribute("listDTOS", listDTOS);
 
@@ -67,7 +63,7 @@ public class JobsController {
                                                         .skill(skill)
                                                         .task(task)
                                                         .build());
-        return "/jobs/info";
+        return "jobs/info";
     }
 
     @GetMapping("/jobs/write-jobs-form")
@@ -77,7 +73,7 @@ public class JobsController {
         // sessionComp 라고 주면 오류나서 sessionC라고 하였음
         request.setAttribute("sessionC", sessionComp);
 
-        return "/jobs/write-jobs-form";
+        return "jobs/write-jobs-form";
     }
 
     @PostMapping("/jobs/save")
@@ -111,6 +107,6 @@ public class JobsController {
         JobsResponse.JobUpdateDTO job = jobsService.updateForm(jobsId);
         request.setAttribute("job", job);
         request.setAttribute("sessionC", sessionUser);
-        return "/jobs/update-jobs-form";
+        return "jobs/update-jobs-form";
     }
 }

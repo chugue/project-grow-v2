@@ -20,7 +20,6 @@ public class ResumeController {
     public String resumeDetail(@PathVariable Integer resumeId, @RequestParam(name = "jobsId") Integer jobsId, HttpServletRequest request) {
         User sessionComp = (User) session.getAttribute("sessionComp");
         User newSessionUser = userService.findById(sessionComp.getId());
-        System.out.println(111111);
 
         ResumeResponse.CompDetailDTO respDTO =
                 resumeService.compResumeDetail(resumeId, jobsId, newSessionUser);

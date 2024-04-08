@@ -19,7 +19,6 @@ public class ApplyJPARepositoryTest {
         List<Apply> applyList = applyJPARepo.findAppliesByNot1ByResumeId(resumeId);
         // then
 
-        System.out.println(applyList.size());
 
     }
 
@@ -31,9 +30,6 @@ public class ApplyJPARepositoryTest {
         List<Apply> dd =  applyJPARepo.findAllByJidAn2(id);
 
         //then
-        System.out.println(dd);
-        System.out.println(dd.size());
-        System.out.println();
     }
 
 }

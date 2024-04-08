@@ -40,13 +40,13 @@ public class UserController {
         }
         request.setAttribute("ursList", ursList); /// jobsId 넣어야함
 
-        return "/user/resume-home";
+        return "user/resume-home";
     }
 
 
     @GetMapping("/user/join-form")
     public String joinForm() {
-        return "/user/join-form";
+        return "user/join-form";
     }
 
     @GetMapping("/")
@@ -120,17 +120,17 @@ public class UserController {
 
     @GetMapping("/user/login-form")
     public String loginForm() {
-        return "/user/login-form";
+        return "user/login-form";
     }
 
     @GetMapping("/user/{id}/apply")
     public String offer(@PathVariable Integer id) {
-        return "/user/apply";
+        return "user/apply";
     }
 
     @GetMapping("/user/{id}/scrap")
     public String scrap(@PathVariable Integer id) {
-        return "/user/scrap";
+        return "user/scrap";
     }
 
     @PostMapping("/user/{id}/update")
@@ -148,7 +148,7 @@ public class UserController {
         User newSessionUser = userService.findById(sessionUser.getId());
         request.setAttribute("user", newSessionUser);
 
-        return "/user/update-form";
+        return "user/update-form";
     }
 
     @GetMapping("/user/{id}/user-home")
@@ -160,11 +160,9 @@ public class UserController {
 
         
         request.setAttribute("resumeList", resumeList);
-        System.out.println("resumeList:  " + resumeList);
         request.setAttribute("sessionUserId", sessionUser.getId());
         request.setAttribute("applyState",applies);
-        System.out.println("applies :"+applies);
-        return "/user/user-home";
+        return "user/user-home";
     }
 
 
@@ -176,7 +174,7 @@ public class UserController {
     }
     @GetMapping("/user/profile-update-form")
     public String profileUpdateForm(HttpServletRequest request) {
-        return "/user/profile-update-form";
+        return "user/profile-update-form";
     }
 
 }

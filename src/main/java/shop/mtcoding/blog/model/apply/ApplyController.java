@@ -65,7 +65,7 @@ public class ApplyController {
     @GetMapping("/resume/{jobId}/applyList")
     public String resumeApplyList(@PathVariable Integer jobId) {
 
-        return "/user/apply";
+        return "user/apply";
     }
 }
 

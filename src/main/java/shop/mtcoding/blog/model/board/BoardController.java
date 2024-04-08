@@ -30,7 +30,6 @@ public class BoardController {
     public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         boardService.update(id, sessionUser.getId(), reqDTO);
-        System.out.println("============");
         return "redirect:/board/board-home";
     }
 
@@ -38,8 +37,7 @@ public class BoardController {
     public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
         Board board = boardService.updateForm(id);
         request.setAttribute("board", board);
-        System.out.println("board : "+board);
-        return "/board/update-form";
+        return "board/update-form";
     }
 
     // 글삭제
@@ -54,7 +52,7 @@ public class BoardController {
     public String boardHome(HttpServletRequest request) {
         List<Board> boardList = boardService.findAll();
         request.setAttribute("boardList", boardList);
-        return "/board/board-home";
+        return "board/board-home";
     }
 
     @GetMapping("/board/save-form")
@@ -73,9 +71,8 @@ public class BoardController {
         request.setAttribute("board", board);
 
         // 이 로고가 찍히면서 레이지 로딩이 될 것임
-        System.out.println("서버 사이드 랜더링 직전에는 Board와 User만 조회된 상태이다~~~~~~");
 
-        return "/board/board-detail";
+        return "board/board-detail";
     }
 
 

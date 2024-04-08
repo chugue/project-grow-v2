@@ -51,7 +51,6 @@ public class UserServiceTest {
                     .resume(resumeList.get(i))
                     .skillList(skills).build());
 
-            System.out.println(resumeList.get(i).getId());
         }
 
     }
@@ -80,6 +79,5 @@ public class UserServiceTest {
         User user = userJPARepository.findByIdAndPassword(reqDTO.getEmail(), reqDTO.getPassword())
                 .orElseThrow(() -> new Exception401("회원 정보가 없습니다."));
         // then
-        System.out.println(user.getEmail());
     }
 }
