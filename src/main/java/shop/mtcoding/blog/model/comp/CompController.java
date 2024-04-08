@@ -41,7 +41,6 @@ public class CompController {
         return "/comp/resume-detail";
     }
 
-
 //    @PostMapping("/comp/{id}/update")
 //    public String update(@PathVariable Integer id, CompRequest.UpdateDTO requestDTO) {
 //        User sessionComp = (User) session.getAttribute("sessionComp");
