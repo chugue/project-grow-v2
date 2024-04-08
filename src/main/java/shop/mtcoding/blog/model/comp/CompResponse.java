@@ -11,6 +11,7 @@ import shop.mtcoding.blog.model.user.User;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class CompResponse {
@@ -169,11 +170,13 @@ public class CompResponse {
             this.myName = user.getMyName();
             this.userId = user.getId();
             this.imgFileName = user.getImgFileName();
+
             this.skillList = skillList.stream()
                     .map(skill -> new SkillDTO(skill))
                     .collect(Collectors.toList());
-            ;
         }
+
+
     }
 
 

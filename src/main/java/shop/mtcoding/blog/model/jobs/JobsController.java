@@ -59,6 +59,7 @@ public class JobsController {
         System.out.println(">>>> area" + area);
         System.out.println(">>>> skill" + skill);
         System.out.println(">>>> task" + task);
+
         List<JobsResponse.ListDTO> listDTOS = jobsService.getJobsWithOption(area, task, skill);
         request.setAttribute("listDTOS", listDTOS);
 
