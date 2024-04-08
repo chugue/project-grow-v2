@@ -29,6 +29,17 @@ public class ResumeController {
         return "comp/resume-detail";
     }
 
+    @GetMapping("/comp/resume-detail/{resumeId}")
+    public String compResumeDetail(@PathVariable Integer resumeId, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User newSessionUser = userService.findById(sessionUser.getId());
+
+        ResumeResponse.DetailDTO2 resume = resumeService.resumeDetail2(resumeId, newSessionUser);
+        request.setAttribute("resume", resume);
+
+        return "comp/resume-detail";
+    }
+
     @GetMapping("/resume/resume-detail/{resumeId}") // 개인이 이력서를 조회했을 때 필요한 로직
     public String resumeDetail2(@PathVariable Integer resumeId, HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");

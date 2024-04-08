@@ -44,7 +44,6 @@ public class CompController {
         return "/comp/resume-detail";
     }
 
-
 //    @PostMapping("/comp/{id}/update")
 //    public String update(@PathVariable Integer id, CompRequest.UpdateDTO requestDTO) {
 //        User sessionComp = (User) session.getAttribute("sessionComp");
@@ -103,7 +102,7 @@ public class CompController {
         User sessionComp = (User) session.getAttribute("sessionComp");
         List<CompResponse.ComphomeDTO> comphomeDTOList = compService.findAllByUserId(sessionComp.getId());
         request.setAttribute("jobsList", comphomeDTOList);
-
+        request.setAttribute("sessionC", sessionComp);
         return "/comp/comp-home";
     }
 
@@ -129,7 +128,7 @@ public class CompController {
     @GetMapping("/comp/profile-update-form")
     public String profileUpdateForm(HttpServletRequest request) {
 
-        User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionUser = (User) session.getAttribute("sessionComp");
         request.setAttribute("imgFileName", sessionUser.getImgFileName());
         return "comp/profile-update-form";
     }
