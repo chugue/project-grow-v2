@@ -5,8 +5,10 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
 import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.user.UserService;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class CompController {
     private final CompService compService;
     private final HttpSession session;
     private final ResumeService resumeService;
+    private final UserService userService;
 
     @GetMapping("/comp/{id}/comp-manage")
     public String compManage (@PathVariable Integer id, HttpServletRequest request) {
@@ -26,6 +29,19 @@ public class CompController {
         request.setAttribute("compManageList",compManageDTOList );
         return "/comp/comp-manage";
     }
+
+    @GetMapping("/comp/resume-detail/{id}")  // 기업이 이력서를 조회했을때 필요한 로직
+    public String resumeDetail(@PathVariable Integer id, @RequestParam(name = "jobsId") Integer jobsId, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        User sessionComp = (User) session.getAttribute("sessionComp");
+        User newSessionUser = userService.findById(sessionUser.getId());
+        System.out.println(111111);
+        ResumeResponse.DetailDTO resume = resumeService.resumeDetail(id, jobsId, newSessionUser, sessionComp);
+        request.setAttribute("resume", resume);
+
+        return "/comp/resume-detail";
+    }
+
 
 //    @PostMapping("/comp/{id}/update")
 //    public String update(@PathVariable Integer id, CompRequest.UpdateDTO requestDTO) {
@@ -120,8 +136,6 @@ public class CompController {
 
         return "/comp/jobs-info";
     }
-
-
 }
 
 
