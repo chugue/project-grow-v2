@@ -487,6 +487,7 @@ table th {
     display: flex;
     flex-direction: column;
     padding: 100px 0;
+    width:100%;
 }
 .new-info-txt-wrapper{
     display: flex;

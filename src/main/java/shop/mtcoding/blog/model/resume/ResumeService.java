@@ -11,6 +11,8 @@ import shop.mtcoding.blog._core.errors.exception.Exception404;
 import shop.mtcoding.blog.model.apply.Apply;
 import shop.mtcoding.blog.model.apply.ApplyJPARepository;
 import shop.mtcoding.blog.model.apply.ApplyResponse;
+import shop.mtcoding.blog.model.comp.CompResponse;
+import shop.mtcoding.blog.model.jobs.JobsResponse;
 import shop.mtcoding.blog.model.skill.Skill;
 import shop.mtcoding.blog.model.skill.SkillJPARepository;
 import shop.mtcoding.blog.model.skill.SkillResponse;
@@ -229,5 +231,18 @@ public class ResumeService {
         //3. 삭제하기
         resumeRepo.deleteById(resume.getId());
     }
+
+    // 멀티옵션으로 추가되는 서비스로직
+    public List<CompResponse.ResumeUserSkillDTO> getResumeWithOption(String area, String career, String skillName){
+        List<Resume> resumeList2 = resumeRepo.findAllByMultioption(area,career,skillName);
+
+        return resumeList2.stream().map((resume) -> CompResponse.ResumeUserSkillDTO.builder()
+                        .resume(resume)
+                        .user(resume.getUser())
+                        .skillList(resume.getSkillList()).build())
+                .toList();
+
+
+        }
 
 }
