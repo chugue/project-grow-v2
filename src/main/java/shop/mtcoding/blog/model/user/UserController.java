@@ -25,7 +25,6 @@ public class UserController {
     private final JobsService jobsService;
     private final UserService userService;
     private final HttpSession session;
-    private final ResumeService resumeService;
     private final ApplyService applyService;
 
 
@@ -161,7 +160,7 @@ public class UserController {
 
         
         request.setAttribute("resumeList", resumeList);
-        System.out.println("resumeList:n " + resumeList);
+        System.out.println("resumeList:  " + resumeList);
         request.setAttribute("sessionUserId", sessionUser.getId());
         request.setAttribute("applyState",applies);
         System.out.println("applies :"+applies);

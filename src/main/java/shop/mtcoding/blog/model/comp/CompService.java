@@ -96,10 +96,10 @@ public class CompService {
         return new CompResponse.MainCountDTO(jobsCount, applicantList.size(), noRespList.size());
     }
 
-
+    @Transactional
     public List<CompResponse.RusaDTO> findApplicants(Integer jobsId) {
         //공고에 지원한 이력서를 전부 찾는데, 그 중 지원안한 상태는 제외해서 조회
-        List<Apply> applyList = applyJPARepo.findAllByJidAn1(jobsId);
+        List<Apply> applyList = applyJPARepo.findAllByJidAn2(jobsId);
         // DTO를 받을 그릇 준비
         List<CompResponse.RusaDTO> rusaDTOList = new ArrayList<>();
 
@@ -115,7 +115,7 @@ public class CompService {
              * 그래서 sout찍어보기 테스트
              */
             User user = apply.getResume().getUser();
-            System.out.println(resume.getUser().toString());
+//            System.out.println(resume.getUser().toString());
 
             return rusaDTOList.add(CompResponse.RusaDTO.builder()
                     .user(user).resume(resume).apply(apply).build());
@@ -133,7 +133,7 @@ public class CompService {
     public User join(Integer role, CompRequest.CompJoinDTO reqDTO) {
 
         // 회원가입 할 때마다 이미지 못가져와서 터지니까 디폴트 이미지 하나 추가함
-        compJPARepo.save(reqDTO.toEntity(role, "54040a46-d1b0-4ea5-9938-d461cd656fc1_naver.jpg"));
+        compJPARepo.save(reqDTO.toEntity(role, "default.jpg"));
 
         // 전에거에 있던 이메일 찾아서 그걸로 세션저장해서 회원가입 직후 바로 로그인 되는거 구현하려고 만듬
         User comp = compJPARepo.findByEmail(reqDTO.getEmail());
@@ -199,22 +199,14 @@ public class CompService {
 
     //기업 로그인하면 보여줄 채용 공고
     public List<CompResponse.JobsSkillDTO> jobsList() {
-        List<Jobs> jobsList = jobsJPARepo.findAll();
+        List<Jobs> jobsList = jobsJPARepo.findAllJoinUserWithSkills();
         List<CompResponse.JobsSkillDTO> jobsSkillList = new ArrayList<>();
 
-        for (int i = 0; i < jobsList.size(); i++) {
-            User user = userJPARepo.findById(jobsList.get(i).getUser().getId())
-                    .orElseThrow(() -> new Exception404("정보를 찾을 수 없습니다."));
-
-            List<Skill> skillList = skillJPARepo.findAllByJobsId(jobsList.get(i).getId());
-            jobsSkillList.add(CompResponse.JobsSkillDTO.builder()
-                    .jobs(jobsList.get(i))
-                    .user(user)
-                    .skillList(skillList)
-                    .build());
-        }
-        return jobsSkillList;
-
+        return jobsSkillList = jobsList.stream().map(jobs -> {
+            return CompResponse.JobsSkillDTO.builder()
+                    .jobs(jobs)
+                    .user(jobs.getUser())
+                    .skillList(jobs.getSkillList()).build();}).toList();
     }
 
     // 기업 로그인하면 보여줄 이력서 목록들

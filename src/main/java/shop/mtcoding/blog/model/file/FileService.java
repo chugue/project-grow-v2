@@ -22,14 +22,14 @@ public class FileService {
     private final UserJPARepository userJPARepo;
 
     @Transactional
-    public void upload(FileInfoRequest.UploadDTO reqDTO){
+    public void upload(FileInfoRequest.UploadDTO reqDTO) {
         //1. 데이터전달
         String title = reqDTO.getTitle();
         MultipartFile imgFile = reqDTO.getImgFile();
 
         //2. 파일저장 위치 설정 및 파일저장 (UUID)
-        String imgFilename = UUID.randomUUID()+"_"+imgFile.getOriginalFilename();
-        Path imgPath = Paths.get("./upload/"+imgFilename);
+        String imgFilename = UUID.randomUUID() + "_" + imgFile.getOriginalFilename();
+        Path imgPath = Paths.get("./upload/" + imgFilename);
         try {
             // 이미지 파일 저장
             Files.write(imgPath, imgFile.getBytes());
@@ -39,7 +39,11 @@ public class FileService {
                     .orElseThrow(() -> new Exception401("로그인이 필요한 서비스입니다."));
             newSessionUser.setImgFileName(imgFilename);
 
-            session.setAttribute("sessionUser",newSessionUser);
+            if (newSessionUser.getRole() == 1) {
+                session.setAttribute("sessionUser", newSessionUser);
+            } else if (newSessionUser.getRole() == 2) {
+                session.setAttribute("sessionComp", newSessionUser);
+            }
 
         } catch (IOException e) {
             throw new RuntimeException(e);

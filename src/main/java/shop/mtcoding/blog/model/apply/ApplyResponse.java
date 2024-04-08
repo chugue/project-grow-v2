@@ -47,7 +47,7 @@ public class ApplyResponse {
 
     @Data
     public static class stateViewDTO{
-        private Integer applyCount;
+        private Integer resumeCount;
         private Integer waitCount;
         private Integer resultCount;
 

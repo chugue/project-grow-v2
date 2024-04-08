@@ -28,16 +28,15 @@ public class JobsController {
         User sessionUser = (User)session.getAttribute("sessionUser");
         //공고정보와 사용자정보를 가져오는 detailDTO
         JobsResponse.DetailDTO detailDTO = jobsService.DetailDTO(jobsId,sessionUser);
-        System.out.println("detailDTO :"+detailDTO);
 
         //사용자 이력서 보유내역과 지원상태를 가져오는 ResumeApplyDTO
         ResumeResponse.ResumeStateDTO resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionUser.getId(), jobsId);
         request.setAttribute("resumeApplyDTOList", resumeApplyDTOList);
         request.setAttribute("detailDTO", detailDTO);
-        return "jobs/jobs-detail";
+        return "/jobs/jobs-detail";
     }
 
-    @GetMapping("/jobs/comp-jobs-detail/{jobsId}")
+    @GetMapping("/comp/comp-jobs-detail/{jobsId}")
     public String compJobsDetail(@PathVariable Integer jobsId, HttpServletRequest request){
         User sessionComp = (User)session.getAttribute("sessionComp");
         //공고정보와 사용자정보를 가져오는 detailDTO
@@ -48,21 +47,25 @@ public class JobsController {
         ResumeResponse.ResumeStateDTO resumeApplyDTOList = resumeService.findAllResumeJoinApplyByUserIdAndJobsId(sessionComp.getId(), jobsId);
         request.setAttribute("resumeApplyDTOList", resumeApplyDTOList);
         request.setAttribute("detailDTO", detailDTO);
-        return "jobs/jobs-detail";
+        return "/comp/comp-jobs-detail";
     }
 
     @GetMapping("/jobs/info")
     public String jobsInfo (HttpServletRequest request,
                             @RequestParam(required = false, defaultValue = "") String area,
                             @RequestParam(required = false, defaultValue = "") String skill,
-                            @RequestParam(required = false, defaultValue = "") String career) {
-        List<JobsResponse.ListDTO> listDTOS = jobsService.listDTOS();
+                            @RequestParam(required = false, defaultValue = "") String task) {
+
+        System.out.println(">>>> area" + area);
+        System.out.println(">>>> skill" + skill);
+        System.out.println(">>>> task" + task);
+        List<JobsResponse.ListDTO> listDTOS = jobsService.getJobsWithOption(area, task, skill);
         request.setAttribute("listDTOS", listDTOS);
 
         request.setAttribute("selected", JobsResponse.searchDTO.builder()
                                                         .area(area)
                                                         .skill(skill)
-                                                        .career(career)
+                                                        .task(task)
                                                         .build());
         return "/jobs/info";
     }
@@ -104,9 +107,10 @@ public class JobsController {
 
     @GetMapping("/jobs/{jobsId}/update-jobs-form")
     public String updateForm (@PathVariable Integer jobsId, HttpServletRequest request) {
+        User sessionUser = (User) session.getAttribute("sessionComp");
         JobsResponse.JobUpdateDTO job = jobsService.updateForm(jobsId);
         request.setAttribute("job", job);
-
+        request.setAttribute("sessionC", sessionUser);
         return "/jobs/update-jobs-form";
     }
 }

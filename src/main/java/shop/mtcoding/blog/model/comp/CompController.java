@@ -32,11 +32,10 @@ public class CompController {
 
     @GetMapping("/comp/resume-detail/{id}")  // 기업이 이력서를 조회했을때 필요한 로직
     public String resumeDetail(@PathVariable Integer id, @RequestParam(name = "jobsId") Integer jobsId, HttpServletRequest request) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
         User sessionComp = (User) session.getAttribute("sessionComp");
-        User newSessionUser = userService.findById(sessionUser.getId());
+        User newSessionUser = userService.findById(sessionComp.getId());
         System.out.println(111111);
-        ResumeResponse.DetailDTO resume = resumeService.resumeDetail(id, jobsId, newSessionUser, sessionComp);
+        ResumeResponse.CompDetailDTO resume = resumeService.compResumeDetail(id, jobsId, newSessionUser);
         request.setAttribute("resume", resume);
 
         return "/comp/resume-detail";
@@ -115,7 +114,7 @@ public class CompController {
 
         User sessionUser = (User) session.getAttribute("sessionUser");
         request.setAttribute("imgFileName", sessionUser.getImgFileName());
-        return "/comp/profile-update-form";
+        return "comp/profile-update-form";
     }
 
 
@@ -134,7 +133,7 @@ public class CompController {
         List<CompResponse.JobsSkillDTO> jobsList = compService.jobsList();
         request.setAttribute("jobsList", jobsList);
 
-        return "/comp/jobs-info";
+        return "comp/jobs-info";
     }
 }
 

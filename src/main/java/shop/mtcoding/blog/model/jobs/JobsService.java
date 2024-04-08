@@ -17,6 +17,7 @@ import shop.mtcoding.blog.model.user.UserJPARepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -176,6 +177,15 @@ public class JobsService {
                 .task(jobs.getTask())
                 .skillChecked(new SkillResponse.SkillCheckedDTO(skill)).build();
         return reqDTO;
+    }
+
+    public List<JobsResponse.ListDTO> getJobsWithOption(String area, String task, String skillName){
+        List<Jobs> jobsList2 = jobsRepo.fintdAllByMultioption(area, task ,skillName);
+        return jobsList2.stream().map((jobs) -> JobsResponse.ListDTO.builder()
+                        .jobs(jobs)
+                        .user(jobs.getUser())
+                        .skills(jobs.getSkillList()).build())
+                .toList();
     }
 }
 
