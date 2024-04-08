@@ -269,6 +269,15 @@ public class ResumeResponse {
         }
     }
 
+
+
+    @Data
+    @Builder
+    public static class resumeSearchDTO{
+        private String area;
+        private String skill;
+        private String career;
+    }
 }
 
 

@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import shop.mtcoding.blog.model.jobs.JobsResponse;
+import shop.mtcoding.blog.model.jobs.JobsService;
 import shop.mtcoding.blog.model.resume.ResumeResponse;
 import shop.mtcoding.blog.model.resume.ResumeService;
 import shop.mtcoding.blog.model.user.User;
@@ -19,6 +21,7 @@ public class CompController {
     private final HttpSession session;
     private final ResumeService resumeService;
     private final UserService userService;
+    private final JobsService jobsService;
 
     @GetMapping("/comp/{id}/comp-manage")
     public String compManage (@PathVariable Integer id, HttpServletRequest request) {
@@ -75,9 +78,23 @@ public class CompController {
     }
 
     @GetMapping("/comp/read-resume")
-    public String readResume(HttpServletRequest request) {
-        List<CompResponse.ResumeUserSkillDTO> rusList = compService.findAllRusList();
-        request.setAttribute("rusList", rusList);
+    public String readResume(HttpServletRequest request,
+                             @RequestParam(required = false, defaultValue = "") String area,
+                             @RequestParam(required = false, defaultValue = "") String skill,
+                             @RequestParam(required = false, defaultValue = "") String career) {
+
+
+            List<CompResponse.ResumeUserSkillDTO> rusList = resumeService.getResumeWithOption(area,skill,career);
+            request.setAttribute("rusList", rusList);
+
+
+
+        request.setAttribute("selected", ResumeResponse.resumeSearchDTO.builder()
+                .area(area)
+                .skill(skill)
+                .career(career)
+                .build());
+
         return "/comp/read-resume";
     }
 
@@ -128,10 +145,22 @@ public class CompController {
         return "/comp/talent";
     }
 
+
     @GetMapping("/comp/jobs-info")
-    public String jobsInfo(HttpServletRequest request) {
-        List<CompResponse.JobsSkillDTO> jobsList = compService.jobsList();
-        request.setAttribute("jobsList", jobsList);
+    public String jobsInfo(HttpServletRequest request,
+                           @RequestParam(required = false, defaultValue = "") String area,
+                           @RequestParam(required = false, defaultValue = "") String skill,
+                           @RequestParam(required = false, defaultValue = "") String task) {
+
+
+        List<JobsResponse.ListDTO> listDTOS = jobsService.getJobsWithOption(area, task, skill);
+        request.setAttribute("listDTOS", listDTOS);
+
+        request.setAttribute("selected", JobsResponse.searchDTO.builder()
+                .area(area)
+                .skill(skill)
+                .task(task)
+                .build());
 
         return "comp/jobs-info";
     }
